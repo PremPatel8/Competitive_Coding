@@ -1,4 +1,12 @@
+# # Unoptimized recursive solution
+# def fibonacci(n):
+#     if n >= 0 and n <=1:
+#         return n
+#     else:
+#         return fibonacci(n-2)+fibonacci(n-1)
+
 def fibonacci(n):
+    # Using Memoization (Dynamic Programming) to reduce redundant calculations/function calls
     mem = {}
     
     if n in mem:
