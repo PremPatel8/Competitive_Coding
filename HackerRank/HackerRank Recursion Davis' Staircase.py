@@ -10,22 +10,19 @@ import sys
 
 
 def stepPerms(n):
-    st = 0
-    stArr = {}
+    stArr = [0]*(n+1)
 
     def stepCalc(st):
-        if st in stArr:
-            return stArr[st]
-        elif st > n:
+        if st < 0:
             return 0
-        elif st == n:
+        elif st == 0:
             return 1
-        else:
-            val = stepCalc(st+1) + stepCalc(st+2) + stepCalc(st+3)
-            stArr[st] = val
-            return val
+        if stArr[st] == 0:
+            stArr[st] = stepCalc(st-1) + stepCalc(st-2) + stepCalc(st-3)
+        
+        return stArr[st]
 
-    return stepCalc(st)
+    return stepCalc(n)
 
 
 if __name__ == '__main__':
