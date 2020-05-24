@@ -5,25 +5,17 @@ import os
 import random
 import re
 import sys
+from collections import deque
 
 
 # This solution works but is too slow
 # Complete the poisonousPlants function below.
 def poisonousPlants(p):
-    cntr = 0
+    stack_list = []
 
-    while True:
-        del_list = []
-        
-        for i in range(1,len(p)):
-            if p[i] > p[i-1]:
-                del_list.append(i)
-        if not del_list:
-            return cntr
-        else:
-            cntr += 1
-            for index in sorted(del_list, reverse=True):
-                del p[index]
+    for i in range(1, len(p)):
+        if 
+
 
 
 
