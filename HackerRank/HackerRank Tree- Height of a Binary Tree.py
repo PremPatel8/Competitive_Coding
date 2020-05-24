@@ -1,3 +1,4 @@
+from collections import deque
 class Node:
     def __init__(self, info): 
         self.info = info  
@@ -45,12 +46,34 @@ class Node:
 
        // this is a node of the tree , which contains info as data, left , right
 '''
+# Iterative approach
 def height(root):
     # print(type(root), root)
-    if root == None:
-        return -1
-    else:
-        return 1+max(height(root.left),height(root.right))
+    if root is None:
+        return 0
+    
+    queue = deque()
+    queue.append(root)
+
+    hgt = 0
+
+    while queue:
+        lvlNodes = len(queue)
+
+        while lvlNodes > 0:
+            firstEle = queue.popleft()
+
+            if firstEle.left:
+                queue.append(firstEle.left)
+            
+            if firstEle.right:
+                queue.append(firstEle.right)
+            
+            lvlNodes -= 1
+        
+        hgt += 1
+    
+    return hgt-1
 
 
 
