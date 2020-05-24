@@ -47,60 +47,27 @@ class Node:
 '''
 
 def lca(root, v1, v2):
-    v1Path = set()
-    v2Path = set()
-
     current = root
 
-# Getting the path to V1
     while True:
-        v1Path.add(current)
-
-        if v1 < current.info:
-            current = current.left
-        elif v1 > current.info:
+        if current.info < v1 and current.info < v2:
             current = current.right
-        elif v1 == current.info:
-            break
-    
-    current = root
-
-    # Getting the path to V2
-    while True:
-        v2Path.add(current)
-
-        if v2 < current.info:
+        elif current.info > v1 and current.info > v2:
             current = current.left
-        elif v2 > current.info:
-            current = current.right
-        elif v2 == current.info:
-            break
-    
-    # print("v1Path-")
-    # for node in v1Path:
-    #     print(node, end = ' ')
-    
-    # print("\n\nv2Path-")
-    # for node in v2Path:
-    #     print(node, end = ' ')
-
-    c = list(v1Path & v2Path)
-
-    # print("\n\nIntersection list-")
-    # for nodes in c:
-    #     print(nodes)
-
-    return c[0]
+        else:
+            return current
 
 tree = BinarySearchTree()
-t = 6
+t = 9
 
-arr = [4,2,3,1,7,6]
+arr = [8,6,5,7,11,12,13,10,9]
 
 for i in range(t):
     tree.create(arr[i])
 
-v = [1,7]
+v = [9,12]
 
 ans = lca(tree.root, v[0], v[1])
+
+print("\n\nans-")
 print (ans.info)
