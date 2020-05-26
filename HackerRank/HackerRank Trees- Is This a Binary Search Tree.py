@@ -1,5 +1,6 @@
 from binarytree import tree, bst
 
+
 def checkBST(root):
     nodeList = []
 
@@ -11,9 +12,9 @@ def checkBST(root):
 
         if node.right:
             InOrder(node.right)
-    
+
     InOrder(root)
-    
+
     return sorted(list(set(nodeList))) == nodeList
 
 
