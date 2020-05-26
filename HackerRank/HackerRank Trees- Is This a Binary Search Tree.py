@@ -1,25 +1,23 @@
-from binarytree import tree, bst
+from binarytree import bst
+import sys
 
 
+# Recursive solution
 def checkBST(root):
-    nodeList = []
 
-    def InOrder(node):
-        if node.left:
-            InOrder(node.left)
+    def _checkBST(node, mi, mx):
+        if node is None:
+            return True
 
-        nodeList.append(node.val)
+        return (mi < node.val and node.val < mx) and (
+            _checkBST(node.left, mi, node.val) and
+            _checkBST(node.right, node.val, mx))
 
-        if node.right:
-            InOrder(node.right)
-
-    InOrder(root)
-
-    return sorted(list(set(nodeList))) == nodeList
+    return _checkBST(root, -sys.maxsize - 1, sys.maxsize)
 
 
 tree = bst(is_perfect=True)
 
-# print(tree)
+print(tree)
 
 print(checkBST(tree))
