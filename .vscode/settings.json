@@ -1,3 +1,7 @@
 {
-    "python.pythonPath": "C:\\Python38\\python.exe"
+    "python.pythonPath": "C:\\Python38\\python.exe",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.pep8Enabled": true,
+    "python.formatting.provider": "autopep8"
 }
