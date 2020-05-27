@@ -61,23 +61,14 @@ def dfs_hidden(obj, already):
 
 def decodeHuff(root, s):
     output = []
+    node = root
 
-    def decoder(node, i):
-        if i < len(s):
-            if s[i] == '1':
-                node = node.right
-            else:
-                node = node.left
+    for c in s:
+        node = node.right if c == '1' else node.left
 
-            if node.data != '\0':
-                output.append(node.data)
-                return decoder(root, i+1)
-            else:
-                return decoder(node, i+1)
-        else:
-            return
-
-    decoder(root, 0)
+        if node.data != '\0':
+            output.append(node.data)
+            node = root
 
     print(''.join(output))
 
