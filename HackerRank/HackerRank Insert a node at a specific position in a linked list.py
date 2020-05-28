@@ -52,16 +52,14 @@ def print_singly_linked_list(node, sep, fptr):
 
 def insertNodeAtPosition(head, data, position):
     nodeToInsert = SinglyLinkedListNode(data)
-    i = 0
-    # insert a node to a empty linked list
-    if head is None:
-        return nodeToInsert
+
     # insert a node at the head of a linked list
-    elif position == 0:
+    if position == 0:
         nodeToInsert.next = head
         return nodeToInsert
     else:
         # insert a node in the middle or at the end of the linked list
+        i = 0
         currPtr = head
 
         while(i < position-1 and currPtr.next is not None):
