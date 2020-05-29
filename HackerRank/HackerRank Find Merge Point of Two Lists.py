@@ -51,38 +51,24 @@ def print_singly_linked_list(node, sep, fptr):
 
 
 def findMergeNode(head1, head2):
+    if head1 is None or head2 is None:
+        return None
+
     cur1 = head1
     cur2 = head2
-    diff = 0
-    l1 = 0
-    l2 = 0
 
-    while(cur1 is not None):
-        l1 += 1
-        cur1 = cur1.next
-    
-    while(cur2 is not None):
-        l2 += 1
-        cur2 = cur2.next
-
-    diff = l1-l2 if l1 > l2 else l2-l1
-
-    if diff > 0:
-        if l1 > l2:
-            for _ in range(diff):
-                head1 = head1.next
+    while cur1 is not cur2:
+        if cur1 is None:
+            cur1 = head2
         else:
-            for _ in range(diff):
-                head2 = head2.next
+            cur1 = cur1.next
 
-    while head1 is not head2:
-        head1 = head1.next
-        head2 = head2.next
+        if cur2 is None:
+            cur2 = head1
+        else:
+            cur2 = cur2.next
 
-    if head1 is not None:
-        return head1.data
-
-    return None
+    return cur1.data
 
 
 if __name__ == '__main__':
