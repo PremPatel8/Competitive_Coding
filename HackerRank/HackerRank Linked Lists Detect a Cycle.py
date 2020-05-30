@@ -10,22 +10,25 @@ A Node is defined as:
 """
 
 
+'''
+Tortoise and Hare technique used, move the tortoise node one node at a time and
+the hare node two nodes at a time. If there is a cycle in the Linked List they
+will eventually meet, if not then either one of them will become Null and
+we can stop checking any further
+'''
+
+
 def has_cycle(head):
     if head is None:
         return False
 
-    tortoise = head
-    hare = head
+    fast = slow = head
 
-    while tortoise.next is not None and hare.next is not None:
-        tortoise = tortoise.next
-        
-        if hare.next.next is not None:
-            hare = hare.next.next
-        else:
-            return False
+    while fast.next is not None and slow.next is not None:
+        fast = fast.next.next
+        slow = slow.next
 
-        if tortoise is hare:
+        if fast is slow:
             return True
 
     return False
