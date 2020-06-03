@@ -5,7 +5,8 @@ import os
 import random
 import re
 import sys
-from collections import defaultdict
+import pprint
+from collections import defaultdict, Counter
 
 # Complete the findShortest function below.
 
@@ -17,6 +18,7 @@ from collections import defaultdict
 # 3. An edge exists between <name>_from[i] to <name>_to[i].
 #
 #
+
 
 class Graph(object):
     """ Graph data structure, undirected by default. """
@@ -39,16 +41,63 @@ class Graph(object):
         if not self._directed:
             self._graph[node2].add(node1)
 
+    def is_connected(self, node1, node2):
+        """ Is node1 directly connected to node2 """
+
+        return node1 in self._graph and node2 in self._graph[node1]
+
     def __str__(self):
         return '{}({})'.format(self.__class__.__name__, dict(self._graph))
 
+
 def findShortest(graph_nodes, graph_from, graph_to, ids, val):
-    print(graph_nodes, graph_from, graph_to, ids, val)
-    return -1
+    colorFreq = Counter(ids)
+
+    if colorFreq[val] <= 1:
+        return -1
+
+    nodeList = []
+    shortestPathLen = 1000000000
+
+    for f, t in zip(graph_from, graph_to):
+        nodeList.append([f, t])
+
+    colorGraph = Graph(nodeList)
+
+    # pretty_print = pprint.PrettyPrinter()
+    # pretty_print.pprint(colorGraph._graph)
+
+    nodesOfReqiredColor = []
+
+    for i, id in enumerate(ids):
+        if id == val:
+            nodesOfReqiredColor.append(i+1)
+
+    # print(nodesOfReqiredColor)
+
+    for i, startNode in enumerate(nodesOfReqiredColor):
+        for endNode in nodesOfReqiredColor[i+1:]:
+            pathLen = bfs_paths(colorGraph._graph, startNode, endNode)
+
+            shortestPathLen = min(shortestPathLen, pathLen)
+
+    return shortestPathLen
+
+
+def bfs_paths(graph, start, goal):
+    queue = [(start, [start])]
+    while queue:
+        (vertex, path) = queue.pop(0)
+        for next in graph[vertex]-set(path):
+            if next == goal:
+                return len(path + [next])-1
+            else:
+                queue.append((next, path + [next]))
 
 
 if __name__ == '__main__':
-    fptr = open('D:/GitHub/Cometitive_Coding/HackerRank/Find_Nearest_Clone.txt', 'w')
+    fptr = open(
+        'D:/GitHub/Cometitive_Coding/HackerRank/Find_Nearest_Clone.txt', 'w')
 
     graph_nodes, graph_edges = map(int, input().split())
 
