@@ -22,8 +22,11 @@ class Graph(object):
     def find_all_distances(self, startNode):
         distances = []
 
+        # Iterate through every node in the tree except the start node
         for node in range(self._nodesNo):
             if node != startNode:
+                # For each node in the tree find the shortest distance between
+                # that node and the given start node
                 dist = self.BFS_Distance(startNode, node)
                 distances.append(dist)
 
@@ -34,6 +37,9 @@ class Graph(object):
         queue = deque([(startNode, weight)])
         visited = {startNode}
 
+        """ If the endNode is disconnected from the rest of the graph then
+        it will not be present in the Adjacency list and won't be reachable
+        from the start node, hence it's distance will be -1 """
         if endNode not in self._graph:
             return -1
 
@@ -49,6 +55,8 @@ class Graph(object):
                 queue.append((neighbour, wt+6))
                 visited.add(neighbour)
 
+        """If the endNode is present in the Adjacency list but no path is found
+        from the startNode to this endNode then it's distance will be -1 """
         return -1
 
 
