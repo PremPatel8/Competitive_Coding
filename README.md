@@ -1,2 +1,2 @@
 # Cometitive_Coding
-Solutions to problems from HackerRank, LeetCode, Codewars etc.
+My solutions to problems from HackerRank, LeetCode, Codewars etc.
