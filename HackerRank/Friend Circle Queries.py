@@ -22,6 +22,7 @@ class Disjoint_Set():
             self.parents[n] = n
             self.size[n] = 1
 
+    # Optimized using Union by Size / Rank
     def union(self, node_A, node_B):
         root_A = self.find(node_A)
         root_B = self.find(node_B)
@@ -36,6 +37,7 @@ class Disjoint_Set():
                 self.size[root_A] += self.size[root_B]
                 self.largestSet = max(self.largestSet, self.size[root_A])
 
+    # Optimized using Path Compression
     def find(self, node):
         if self.parents[node] == node:
             return node
