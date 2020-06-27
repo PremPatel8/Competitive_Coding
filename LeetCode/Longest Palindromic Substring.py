@@ -1,5 +1,10 @@
 
 class Solution:
+
+    """ Expand Around Center algorithm
+        Time complexity : O(n^2)
+        Space complexity : O(1). 
+     """
     def longestPalindrome(self, s: str) -> str:
         i = start = end = 0
         strlen = len(s)
