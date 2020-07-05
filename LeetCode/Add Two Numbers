@@ -1,0 +1,74 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+""" You are given two non-empty linked lists representing two non-negative integers. 
+The digits are stored in reverse order and each of their nodes contain a single digit. 
+Add the two numbers and return it as a linked list. 
+You may assume the two numbers do not contain any leading zero, except the number 0 itself. """
+
+""" Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+Output: 7 -> 0 -> 8
+Explanation: 342 + 465 = 807. """
+
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+    def __repr__(self):
+        return self.val
+
+
+class Solution:
+    def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+        numA = numB = total = 0
+        headA = l1
+        headB = l2
+        head = tail = None
+
+        numA = self.getNum(headA)
+        numB = self.getNum(headB)
+
+        total = numA + numB
+
+        if total == 0:
+            return ListNode(0)
+
+        while total > 0:
+            digit = total % 10
+
+            if not head:
+                head = tail = ListNode(digit)
+            else:
+                tail.next = ListNode(digit)
+                tail = tail.next
+
+            total = total//10
+
+        return head
+
+    def getNum(self, headPtr):
+        num = i = 0
+        while headPtr:
+            num += headPtr.val * 10**i
+            headPtr = headPtr.next
+            i += 1
+
+        return num
+
+
+h1 = ListNode(2)
+h1.next = ListNode(4)
+h1.next.next = ListNode(3)
+
+h2 = ListNode(5)
+h2.next = ListNode(6)
+h2.next.next = ListNode(4)
+
+myobj = Solution()
+
+print(myobj.addTwoNumbers(h1, h2))
