@@ -5,45 +5,22 @@
 #         self.next = next
 class Solution:
     def oddEvenList(self, head: ListNode) -> ListNode:
-        if head:
-            oddPtr = head
-        else:
+        if head is None or head.next is None:
             return head
-        if head.next:
-            evenPtr = head.next
-        else:
-            return head
-
-        oddHead = evenHead = None
-
-        while oddPtr or evenPtr:
-            if oddPtr:
-                if not oddHead:
-                    oddHead = oddPtr
-                    oddCur = oddPtr
-                else:
-                    oddCur.next = oddPtr
-                    oddCur = oddCur.next
-
-                if oddPtr.next:
-                    oddPtr = oddPtr.next.next
-                else:
-                    oddPtr = None
-
-            if evenPtr:
-                if not evenHead:
-                    evenHead = evenPtr
-                    evenCur = evenPtr
-                else:
-                    evenCur.next = evenPtr
-                    evenCur = evenCur.next
-
-                if evenPtr.next:
-                    evenPtr = evenPtr.next.next
-                else:
-                    evenPtr = None
-
-        evenCur.next = None
-        oddCur.next = evenHead
-
-        return oddHead
+        headOdd = ListNode(0)
+        curodd = headOdd
+        headEven = ListNode(0)
+        cureven = headEven
+        isOdd = True
+        while head:
+            if isOdd:
+                curodd.next = head
+                curodd = curodd.next
+            else:
+                cureven.next = head
+                cureven = cureven.next
+            isOdd = not isOdd
+            head = head.next
+        curodd.next = headEven.next
+        cureven.next = None
+        return headOdd.next
