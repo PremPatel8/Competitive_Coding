@@ -12,20 +12,20 @@ class TreeNode:
 
 class Solution:
     inorderIndex = defaultdict(int)
-    preIndex = 0
+    # preIndex = 0
 
     def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
         for idx, node in enumerate(inorder):
             self.inorderIndex[node] = idx
 
-        return self.buildBinaryTree(preorder, inorder, 0, len(inorder)-1)
+        return self.buildBinaryTree(0, preorder, inorder, 0, len(inorder)-1)
 
-    def buildBinaryTree(self, preorder, inorder, start, end):
-        if start > end or self.preIndex > len(preorder):
+    def buildBinaryTree(self, preIndex, preorder, inorder, start, end):
+        if start > end or preIndex > len(preorder)-1:
             return None
 
-        root = TreeNode(preorder[self.preIndex])
-        self.preIndex += 1
+        root = TreeNode(preorder[preIndex])
+        # self.preIndex += 1
 
         if not root:
             return None
@@ -35,7 +35,7 @@ class Solution:
 
         index = self.inorderIndex[root.val]
 
-        root.left = self.buildBinaryTree(preorder, inorder, start, index-1)
-        root.right = self.buildBinaryTree(preorder, inorder, index+1, end)
+        root.left = self.buildBinaryTree(preIndex+1, preorder, inorder, start, index-1)
+        root.right = self.buildBinaryTree(preIndex+index-start+1, preorder, inorder, index+1, end)
 
         return root
