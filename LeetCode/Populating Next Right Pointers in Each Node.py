@@ -13,27 +13,14 @@ class Node:
 
 class Solution:
     def connect(self, root: 'Node') -> 'Node':
-        if not root:
-            return root
+        ans = root
+        while root and root.left:
+            curr = root
 
-        temp = []
-        queue = deque([root])
+            while curr:
+                curr.left.next = curr.right
+                curr.right.next = curr.next.left if curr.next else None
+                curr = curr.next
 
-        while queue:
-            for _ in range(len(queue)):
-                node = queue.popleft()
-                temp.append(node)
-
-                if node.left:
-                    queue += [node.left]
-                if node.right:
-                    queue += [node.right]
-
-            i = 0
-            while i < len(temp)-1:
-                temp[i].next = temp[i+1]
-                i += 1
-
-            temp = []
-
-        return root
+            root = root.left
+        return ans
