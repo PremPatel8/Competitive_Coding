@@ -5,37 +5,28 @@ class TreeNode:
         self.left = left
         self.right = right
 
-""" 91 / 91 test cases passed.
-Runtime: 104 ms
-Memory Usage: 18 MB """
+
+"""91 / 91 test cases passed.
+Runtime: 80 ms
+Memory Usage: 17.7 MB"""
+
 
 class Solution:
     def kthSmallest(self, root: TreeNode, k: int) -> int:
-        counter = 0
-        leafReached = False
-        ans = 0
+        stack = []
 
-        def helper(node):
-            if not node:
-                nonlocal leafReached
-                leafReached = True
-                return
+        while True:
+            while root:
+                stack.append(root)
+                root = root.left
 
-            helper(node.left)
+            root = stack.pop()
+            k = k - 1
 
-            if leafReached:
-                nonlocal counter
-                counter += 1
+            if not k:
+                return root.val
 
-            if counter == k:
-                nonlocal ans
-                ans = node.val
-
-            helper(node.right)
-
-            return ans
-
-        return helper(root)
+            root = root.right
 
 
 tree = TreeNode(3)
