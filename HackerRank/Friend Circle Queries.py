@@ -1,4 +1,5 @@
 #!/bin/python3
+""" Disjoint Set Union Find """
 
 import math
 import os
