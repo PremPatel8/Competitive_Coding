@@ -19,7 +19,7 @@ Input: "23"
 Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
 """
 
-# Nick White Solution
+# Nick White Solution, Queue based approach
 
 
 class Solution:
@@ -52,3 +52,7 @@ class Solution:
 myobj = Solution()
 
 print(myobj.letterCombinations("23"))
+
+#%%
+digit = "3"
+digit[1:]
