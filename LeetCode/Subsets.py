@@ -24,25 +24,13 @@ Output:
 ]
 """
 
-
+# Iterative solution
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
-        output = []
-
-        def backtrack(temp, nums, output, start):
-            output.append(temp.copy())
-
-            i = start
-            while i < len(nums):
-                temp.append(nums[i])
-                backtrack(temp, nums, output, i+1)
-                temp.pop()
-                i += 1
-
-        if nums:
-            backtrack([], nums, output, 0)
-
-        return output
+        result = [[]]
+        for ele in nums:
+            result += [entry + [ele] for entry in result]
+        return result
 
 
 myobj = Solution()
