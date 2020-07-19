@@ -24,26 +24,17 @@ Output:
 
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
-        output = []
-
-        if not nums or len(nums) == 0:
-            return output
-
-        def backtrack(permutation, nums):
-            if len(permutation) == len(nums):
-                output.append(permutation.copy())
-            else:
-                for num in nums:
-                    if num in permutation:
-                        continue
-
-                    permutation.append(num)
-                    backtrack(permutation, nums)
-                    permutation.pop()
-
-        backtrack([], nums)
-
-        return output
+        if len(nums) == 0:
+            return []
+        if len(nums) == 1:
+            return [nums]
+        l = []
+        for i in range(len(nums)):
+            m = nums[i]
+            rem = nums[:i]+nums[i+1:]
+            for p in self.permute(rem):
+                l.append([m]+p)
+        return l
 
 
 myobj = Solution()
