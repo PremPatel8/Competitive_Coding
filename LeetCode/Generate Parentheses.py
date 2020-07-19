@@ -22,41 +22,20 @@ Output:
 
 
 class Solution:
-    def generateParenthesis(self, n: int) -> List[str]:
-        output = []
+    def generateParenthesis(self, N):
+        ans = []
 
-        def BalancedBrackets(combination):
-            stack = []
+        def backtrack(S='', left=0, right=0):
+            if len(S) == 2 * N:
+                ans.append(S)
+                return
+            if left < N:
+                backtrack(S+'(', left+1, right)
+            if right < left:
+                backtrack(S+')', left, right+1)
 
-            for chr in combination:
-                if chr == "(":
-                    stack.append(chr)
-                elif chr == ")":
-                    if len(stack) == 0:
-                        return False
-
-                    top_element = stack.pop()
-
-                    if not (top_element == "(" and chr == ")"):
-                        return False
-
-            if len(stack) != 0:
-                return False
-
-            return True
-
-        def backtrack(combination, brackets):
-            if brackets == 0:
-                if BalancedBrackets(combination):
-                    output.append(combination)
-            else:
-                for br in ["(", ")"]:
-                    backtrack(combination+br, brackets-1)
-
-        if n:
-            backtrack("", 2*n)
-
-        return output
+        backtrack()
+        return ans
 
 
 myobj = Solution()
