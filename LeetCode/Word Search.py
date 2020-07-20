@@ -32,34 +32,35 @@ board and word consists only of lowercase and uppercase English letters.
 
 """ 89 / 89 test cases passed.
 	Status: Accepted
-Runtime: 436 ms
-Memory Usage: 15.6 MB """
+Runtime: 384 ms
+Memory Usage: 15.4 MB """
 
 
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
-        if not board:
-            return False
+        lenX, lenY = len(board), len(board[0])
+        lenW = len(word)
 
-        def DFS(board, i, j, word):
-            if len(word) == 0:
+        def dfs(x, y, idx):
+            if idx == lenW:
                 return True
-
-            if i < 0 or i >= len(board) or j < 0 or j >= len(board[0]) or word[0] != board[i][j]:
+            if (x < 0 or x >= lenX) or (y < 0 or y >= lenY) or board[x][y] != word[idx]:
                 return False
 
-            tmp = board[i][j]
-            board[i][j] = "#"
+            tmp = board[x][y]
+            board[x][y] = "#"
+            idx += 1
 
-            res = DFS(board, i+1, j, word[1:]) or DFS(board, i-1, j, word[1:]) \
-                or DFS(board, i, j+1, word[1:]) or DFS(board, i, j-1, word[1:])
+            if dfs(x-1, y, idx) or dfs(x, y-1, idx) or dfs(x+1, y, idx) or dfs(x, y+1, idx):
+                # board[x][y] = tmp
+                return True
+            else:
+                board[x][y] = tmp
+                return False
 
-            board[i][j] = tmp
-            return res
-
-        for r in range(len(board)):
-            for c in range(len(board[0])):
-                if DFS(board, r, c, word):
+        for i in range(lenX):
+            for j in range(lenY):
+                if dfs(i, j, 0):
                     return True
 
         return False
@@ -73,5 +74,6 @@ bord = [
     ['A', 'D', 'E', 'E']
 ]
 
-word = "ABCCED"
+# word = "ABCCED"
+word = "PREM"
 print(myobj.exist(bord, word))
