@@ -1,4 +1,6 @@
 from typing import List
+from collections import Counter
+from itertools import chain
 
 """
 Problem Name: Word Search
@@ -32,35 +34,41 @@ board and word consists only of lowercase and uppercase English letters.
 
 """ 89 / 89 test cases passed.
 	Status: Accepted
-Runtime: 384 ms
-Memory Usage: 15.4 MB """
+Runtime: 200 ms
+Memory Usage: 15.7 MB """
 
-
+# Using counter to check if the board has the necessary char frequency (no. of each char) to contain the target word before iterating through the board
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
-        lenX, lenY = len(board), len(board[0])
-        lenW = len(word)
+        if not board or not word:
+            return False
 
-        def dfs(x, y, idx):
-            if idx == lenW:
-                return True
-            if (x < 0 or x >= lenX) or (y < 0 or y >= lenY) or board[x][y] != word[idx]:
+        board_counter, word_counter = Counter(chain(*board)), Counter(word)
+        if word_counter - board_counter:
+            return False
+
+        rows, cols, chars = len(board), len(board[0]), len(word)
+        gradients = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
+        def dfs(i: int, j: int, idx: int = 0):
+            if not (0 <= i < rows and 0 <= j < cols) or board[i][j] != word[idx]:
                 return False
 
-            tmp = board[x][y]
-            board[x][y] = "#"
-            idx += 1
-
-            if dfs(x-1, y, idx) or dfs(x, y-1, idx) or dfs(x+1, y, idx) or dfs(x, y+1, idx):
-                # board[x][y] = tmp
+            if idx == chars - 1:
                 return True
-            else:
-                board[x][y] = tmp
-                return False
 
-        for i in range(lenX):
-            for j in range(lenY):
-                if dfs(i, j, 0):
+            cell_value, board[i][j] = board[i][j], '#'
+
+            if any(dfs(i + di, j + dj, idx + 1) for (di, dj) in gradients):
+                return True
+
+            board[i][j] = cell_value
+
+            return False
+
+        for r in range(rows):
+            for c in range(cols):
+                if board[r][c] == word[0] and dfs(r, c):
                     return True
 
         return False
@@ -68,12 +76,12 @@ class Solution:
 
 myobj = Solution()
 
-bord = [
+board = [
     ['A', 'B', 'C', 'E'],
     ['S', 'F', 'C', 'S'],
     ['A', 'D', 'E', 'E']
 ]
 
-# word = "ABCCED"
-word = "PREM"
-print(myobj.exist(bord, word))
+word = "ABCCED"
+# word = "PREM"
+print(myobj.exist(board, word))
