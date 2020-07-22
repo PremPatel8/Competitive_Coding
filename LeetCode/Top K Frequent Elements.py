@@ -1,5 +1,6 @@
 from typing import List
 from collections import Counter
+import itertools
 
 """
 Problem Name: Top K Frequent Elements
@@ -28,12 +29,24 @@ You can return the answer in any order.
 Runtime: 124 ms
 Memory Usage: 18.3 MB """
 
-
+# Using bucket sort to get the elements sorted by increasing frequency (element with the highest frequency at the end)
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        output = Counter(nums).most_common(k)
+        # O(1) time
+        if k == len(nums) or len(nums) == 1:
+            return nums
 
-        return [x[0] for x in output]
+        bucket = [[] for _ in range(len(nums) + 1)]
+
+        Count = Counter(nums).items()
+
+        for num, freq in Count:
+            bucket[freq].append(num)
+
+        # flat_list = [item for sublist in bucket for item in sublist]
+        flat_list = list(itertools.chain.from_iterable(bucket))
+
+        return flat_list[::-1][:k]
 
 
 myobj = Solution()
