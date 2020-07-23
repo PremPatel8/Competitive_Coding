@@ -25,7 +25,7 @@ You may assume k is always valid, 1 ≤ k ≤ array's length.
 Runtime: 80 ms
 Memory Usage: 14.5 MB """
 
-# O(nlogk) heap based solution
+# O(N lg K) running time + O(K) memory, heap based solution
 class Solution:
     def findKthLargest(self, nums: List[int], k: int) -> int:
         if k == len(nums):
