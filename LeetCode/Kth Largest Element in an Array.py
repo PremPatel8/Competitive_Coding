@@ -1,4 +1,5 @@
 from typing import List
+import random
 import heapq
 
 """
@@ -22,34 +23,65 @@ You may assume k is always valid, 1 ≤ k ≤ array's length.
 
 """ 32 / 32 test cases passed.
 	Status: Accepted
-Runtime: 80 ms
-Memory Usage: 14.5 MB """
+Runtime: 76 ms
+Memory Usage: 14.3 MB """
 
-# O(N lg K) running time + O(K) memory, heap based solution
+""" Analyzing the problem statement, we realize that we don't actually need to sort the entire array — we only need to rearrange its contents so that the kth element of the array is the kth largest or smallest.
+In QuickSort, we pick a pivot element and move it to its correct position. We also partition the array around it. In QuickSelect, the idea is to stop at the point where the pivot itself is the kth largest element.
+We can optimize the algorithm further if we don't recur for both left and right sides of the pivot. We only need to recur for one of them according to the position of the pivot.
+https://www.youtube.com/watch?v=hGK_5n81drs&list=TLPQMjIwNzIwMjBd9-KgDbpTkg&index=1
+"""
+
+# O(N) best case / O(N^2) worst case running time + O(1) memory, Quick Select / QuickSort paritioning based solution
+
+
 class Solution:
     def findKthLargest(self, nums: List[int], k: int) -> int:
-        if k == len(nums):
-            return min(nums)
+        if k < 1 or nums is None:
+            return 0
 
-        minHeap = []
+        if len(nums) == 1 and k <= len(nums):
+            return nums[0]
 
-        for num in nums:
-            if len(minHeap) == k and num < minHeap[0]:
-                continue
+        random.shuffle(nums)
+
+        k = len(nums) - k
+        lo = 0
+        hi = len(nums) - 1
+        while (lo < hi):
+            j = self.partition(nums, lo, hi)
+
+            if(j < k):
+                lo = j + 1
+            elif (j > k):
+                hi = j - 1
             else:
-                heapq.heappush(minHeap, num)
+                break
 
-            if len(minHeap) > k:
-                heapq.heappop(minHeap)
+        return nums[k]
 
-        return minHeap[0]
+    def partition(self, nums, lo, hi):
+        pivot = nums[hi]
+        j = i = lo
+
+        while (j < hi):
+            if (nums[j] <= pivot):
+                self.swap(nums, i, j)
+                i += 1
+            j += 1
+
+        self.swap(nums, i, hi)
+        return i
+
+    def swap(self, nums, i, j):
+        nums[i], nums[j] = nums[j], nums[i]
 
 
 myobj = Solution()
-# input = [3, 2, 1, 5, 6, 4]
-# k = 2
+input = [3, 2, 1, 5, 6, 4]
+k = 2
 # input = [3, 2, 3, 1, 2, 4, 5, 5, 6]
 # k = 4
-input = [7, 6, 5, 4, 3, 2, 1]
-k = 2
+# input = [7, 6, 5, 4, 3, 2, 1]
+# k = 2
 print(myobj.findKthLargest(input, k))
