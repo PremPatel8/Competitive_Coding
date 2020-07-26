@@ -28,44 +28,23 @@ Given target = 20, return false.
 """ 129 / 129 test cases passed.
 	Status: Accepted
 Runtime: 36 ms
-Memory Usage: 18.4 MB """
+Memory Usage: 18.5 MB """
 
-# Time complexity : O() Space complexity : O() My Solution
+# Time complexity : O(m+n) Space complexity : O(1) LeetCode Solution
 
 
 class Solution:
     def searchMatrix(self, matrix, target):
-        if len(matrix) == 0 or len(matrix[0]) == 0:
+        if not matrix or not matrix[0]:
             return False
-
-        row_count = []
-        column_count = []
-
-        for itr, row in enumerate(matrix):
-            if row[0] == target or row[-1] == target:
+        row, col = 0, len(matrix[0]) - 1
+        while row < len(matrix) and col >= 0:
+            if matrix[row][col] > target:
+                col -= 1
+            elif matrix[row][col] < target:
+                row += 1
+            else:
                 return True
-            elif row[0] < target < row[-1]:
-                row_count.append(itr)
-
-        if len(row_count) == 0:
-            return False
-
-        rows = len(matrix)-1
-        columns = len(matrix[0])
-
-        for col in range(columns):
-            if matrix[0][col] == target or matrix[rows][col] == target:
-                return True
-            elif matrix[0][col] < target < matrix[rows][col]:
-                column_count.append(col)
-
-        if len(column_count) == 0:
-            return False
-
-        for ro in row_count:
-            if target in matrix[ro][column_count[0]:column_count[-1]+1]:
-                return True
-
         return False
 
 
