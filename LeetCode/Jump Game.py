@@ -26,10 +26,14 @@ Constraints:
 0 <= nums[i][j] <= 10^5
 """
 
-""" Runtime """
+""" 75 / 75 test cases passed.
+	Status: Accepted
+Runtime: 100 ms
+Memory Usage: 15.7 MB """
 
-# Time complexity : O() Space complexity : O() Dynamic Programming Solution
+# Time complexity : O() Space complexity : O(1) Greedy Solution
 # Time Limit Exceeded
+
 
 class Solution:
     def canJump(self, nums: List[int]) -> bool:
@@ -39,27 +43,22 @@ class Solution:
         if len(nums) == 1:
             return True
 
-        ln_nums = len(nums)
+        dist = i = 0
 
-        jump = [False]*ln_nums
+        while(i <= dist):
+            dist = max(dist, i+nums[i])
 
-        jump[ln_nums-1] = True
+            if(dist >= len(nums)-1):
+                return True
 
-        for i in reversed(range(ln_nums-2+1)):
-            for j in range(nums[i]+1):
-                if i+j >= ln_nums or j > nums[i]:
-                    break
+            i += 1
 
-                if jump[i+j] is True:
-                    jump[i] = True
-                    break
-
-        return jump[0]
+        return False
 
 
 myobj = Solution()
-# inpt = [2, 3, 1, 1, 4]
-inpt = [3, 2, 1, 0, 4]
+inpt = [2, 3, 1, 1, 4]
+# inpt = [3, 2, 1, 0, 4]
 # inpt = [1, 0, 1, 0]
 # inpt = [2, 0]
 print(myobj.canJump(inpt))
