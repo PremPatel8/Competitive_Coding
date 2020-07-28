@@ -32,6 +32,8 @@ Resources:
 https://leetcode.com/explore/interview/card/top-interview-questions-medium/111/dynamic-programming/808/discuss/22954/C++-DP
 https://leetcode.com/explore/interview/card/top-interview-questions-medium/111/dynamic-programming/808/discuss/23234/Accpeted-simple-Python-DP-solution.
 https://leetcode.com/explore/interview/card/top-interview-questions-medium/111/dynamic-programming/808/discuss/22975/Python-easy-to-understand-solutions-(math-dp-O(m*n)-and-O(n)-space).
+http://www.crazyforcode.com/paths-rectangular-grid/
+https://leetcode.com/explore/interview/card/top-interview-questions-medium/111/dynamic-programming/808/discuss/22958/Math-solution-O(1)-space
 """
 
 """ 62 / 62 test cases passed.
