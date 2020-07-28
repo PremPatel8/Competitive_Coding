@@ -26,32 +26,27 @@ Output: 28
 Constraints:
 1 <= m, n <= 100
 It's guaranteed that the answer will be less than or equal to 2 * 10 ^ 9.
+
+Resources:
+https://leetcode.com/explore/interview/card/top-interview-questions-medium/111/dynamic-programming/808/discuss/22954/C++-DP
+https://leetcode.com/explore/interview/card/top-interview-questions-medium/111/dynamic-programming/808/discuss/23234/Accpeted-simple-Python-DP-solution.
 """
 
 """ 62 / 62 test cases passed.
 	Status: Accepted
-Runtime: 40 ms
-Memory Usage: 14 MB """
+Runtime: 36 ms
+Memory Usage: 14.1 MB """
 
-# Time complexity : O() Space complexity : O() DP Bottom Up solution
+# Time complexity : O(m*n) Space complexity : O(n) Optimized DP solution
 
 
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
-        if m <= 0 or n<=0:
-            return 0
-        if m == 1 and n == 1:
-            return 1
-
-        dp_array = [[1 for _ in range(n)] for _ in range(m)]
-
-        print(dp_array)
-
+        dp = [1] * n
         for i in range(1, m):
             for j in range(1, n):
-                dp_array[i][j] = dp_array[i][j-1]+dp_array[i-1][j]
-
-        return dp_array[-1][-1]
+                dp[j] = dp[j - 1] + dp[j]
+        return dp[-1] if m and n else 0
 
 
 myobj = Solution()
