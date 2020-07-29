@@ -28,22 +28,41 @@ https://leetcode.com/articles/coin-change/#
 
 """ 182 / 182 test cases passed.
 	Status: Accepted
-Runtime: 1536 ms
-Memory Usage: 13.9 MB """
+Runtime: 1872 ms
+Memory Usage: 17.1 MB """
+# Alternate solution techniques are DFS, DP table, DP Top Down(memoization)
 
-# Time complexity : O(S*n) Space complexity : O(S) Dynamic programming - Bottom up solution
+# Time complexity : O(S*n) Space complexity : O(S) Dynamic programming - Top down (memoization) solution
 # S = amount, n = number of coin denomination count
 
 
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        dp = [float('inf')] * (amount + 1)
-        dp[0] = 0
+        if amount < 1:
+            return 0
 
-        for coin in coins:
-            for x in range(coin, amount + 1):
-                dp[x] = min(dp[x], dp[x - coin] + 1)
-        return dp[amount] if dp[amount] != float('inf') else -1
+        def coinChange(coins, rem, count):
+            if rem < 0:
+                return -1
+
+            if rem == 0:
+                return 0
+
+            if count[rem-1] != 0:
+                return count[rem-1]
+
+            minval = float('inf')
+
+            for coin in coins:
+                res = coinChange(coins, rem-coin, count)
+
+                if res >= 0 and res < minval:
+                    minval = 1+res
+
+            count[rem-1] = minval if minval != float('inf') else -1
+            return count[rem - 1]
+
+        return coinChange(coins, amount, [0]*amount)
 
 
 myobj = Solution()
