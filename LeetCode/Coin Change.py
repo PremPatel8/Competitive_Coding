@@ -30,44 +30,42 @@ https://leetcode.com/explore/interview/card/top-interview-questions-medium/111/d
 
 """ 182 / 182 test cases passed.
 	Status: Accepted
-Runtime: 820 ms
+Runtime: 204 ms
 Memory Usage: 13.9 MB """
-# Alternate solution techniques are BFS, DP table Bottom Up, DP Top Down(memoization)
+# Alternate solution techniques are BFS, DFS, DP table (Bottom Up), DP Top Down (memoization)
 
-# Time complexity : O(S*n) Space complexity : O(S) BFS solution
+# Time complexity : O() Space complexity : O() DFS recursive solution
 # S = amount, n = number of coin denomination count
 
 
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        """
-        Use BFS which is to find the shortest path from 0 to amount.
-        This is much faster than the dp solution.
-        """
-        if not amount:  # Don't need any coin.
-            return 0
+        coins.sort(reverse=True)
+        min_coins = float('inf')
 
-        queue = deque([(0, 0)])
-        visited = [True] + [False] * amount
-        while queue:
-            totalCoins, currVal = queue.popleft()
-            totalCoins += 1  # Take a new coin.
-            for coin in coins:
-                nextVal = currVal + coin
-                if nextVal == amount:  # Find a combination.
-                    return totalCoins
+        def count_coins(start_coin, coin_count, remaining_amount):
+            nonlocal min_coins
 
-                if nextVal < amount:  # Could add more coins.
-                    if not visited[nextVal]:  # Current value not checked.
-                        visited[nextVal] = True  # Prevent checking again.
-                        queue.append((totalCoins, nextVal))
+            if remaining_amount == 0:
+                min_coins = min(min_coins, coin_count)
+                return
 
-        return -1  # Cannot find any combination.
+            # Iterate from largest coins to smallest coins
+            for i in range(start_coin, len(coins)):
+                remaining_coin_allowance = min_coins - coin_count
+                max_amount_possible = coins[i] * remaining_coin_allowance
+
+                if coins[i] <= remaining_amount and remaining_amount < max_amount_possible:
+                    count_coins(i, coin_count + 1, remaining_amount - coins[i])
+
+        count_coins(0, 0, amount)
+
+        return min_coins if min_coins < float('inf') else -1
 
 
 myobj = Solution()
-coins = [1, 2, 5]
-amount = 11
+# coins = [1, 2, 5]
+# amount = 11
 coins = [1, 2, 3]
 amount = 6
 print(myobj.coinChange(coins, amount))
