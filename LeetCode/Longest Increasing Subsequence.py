@@ -25,11 +25,11 @@ https://leetcode.com/articles/longest-increasing-subsequence/#
 
 """ 24 / 24 test cases passed.
 	Status: Accepted
-Runtime: 1052 ms
+Runtime: 76 ms
 Memory Usage: 14 MB """
 # Solution techniques are
 
-# Time complexity : O() Space complexity : O() alternate solution
+# Time complexity : O() Space complexity : O() alternate solution using simple search and replace to generate longest increasing subsequence array
 
 
 class Solution:
