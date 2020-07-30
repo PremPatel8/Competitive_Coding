@@ -69,3 +69,55 @@ myobj = Solution()
 coins = [1, 2, 3]
 amount = 6
 print(myobj.coinChange(coins, amount))
+
+
+"""
+# Alternate DFS Recursive
+def coinChange(coins, amount):
+    m = 2**31 - 1
+
+    def coinChangeHelper(index, amount, count):
+        nonlocal m, coins
+
+        if amount == 0:
+            m = min(m, count)
+
+        for j in range(index, len(coins), 1):
+            if coins[j] <= amount < (m - count)*coins[j]:  # most important line
+                n = amount//coins[j]
+                i = n
+                while i > 0:
+                    if amount - i * coins[j] < (m - count - i)*coins[j]: # most important line
+                        coinChangeHelper(j+1, amount - i*coins[j], count + i)
+                    else:
+                        break
+                    i -= 1
+
+
+    coins.sort(reverse = True)
+    coinChangeHelper(0, amount, 0)
+    return m if m < 2**31 - 1 else -1 
+"""
+
+""" 
+   #  DFS Iterative
+    class Solution:
+       def coinChange(self, coins, amount):
+           coins.sort()
+           stack = [(0, 0, len(coins))] # steps, accumulated
+           min_steps = 2**31
+
+           while len(stack) != 0:
+               steps, accumulated, sequence = stack.pop()
+
+               if accumulated == amount:
+                   min_steps = min(min_steps, steps)
+
+               if accumulated > amount or amount - accumulated > coins[sequence-1] * (min_steps-steps):
+                   continue
+
+               for seq, coin in enumerate(coins[:sequence]):
+                   stack.append((steps+1, accumulated+coin, seq+1))
+
+           return min_steps if min_steps != 2**31 else -1
+"""
