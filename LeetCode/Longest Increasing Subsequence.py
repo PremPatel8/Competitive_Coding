@@ -29,32 +29,29 @@ Runtime: 1052 ms
 Memory Usage: 14 MB """
 # Solution techniques are
 
-# Time complexity : O(n*2) Space complexity : O(n) Dynamic Programming solution
+# Time complexity : O() Space complexity : O() alternate solution
 
 
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
-        if not nums or len(nums) == 0:
+        if not nums:
             return 0
-
         if len(nums) == 1:
             return 1
 
-        dp = [0]*len(nums)
-        dp[0] = 1
-        maxans = 1
+        sol = []
+        for idx, num in enumerate(nums):
+            if not sol:
+                sol.append(num)
+            elif num > sol[-1]:
+                sol.append(num)
+            else:
+                for j in range(len(sol)):
+                    if num <= sol[j]:
+                        sol[j] = num
+                        break
 
-        for i in range(1, len(nums)):
-            maxvalUptpoI = 0
-
-            for j in range(0, i):
-                if nums[i] > nums[j]:
-                    maxvalUptpoI = max(maxvalUptpoI, dp[j])
-
-            dp[i] = maxvalUptpoI+1
-            maxans = max(maxans, dp[i])
-
-        return maxans
+        return len(sol)
 
 
 myobj = Solution()
