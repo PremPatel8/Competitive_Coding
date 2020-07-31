@@ -25,33 +25,28 @@ https://leetcode.com/articles/longest-increasing-subsequence/#
 
 """ 24 / 24 test cases passed.
 	Status: Accepted
-Runtime: 76 ms
+Runtime: 48 ms
 Memory Usage: 14 MB """
-# Solution techniques are
+# Solution techniques are Dynamic Programming, Patience Sort using Binary Search
 
-# Time complexity : O() Space complexity : O() alternate solution using simple search and replace to generate longest increasing subsequence array
+# Time complexity : O(n log n) Space complexity : O(n) alternate solution using Patience Sort which uses Binary Search
 
 
 class Solution:
-    def lengthOfLIS(self, nums: List[int]) -> int:
-        if not nums:
-            return 0
-        if len(nums) == 1:
-            return 1
-
-        sol = []
-        for idx, num in enumerate(nums):
-            if not sol:
-                sol.append(num)
-            elif num > sol[-1]:
-                sol.append(num)
-            else:
-                for j in range(len(sol)):
-                    if num <= sol[j]:
-                        sol[j] = num
-                        break
-
-        return len(sol)
+    def lengthOfLIS(self, nums):
+        tails = [0] * len(nums)
+        size = 0
+        for x in nums:
+            i, j = 0, size
+            while i != j:
+                m = (i + j) // 2
+                if tails[m] < x:
+                    i = m + 1
+                else:
+                    j = m
+            tails[i] = x
+            size = max(i + 1, size)
+        return size
 
 
 myobj = Solution()
