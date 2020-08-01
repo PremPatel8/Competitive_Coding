@@ -33,8 +33,8 @@ Resources:
 
 """ 48 / 48 test cases passed.
 	Status: Accepted
-Runtime: 124 ms
-Memory Usage: 18.7 MB """
+Runtime: 108 ms
+Memory Usage: 18.4 MB """
 # Solution techniques are
 
 # Time complexity : O() Space complexity : O()
@@ -55,16 +55,17 @@ class Codec:
         :type root: TreeNode
         :rtype: str
         """
-        def doit(node):
+        if not root:
+            return ""
+        sent = []
+        queue = collections.deque([root])
+        while queue:
+            node = queue.popleft()
+            sent.append(str(node.val) if node else '#')
             if node:
-                vals.append(str(node.val))
-                doit(node.left)
-                doit(node.right)
-            else:
-                vals.append('#')
-        vals = []
-        doit(root)
-        return ' '.join(vals)
+                queue.append(node.left)
+                queue.append(node.right)
+        return ','.join(sent)
 
     def deserialize(self, data):
         """Decodes your encoded data to tree.
@@ -72,16 +73,23 @@ class Codec:
         :type data: str
         :rtype: TreeNode
         """
-        def doit():
-            val = next(vals)
-            if val == '#':
-                return None
-            node = TreeNode(int(val))
-            node.left = doit()
-            node.right = doit()
-            return node
-        vals = iter(data.split())
-        return doit()
+        if not data:
+            return None
+        received = data.split(',')
+        root = TreeNode(received[0])
+        queue = collections.deque([root])
+        i = 1
+        while queue:
+            node = queue.popleft()
+            if received[i] != '#':
+                node.left = TreeNode(received[i])
+                queue.append(node.left)
+            i += 1
+            if received[i] != '#':
+                node.right = TreeNode(received[i])
+                queue.append(node.right)
+            i += 1
+        return root
 
 
 # Your Codec object will be instantiated and called as such:
