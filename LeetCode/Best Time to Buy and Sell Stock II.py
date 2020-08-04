@@ -21,7 +21,9 @@ Constraints:
 0 <= prices[i] <= 10 ^ 4
 
 Resources:
-
+https://leetcode.com/explore/interview/card/top-interview-questions-easy/92/array/564/discuss/39404/Shortest-and-fastest-solution-with-explanation.-You-can-never-beat-this.
+https://leetcode.com/explore/interview/card/top-interview-questions-easy/92/array/564/discuss/208241/Explanation-for-the-dummy-like-me.
+https://leetcode.com/explore/interview/card/top-interview-questions-easy/92/array/564/discuss/39531/Java-O(n)-solution-if-we're-not-greedy
 """
 
 """ 200 / 200 test cases passed.
@@ -52,3 +54,38 @@ myobj = Solution()
 inpt = [1, 4, 2]
 
 print(myobj.maxProfit(inpt))
+
+
+
+""" 
+Alt solution
+class Solution {
+    public int maxProfit(int[] prices) {
+        int i = 0;
+        int valley = prices[0];
+        int peak = prices[0];
+        int maxprofit = 0;
+        while (i < prices.length - 1) {
+            while (i < prices.length - 1 && prices[i] >= prices[i + 1])
+                i++;
+            valley = prices[i];
+            while (i < prices.length - 1 && prices[i] <= prices[i + 1])
+                i++;
+            peak = prices[i];
+            maxprofit += peak - valley;
+        }
+        return maxprofit;
+    }
+}
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        int maxprofit = 0;
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] > prices[i - 1])
+                maxprofit += prices[i] - prices[i - 1];
+        }
+        return maxprofit;
+    }
+}
+"""
