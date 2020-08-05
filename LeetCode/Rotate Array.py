@@ -30,28 +30,41 @@ Resources:
 
 """
 
-""" 35 / 35 test cases passed.
-	Status: Accepted
-Runtime: 64 ms
-Memory Usage: 15.3 MB """
+""" runtime """
 
-# Solution techniques are Using Extra Array and Using Cyclic Replacements
+# Solution techniques are Using Extra Array and Using Cyclic Replacements and using list reverse
 
-# Time complexity : O(n) Space complexity : O(n) Using Extra Array
+# Time complexity : O(n) Space complexity : O(n) Using Cyclic Replacements
 
 
 class Solution:
     def rotate(self, nums: List[int], k: int) -> None:
         n = len(nums)
-        a = [0] * n
-        for i in range(n):
-            a[(i + k) % n] = nums[i]
+        k %= n
 
-        nums[:] = a
-        return nums
+        start = count = 0
+        
+        while count < n:
+            current = start
+            prev = nums[start]
+
+            while True:
+                next_idx = (current + k) % n
+
+                nums[next_idx], prev = prev, nums[next_idx]
+
+                current = next_idx
+
+                count += 1
+
+                if start == current:
+                    break
+
+            start += 1
 
 
 myobj = Solution()
 nums = [1, 2, 3, 4, 5, 6, 7]
 k = 3
-print(myobj.rotate(nums, k))
+myobj.rotate(nums, k)
+print(nums)
