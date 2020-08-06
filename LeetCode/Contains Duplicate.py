@@ -22,20 +22,34 @@ Resources:
 """ 
 18 / 18 test cases passed.
 	Status: Accepted
-Runtime: 128 ms
-Memory Usage: 19.2 MB
+Runtime: 156 ms
+Memory Usage: 20.1 MB
  """
 
 # Solution techniques are
 
-# Time complexity : O() Space complexity : O() Naive solution using Set
+# Time complexity : O() Space complexity : O() solution using dict
 
 
 class Solution:
     def containsDuplicate(self, nums: List[int]) -> bool:
-        return not (len(nums) == len(set(nums)))
+        if not nums or len(nums) == 0:
+            return False
+        if len(nums) == 1:
+            return False
+
+        freq_count = dict()
+
+        for no in nums:
+            if no in freq_count:
+                return True
+            else:
+                freq_count[no] = 1
+
+        return False
 
 
 myobj = Solution()
-inpt = [1, 2, 3, 1]
+# inpt = [1, 2, 3, 1]
+inpt = [1, 2, 3, 4]
 print(myobj.containsDuplicate(inpt))
