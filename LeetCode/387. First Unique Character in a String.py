@@ -22,7 +22,10 @@ Resources:
 
 """
 
-""" runtime """
+""" 
+runtime: 200 ms
+Memory: 13.6 MB
+ """
 
 # Solution techniques are
 
