@@ -30,15 +30,22 @@ Resources:
 
 """ 61 / 61 test cases passed.
 	Status: Accepted
-Runtime: 84 ms
-Memory Usage: 14.1 MB """
+Runtime: 80 ms
+Memory Usage: 14 MB """
 
 # Solution techniques are
 
-# Time complexity : O() Space complexity : O() solution using
+# Time complexity : O(n*2) Space complexity : O() My solution using iteration and lists
 
 
 class Solution:
+    def find_element_in_list(self, element, list_element):
+        try:
+            index_element = list_element.index(element)
+            return index_element
+        except ValueError:
+            return None
+
     def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
         len1 = len(nums1)
         len2 = len(nums2)
@@ -48,9 +55,9 @@ class Solution:
             nums1, nums2) if len1 < len2 else (nums2, nums1)
 
         for no in smallerlist:
-            if no in largerlist:
-                res.append(no)
-                largerlist.remove(no)
+            eleIndex = self.find_element_in_list(no, largerlist)
+            if eleIndex is not None:
+                res.append(largerlist.pop(eleIndex))
 
         return res
 
