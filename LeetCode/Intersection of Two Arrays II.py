@@ -1,4 +1,5 @@
 from typing import List
+from collections import Counter
 """
 Problem Name: Intersection of Two Arrays II
 
@@ -30,36 +31,22 @@ Resources:
 
 """ 61 / 61 test cases passed.
 	Status: Accepted
-Runtime: 80 ms
-Memory Usage: 14 MB """
+Runtime: 44 ms
+Memory Usage: 14.1 MB """
 
 # Solution techniques are
 
-# Time complexity : O(n*2) Space complexity : O() My solution using iteration and lists
+# Time complexity : O(n*2) Space complexity : O() My optimized solution using counter and intersection
 
 
 class Solution:
-    def find_element_in_list(self, element, list_element):
-        try:
-            index_element = list_element.index(element)
-            return index_element
-        except ValueError:
-            return None
-
     def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
-        len1 = len(nums1)
-        len2 = len(nums2)
-        res = []
+        count1 = Counter(nums1)
+        count2 = Counter(nums2)
 
-        smallerlist, largerlist = (
-            nums1, nums2) if len1 < len2 else (nums2, nums1)
+        intersection = count1 & count2
 
-        for no in smallerlist:
-            eleIndex = self.find_element_in_list(no, largerlist)
-            if eleIndex is not None:
-                res.append(largerlist.pop(eleIndex))
-
-        return res
+        return list(intersection.elements())
 
 
 myobj = Solution()
