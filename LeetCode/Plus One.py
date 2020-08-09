@@ -23,19 +23,18 @@ Resources:
 """
 """ 109 / 109 test cases passed.
 	Status: Accepted
-Runtime: 68 ms
-Memory Usage: 13.7 MB """
+Runtime: 52 ms
+Memory Usage: 13.8 MB """
 
 # Solution techniques are
-# Time complexity : O() Space complexity : O() My basic solution
+# Time complexity : O() Space complexity : O() My slightly improved solution
 
 
 class Solution:
     def plusOne(self, digits: List[int]) -> List[int]:
         num = 0
 
-        for i, digit in enumerate(reversed(digits)):
-            num += digit*10**i
+        num = int(''.join(map(str, digits)))
 
         num += 1
         num = str(num)
