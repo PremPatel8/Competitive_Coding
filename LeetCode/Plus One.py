@@ -27,19 +27,17 @@ Runtime: 52 ms
 Memory Usage: 13.8 MB """
 
 # Solution techniques are
-# Time complexity : O() Space complexity : O() My slightly improved solution
+# Time complexity : O() Space complexity : O() optimized solution
 
 
 class Solution:
     def plusOne(self, digits: List[int]) -> List[int]:
         num = 0
 
-        num = int(''.join(map(str, digits)))
+        for i in range(len(digits)):
+            num += digits[i] * pow(10, (len(digits)-1-i))
 
-        num += 1
-        num = str(num)
-
-        return list(map(int, num))
+        return [int(i) for i in str(num+1)]
 
 
 myobj = Solution()
