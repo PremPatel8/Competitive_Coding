@@ -23,24 +23,29 @@ Resources:
 """
 """ 109 / 109 test cases passed.
 	Status: Accepted
-Runtime: 52 ms
+Runtime: 28 ms
 Memory Usage: 13.8 MB """
 
 # Solution techniques are
-# Time complexity : O() Space complexity : O() optimized solution
+# Time complexity : O(n) Space complexity : O(1) further optimized solution
 
 
 class Solution:
     def plusOne(self, digits: List[int]) -> List[int]:
-        num = 0
+        n = len(digits)
 
-        for i in range(len(digits)):
-            num += digits[i] * pow(10, (len(digits)-1-i))
+        for idx in range(n-1, -1, -1):
+            if digits[idx] == 9:
+                digits[idx] = 0
+            else:
+                digits[idx] += 1
+                return digits
 
-        return [int(i) for i in str(num+1)]
+        return [1] + digits
 
 
 myobj = Solution()
 # inpt = [1, 2, 3]
-inpt = [4, 3, 2, 1]
+# inpt = [4, 3, 2, 1]
+inpt = [9,9,9,9,9]
 print(myobj.plusOne(inpt))
