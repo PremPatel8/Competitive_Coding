@@ -41,23 +41,39 @@ Runtime: 92 ms
 Memory Usage: 13.9 MB """
 
 # Solution techniques are
-# Time complexity : O() Space complexity : O() optimized solution using set and matrix iteration
+# Time complexity : O() Space complexity : O() un optimized straightforward solution
 
 
 class Solution:
-    def isValidSudoku(self, board: List[List[str]]) -> bool:
-        seen = set()
+    def isValidSudoku(self, board):
+        return (self.is_row_valid(board) and
+                self.is_col_valid(board) and
+                self.is_square_valid(board))
 
-        for i, row in enumerate(board):
-            for j, cval in enumerate(row):
-                if cval != ".":
-                    if (cval, i) in seen or (j, cval) in seen or (i//3, j//3, cval) in seen:
-                        return False
-                    else:
-                        seen.add((cval, i))
-                        seen.add((j, cval))
-                        seen.add((i//3, j//3, cval))
+    def is_row_valid(self, board):
+        for row in board:
+            if not self.is_unit_valid(row):
+                return False
         return True
+
+    def is_col_valid(self, board):
+        for col in zip(*board):
+            if not self.is_unit_valid(col):
+                return False
+        return True
+
+    def is_square_valid(self, board):
+        for i in (0, 3, 6):
+            for j in (0, 3, 6):
+                square = [board[x][y]
+                          for x in range(i, i + 3) for y in range(j, j + 3)]
+                if not self.is_unit_valid(square):
+                    return False
+        return True
+
+    def is_unit_valid(self, unit):
+        unit = [i for i in unit if i != '.']
+        return len(set(unit)) == len(unit)
 
 
 myobj = Solution()
