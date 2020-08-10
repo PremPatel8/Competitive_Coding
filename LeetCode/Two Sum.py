@@ -21,10 +21,10 @@ Resources:
 """ 29 / 29 test cases passed.
 	Status: Accepted
 Runtime: 44 ms
-Memory Usage: 15.6 MB """
+Memory Usage: 15.3 MB """
 
 # Solution techniques are
-# Time complexity : O(n) Space complexity : O(n) My solution Two-pass Hash Table / Dict / Counter
+# Time complexity : O(n) Space complexity : O(n) Optimized One-pass Hash Table / Dict
 
 
 class Solution:
@@ -39,24 +39,16 @@ class Solution:
                 res = [0, 1]
             return res
 
-        numFreq = Counter(nums)
+        numIndex = dict()
 
-        for no in numFreq:
-            second = target-no
+        for i, no in enumerate(nums):
+            complement = target-no
 
-            if second == no:
-                if numFreq[no] > 1:
-                    res.append(nums.index(no))
-                    nums[res[0]] = -1
-                    res.append(nums.index(no))
-                    break
-                else:
-                    continue
-            else:
-                if second in numFreq:
-                    res.append(nums.index(no))
-                    res.append(nums.index(second))
-                    break
+            if complement in numIndex:
+                res = [numIndex[complement], i]
+                break
+
+            numIndex[no] = i
 
         return res
 
