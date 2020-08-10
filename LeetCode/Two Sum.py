@@ -1,20 +1,19 @@
 from typing import List
 from collections import Counter
 """
-Problem Name: Move Zeroes
+Problem Name: Two Sum
 
 Problem Section: Array
 
 Problem Statement:
-Given an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
 
 Example:
-Input: [0,1,0,3,12]
-Output: [1,3,12,0,0]
+Given nums = [2, 7, 11, 15], target = 9,
 
-Note:
-You must do this in-place without making a copy of the array.
-Minimize the total number of operations.
+Because nums[0] + nums[1] = 2 + 7 = 9,
+return [0, 1].
 
 Resources:
 """
@@ -57,6 +56,3 @@ myobj = Solution()
 nums = [2, 7, 11, 15]
 target = 9
 print(myobj.twoSum(nums, target))
-
-
-# %%
