@@ -20,20 +20,30 @@ Output: ["h","a","n","n","a","H"]
 
 Resources:
 """
-""" 478 / 478 test cases passed.
+""" 1032 / 1032 test cases passed.
 	Status: Accepted
-Runtime: 204 ms
-Memory Usage: 18.3 MB """
+Runtime: 28 ms
+Memory Usage: 14 MB """
 
 # Solution techniques are
-# Time complexity : O() Space complexity : O() My simple solution
+# Time complexity : O() Space complexity : O() My simple solution using string reverse
 
 
 class Solution:
-    def reverseString(self, s: List[str]) -> None:
-        s.reverse()
+    def reverse(self, x: int) -> int:
+        if x < 0:
+            s = str(x)[1:]
+            s = s[::-1]
+            s = "-"+s
+        else:
+            s = str(x)
+            s = s[::-1]
+
+        res = int(str(s))
+
+        return res if res > -2**31 and res < 2**31-1 else 0
 
 
 myobj = Solution()
-inpt = ["h", "e", "l", "l", "o"]
-print(myobj.reverseString(inpt))
+inpt = 123
+print(myobj.reverse(inpt))
