@@ -22,22 +22,32 @@ Resources:
 """
 """ 1032 / 1032 test cases passed.
 	Status: Accepted
-Runtime: 32 ms
-Memory Usage: 14 MB """
+Runtime: 28 ms
+Memory Usage: 13.8 MB """
 
 # Solution techniques are
-# Time complexity : O() Space complexity : O() string reverse solution cleaner code
+# Time complexity : O() Space complexity : O() optimized mathematical div & mod solution
 
 
 class Solution:
     def reverse(self, x: int) -> int:
+        res = 0
         sign = -1 if x < 0 else 1
+        x = abs(x)
 
-        res = sign * int(str(abs(x))[::-1])
+        while x != 0:
+            pop = x % 10
+            newRes = res*10 + pop
 
-        return res if res > -2**31 and res < 2**31-1 else 0
+            if newRes > (2**31-1) or newRes < (-2**31):
+                return 0
+
+            res = newRes
+            x = x // 10
+
+        return sign*res
 
 
 myobj = Solution()
-inpt = 123
+inpt = 1534236469
 print(myobj.reverse(inpt))
