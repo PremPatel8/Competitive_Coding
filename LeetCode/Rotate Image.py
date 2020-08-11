@@ -32,8 +32,8 @@ Resources:
 """
 """ 21 / 21 test cases passed.
 	Status: Accepted
-Runtime: 36 ms
-Memory Usage: 14 MB """
+Runtime: 32 ms
+Memory Usage: 13.6 MB """
 
 # Solution techniques are
 # Time complexity : O() Space complexity : O()
@@ -42,8 +42,16 @@ Memory Usage: 14 MB """
 class Solution:
     def rotate(self, matrix: List[List[int]]) -> None:
         matrix.reverse()
-        matrix[:] = map(list, zip(*matrix))
         # print(matrix)
+        # matrix[:] = map(list, zip(*matrix))
+
+        size = len(matrix)
+
+        for i in range(size):
+            for j in range(i+1, size):
+                matrix[j][i], matrix[i][j] = matrix[i][j], matrix[j][i]
+
+        print(matrix)
 
 
 myobj = Solution()
