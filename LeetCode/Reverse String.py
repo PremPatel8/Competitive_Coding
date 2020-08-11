@@ -22,24 +22,18 @@ Resources:
 """
 """ 1032 / 1032 test cases passed.
 	Status: Accepted
-Runtime: 28 ms
+Runtime: 32 ms
 Memory Usage: 14 MB """
 
 # Solution techniques are
-# Time complexity : O() Space complexity : O() My simple solution using string reverse
+# Time complexity : O() Space complexity : O() string reverse solution cleaner code
 
 
 class Solution:
     def reverse(self, x: int) -> int:
-        if x < 0:
-            s = str(x)[1:]
-            s = s[::-1]
-            s = "-"+s
-        else:
-            s = str(x)
-            s = s[::-1]
+        sign = -1 if x < 0 else 1
 
-        res = int(str(s))
+        res = sign * int(str(abs(x))[::-1])
 
         return res if res > -2**31 and res < 2**31-1 else 0
 
