@@ -29,7 +29,7 @@ Memory Usage: 16.2 MB """
 
 # Solution techniques are
 
-# Time complexity : O() Space complexity : O() solution using
+# Time complexity : O(n) Space complexity : O(1) solution using set
 
 
 class Solution:
