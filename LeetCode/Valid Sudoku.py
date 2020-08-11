@@ -38,10 +38,10 @@ Resources:
 """ 504 / 504 test cases passed.
 	Status: Accepted
 Runtime: 92 ms
-Memory Usage: 13.9 MB """
+Memory Usage: 14 MB """
 
 # Solution techniques are
-# Time complexity : O() Space complexity : O() un optimized straightforward solution
+# Time complexity : O() Space complexity : O() straightforward solution
 
 
 class Solution:
