@@ -22,8 +22,8 @@ Resources:
 """
 """ 478 / 478 test cases passed.
 	Status: Accepted
-Runtime: 216 ms
-Memory Usage: 18.2 MB """
+Runtime: 204 ms
+Memory Usage: 18.3 MB """
 
 # Solution techniques are
 # Time complexity : O() Space complexity : O() My simple solution
@@ -31,10 +31,7 @@ Memory Usage: 18.2 MB """
 
 class Solution:
     def reverseString(self, s: List[str]) -> None:
-        arrlen = len(s)
-
-        for i in range(arrlen//2):
-            s[i], s[arrlen-i-1] = s[arrlen-i-1], s[i]
+        s.reverse()
 
 
 myobj = Solution()
