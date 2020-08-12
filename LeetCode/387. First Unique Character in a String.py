@@ -24,8 +24,10 @@ https://docs.python.org/3.3/library/collections.html#ordereddict-examples-and-re
 """
 
 """ 
-runtime: 200 ms
-Memory: 13.6 MB
+104 / 104 test cases passed.
+	Status: Accepted
+Runtime: 92 ms
+Memory Usage: 13.9 MB
  """
 
 """ Solution techniques are iterate through the string once to get the count of all chars and
@@ -54,20 +56,24 @@ class Solution:
             return 0
 
         ordered_dict = OrderedDict()
+        seen = set()
 
         for idx, ch in enumerate(s):
-            if ch in ordered_dict:
-                ordered_dict[ch][1] += 1
+            if ch in seen:
+                if ch in ordered_dict:
+                    del ordered_dict[ch]
             else:
-                ordered_dict[ch] = [idx, 1]
+                ordered_dict[ch] = idx
+                seen.add(ch)
 
-        for pstn, cnt in ordered_dict.values():
-            if cnt == 1:
-                return pstn
+        if len(ordered_dict):
+            res = ordered_dict.popitem(last=False)
+            return res[1]
 
         return -1
 
 
 myobj = Solution()
-inpt = "loveleetcode"
+# inpt = "loveleetcode"
+inpt = "aadadaad"
 print(myobj.firstUniqChar(inpt))
