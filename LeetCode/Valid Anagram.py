@@ -23,11 +23,11 @@ Resources:
 """
 """ 34 / 34 test cases passed.
 	Status: Accepted
-Runtime: 32 ms
-Memory Usage: 14.2 MB """
+Runtime: 40 ms
+Memory Usage: 14.8 MB """
 
 # Solution techniques are
-# Time complexity : O() Space complexity : O() My solution using Python Counter and subtraction
+# Time complexity : O() Space complexity : O() solution using string sorting
 
 
 class Solution:
@@ -42,8 +42,30 @@ class Solution:
 
 
 myobj = Solution()
-# s = "anagram"
-# t = "nagaram"
-s = "a"
-t = "ab"
+s = "anagram"
+t = "nagaram"
+# s = "a"
+# t = "ab"
 print(myobj.isAnagram(s, t))
+
+
+""" 
+Time complexity : O(n)
+Space complexity : O(1)
+public boolean isAnagram(String s, String t) {
+    if (s.length() != t.length()) {
+        return false;
+    }
+    int[] counter = new int[26];
+    for (int i = 0; i < s.length(); i++) {
+        counter[s.charAt(i) - 'a']++;
+        counter[t.charAt(i) - 'a']--;
+    }
+    for (int count : counter) {
+        if (count != 0) {
+            return false;
+        }
+    }
+    return true;
+}
+ """
