@@ -24,21 +24,17 @@ Resources:
 """
 """ 481 / 481 test cases passed.
 	Status: Accepted
-Runtime: 36 ms
-Memory Usage: 15.1 MB """
+Runtime: 28 ms
+Memory Usage: 14.3 MB """
 
 # Solution techniques are
-# Time complexity : O() Space complexity : O() My solution using string translation to remove punctuations and convert to lowercase and iterating from both sides to compare values
+# Time complexity : O() Space complexity : O() My optimized solution using string translation to remove punctuations and convert to lowercase and iterating from both sides to compare values
 
 
 class Solution:
     def isPalindrome(self, s: str) -> bool:
         s_lowercase = s.lower()
-        s_lowercase = s_lowercase.translate(str.maketrans('', '', string.punctuation))
-        # print(s_lowercase)
-
-        combined_str = "".join(s_lowercase.split())
-        # print(combined_str)
+        combined_str = s_lowercase.translate(str.maketrans('', '', string.punctuation+string.whitespace))
 
         len_combined = len(combined_str)
 
@@ -50,6 +46,6 @@ class Solution:
 
 
 myobj = Solution()
-# inpt = "A man, a plan, a canal: Panama"
-inpt = "race a car"
+inpt = "A man, a plan, a canal: Panama"
+# inpt = "race a car"
 print(myobj.isPalindrome(inpt))
