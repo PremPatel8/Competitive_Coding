@@ -26,8 +26,8 @@ https://docs.python.org/3.3/library/collections.html#ordereddict-examples-and-re
 """ 
 104 / 104 test cases passed.
 	Status: Accepted
-Runtime: 92 ms
-Memory Usage: 13.9 MB
+Runtime: 96 ms
+Memory Usage: 14 MB
  """
 
 """ Solution techniques are iterate through the string once to get the count of all chars and
@@ -35,7 +35,7 @@ then iterate through the string again and return the position of the first char 
 Or my solution use some kind of ordered dict data structure to keep the count of all chars and their 1st encountered positions
 and then iterate through this data structure and return the position of the first char whose count is 1 """
 
-# Time complexity : O(n) Space complexity : O(n) Using OrderedDict & Counter
+# Time complexity : O(n) Space complexity : O(n) Using set and dict
 
 
 class OrderedCounter(Counter, OrderedDict):
@@ -55,25 +55,27 @@ class Solution:
         if len(s) == 1:
             return 0
 
-        ordered_dict = OrderedDict()
+        char_index_dict = dict()
         seen = set()
 
         for idx, ch in enumerate(s):
             if ch in seen:
-                if ch in ordered_dict:
-                    del ordered_dict[ch]
+                if ch in char_index_dict:
+                    del char_index_dict[ch]
             else:
-                ordered_dict[ch] = idx
+                char_index_dict[ch] = idx
                 seen.add(ch)
 
-        if len(ordered_dict):
-            res = ordered_dict.popitem(last=False)
-            return res[1]
+        print(char_index_dict)
+
+        if len(char_index_dict):
+            res = list(char_index_dict.values())[0]
+            return res
 
         return -1
 
 
 myobj = Solution()
-# inpt = "loveleetcode"
-inpt = "aadadaad"
+inpt = "loveleetcode"
+# inpt = "aadadaad"
 print(myobj.firstUniqChar(inpt))
