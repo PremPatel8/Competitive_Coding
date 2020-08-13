@@ -1,0 +1,3 @@
+raja
+https://www.geeksforgeeks.org/check-if-a-queen-can-attack-a-given-cell-on-chessboard/#:~:text=Approach%3A,are%20in%20the%20same%20column.
+https://leetcode.com/problems/decode-ways/

@@ -66,10 +66,9 @@ class Solution:
                 char_index_dict[ch] = idx
                 seen.add(ch)
 
-        print(char_index_dict)
-
         if len(char_index_dict):
-            res = list(char_index_dict.values())[0]
+            # res = list(char_index_dict.values())[0]
+            res = min(char_index_dict.values())
             return res
 
         return -1

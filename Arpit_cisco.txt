@@ -1,0 +1,8 @@
+Arpit
+https://www.geeksforgeeks.org/maximum-sum-such-that-no-two-elements-are-adjacent/
+https://medium.com/@arunistime/maximum-sum-of-non-adjacent-numbers-algorithm-explained-159f08b5790a
+https://www.hackerrank.com/challenges/max-array-sum/editorial
+https://www.geeksforgeeks.org/python-program-for-largest-sum-contiguous-subarray/
+https://leetcode.com/problems/maximum-subarray/discuss/775259/Kadane's-algorithm-wvideo-whiteboard-explanation
+https://www.tutorialspoint.com/validate-ip-address-in-python
+https://www.tutorialspoint.com/validate-ip-address-in-python
