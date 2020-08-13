@@ -1,5 +1,5 @@
 from typing import List
-from collections import Counter, OrderedDict
+import string
 
 """
 Problem Name: 387. First Unique Character in a String
@@ -38,20 +38,20 @@ and then iterate through this data structure and return the position of the firs
 # Time complexity : O(n) Space complexity : O(n) Using Python count and index
 
 
-class OrderedCounter(Counter, OrderedDict):
-    'Counter that remembers the order elements are first encountered'
+# class OrderedCounter(Counter, OrderedDict):
+#     'Counter that remembers the order elements are first encountered'
 
-    def __repr__(self):
-        return '%s(%r)' % (self.__class__.__name__, OrderedDict(self))
+#     def __repr__(self):
+#         return '%s(%r)' % (self.__class__.__name__, OrderedDict(self))
 
-    def __reduce__(self):
-        return self.__class__, (OrderedDict(self),)
+#     def __reduce__(self):
+#         return self.__class__, (OrderedDict(self),)
 
 
 class Solution:
     def firstUniqChar(self, s: str) -> int:
-        letters=string.ascii_lowercase
-        index=[s.index(l) for l in letters if s.count(l) == 1]
+        letters = string.ascii_lowercase
+        index = [s.index(l) for l in letters if s.count(l) == 1]
         return min(index) if len(index) > 0 else -1
 
 
