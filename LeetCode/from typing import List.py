@@ -1,5 +1,6 @@
 from typing import List
 from collections import Counter
+import itertools
 """
 Problem Name: Count and Say
 
@@ -33,43 +34,20 @@ Resources:
 """
 """ 18 / 18 test cases passed.
 	Status: Accepted
-Runtime: 32 ms
-Memory Usage: 14 MB """
+Runtime: 24 ms
+Memory Usage: 14.2 MB """
 
 # Solution techniques are
 # Time complexity : O() Space complexity : O() My solution using DP and string iteration to get digit freq counts
 
 
 class Solution:
-    def countAndSay(self, n: int) -> str:
-        dp = [""]*n
-        dp[0] = "1"
-
-        def encode(val):
-            newVal = ""
-            numFreq = []
-            i = 0
-
-            while i < len(val):
-                currVal = val[i]
-                count = 0
-                while i < len(val) and val[i] == currVal:
-                    count += 1
-                    i += 1
-
-                numFreq.append((count, currVal))
-
-            for count, num in numFreq:
-                # print(key)
-                newVal += str(count)
-                newVal += num
-
-            return newVal
-
-        for i in range(1, n):
-            dp[i] = encode(dp[i-1])
-
-        return dp[n-1]
+    def countAndSay(self, n):
+        s = '1'
+        for _ in range(n - 1):
+            s = ''.join(str(len(list(group))) + digit
+                        for digit, group in itertools.groupby(s))
+        return s
 
 
 myobj = Solution()
