@@ -25,7 +25,7 @@ Memory Usage: 15.2 MB
 """
 
 # Solution techniques are
-# Time complexity : O() Space complexity : O() My solution using iteration and temp and prev pointer
+# Time complexity : O(n) Space complexity : O(1) My solution using iteration and temp and prev pointer
 
 
 # Definition for singly-linked list.
