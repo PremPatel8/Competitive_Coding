@@ -37,17 +37,22 @@ Memory Usage: 13.9 MB """
 
 class Solution:
     def strStr(self, haystack: str, needle: str) -> int:
-        if not needle or len(needle) == 0:
-            return 0
-
         if len(haystack) < len(needle):  # early termination
             return -1
+        if not needle:
+            return 0
 
-        for i in range(len(haystack) - len(needle)+1):
-            if haystack[i:i+len(needle)] == needle:
-                return i
-
-        return -1
+        i = j = 0
+        
+        while j < len(needle) and i < len(haystack):
+            if haystack[i] != needle[j]:
+                i = i - j + 1
+                j = 0
+                continue
+            i += 1
+            j += 1
+        
+        return i - j if j == len(needle) else -1
 
 
 myobj = Solution()
