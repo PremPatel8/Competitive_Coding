@@ -34,32 +34,33 @@ Resources:
 """
 """ 18 / 18 test cases passed.
 	Status: Accepted
-Runtime: 24 ms
-Memory Usage: 14.2 MB """
+Runtime: 32 ms
+Memory Usage: 14 MB """
 
 # Solution techniques are
-# Time complexity : O() Space complexity : O() itertools approach simplified
+# Time complexity : O() Space complexity : O()
 
 
 class Solution:
     def countAndSay(self, n: 'int') -> 'str':
-        def directed_count_value(s):
-            temp, count = '', 1
-            for i in range(len(s) - 1):
-                if s[i] == s[i + 1]:
+        s = '1'
+        for i in range(n-1):
+            count = 1
+            temp = []
+
+            for index in range(1, len(s)):
+                if s[index] == s[index-1]:
                     count += 1
                 else:
-                    temp += str(count) + s[i]
+                    temp.append(str(count))
+                    temp.append(s[index-1])
                     count = 1
 
-            temp += str(count) + s[-1]
-            return temp
+            temp.append(str(count))
+            temp.append(s[-1])
 
-        result = '1'
-        for _ in range(n - 1):
-            result = directed_count_value(result)
-
-        return result
+            s = ''.join(temp)
+        return s
 
 
 myobj = Solution()
