@@ -24,10 +24,10 @@ Resources:
 """ 208 / 208 test cases passed.
 	Status: Accepted
 Runtime: 28 ms
-Memory Usage: 13.8 MB """
+Memory Usage: 13.9 MB """
 
 # Solution techniques are
-# Time complexity : O(1) Space complexity : O(1)
+# Time complexity : O() Space complexity : O() two pointer technique
 
 
 # Definition for singly-linked list.
@@ -38,32 +38,21 @@ Memory Usage: 13.8 MB """
 
 class Solution:
     def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
-        counter = 0
-        curr = head
+        fast = slow = head
 
-        node_addrs = []
+        for _ in range(n):
+            fast = fast.next
 
-        while curr != None:
-            node_addrs.append(curr)
-            curr = curr.next
+        if not fast:
+            return head.next
 
-        # print(f"node_addrs = {node_addrs}")
+        while fast.next:
+            fast = fast.next
+            slow = slow.next
 
-        node_before_index = len(node_addrs)-1-n
+        slow.next = slow.next.next
 
-        # print(f"node_before_index = {node_before_index}")
-
-        if node_before_index < 0:
-            head = head.next
-            return head
-        else:
-            node_before = node_addrs[node_before_index]
-
-            # print(f"node_before = {node_before}")
-
-            node_before.next = node_before.next.next
-
-            return head
+        return head
 
 
 myobj = Solution()
