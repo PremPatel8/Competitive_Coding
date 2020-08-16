@@ -20,12 +20,12 @@ Resources:
 """
 """ 27 / 27 test cases passed.
 	Status: Accepted
-Runtime: 26 ms
-Memory Usage: 15.2 MB
+Runtime: 36 ms
+Memory Usage: 19.9 MB
 """
 
 # Solution techniques are
-# Time complexity : O(n) Space complexity : O(1) My solution using iteration and temp and prev pointer
+# Time complexity : O(n) Space complexity : O(n)(The extra space comes from implicit stack space due to recursion. The recursion could go up to nnn levels deep.) Recursive solution
 
 
 # Definition for singly-linked list.
@@ -35,16 +35,17 @@ Memory Usage: 15.2 MB
 #         self.next = next
 class Solution:
     def reverseList(self, head: ListNode) -> ListNode:
-        curr = head
-        prev = None
+        def reverse(node, prev=None):
+            if not node:
+                return prev
 
-        while curr:
-            temp = curr.next
-            curr.next = prev
-            prev = curr
-            curr = temp
+            n = node.next
 
-        return prev
+            node.next = prev
+
+            return reverse(n, node)
+
+        return reverse(head)
 
 
 myobj = Solution()
