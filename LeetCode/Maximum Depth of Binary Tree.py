@@ -69,3 +69,27 @@ class Solution:
 myobj = Solution()
 
 print(myobj.maxDepth(node))
+
+
+
+""" 
+39 / 39 test cases passed.
+	Status: Accepted
+Runtime: 40 ms
+Memory Usage: 14.9 MB
+
+def maxDepth(self, root):
+    depth = 0
+    level = [root] if root else []
+    while level:
+        depth += 1
+        queue = []
+        for el in level:
+            if el.left:
+                queue.append(el.left)
+            if el.right:
+                queue.append(el.right)
+        level = queue
+        
+    return depth
+ """
