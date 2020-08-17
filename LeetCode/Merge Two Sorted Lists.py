@@ -18,10 +18,10 @@ Resources:
 """ 208 / 208 test cases passed.
 	Status: Accepted
 Runtime: 32 ms
-Memory Usage: 14 MB """
+Memory Usage: 13.8 MB """
 
 # Solution techniques are
-# Time complexity : O() Space complexity : O() My solution using iteration and temp variable
+# Time complexity : O(n) Space complexity : O(1) Optimized iterative solution
 
 
 # Definition for singly-linked list.
@@ -31,29 +31,19 @@ Memory Usage: 14 MB """
 #         self.next = next
 class Solution:
     def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
-        c1 = l1
-        c2 = l2
-        head = None
+        dummy = cur = ListNode(0)
+        while l1 and l2:
+            if l1.val < l2.val:
+                cur.next = l1
+                l1 = l1.next
+            else:
+                cur.next = l2
+                l2 = l2.next
+            cur = cur.next
 
-        if not c1 or not c2:
-            return c1 if not c2 else c2
+        cur.next = l1 or l2
 
-        head = c1 if c1.val <= c2.val else c2
-
-        while c1 and c2:
-            if c1.val <= c2.val:
-                while c1 and c2 and c1.val <= c2.val:
-                    temp = c1
-                    c1 = c1.next
-                temp.next = c2
-
-            elif c1.val > c2.val:
-                while c1 and c2 and c1.val > c2.val:
-                    temp = c2
-                    c2 = c2.next
-                temp.next = c1
-
-        return head
+        return dummy.next
 
 
 myobj = Solution()
