@@ -25,11 +25,11 @@ Resources:
 """
 """ 39 / 39 test cases passed.
 	Status: Accepted
-Runtime: 44 ms
-Memory Usage: 15.4 MB """
+Runtime: 36 ms
+Memory Usage: 15 MB """
 
 # Solution techniques are
-# Time complexity : O(n) Space complexity : O(log n) if tree is balanced else O(n) (n = height of tree) Recursive DFS solution
+# Time complexity : O(n) Space complexity : O(n) Iterative BFS solution
 
 
 # Definition for a binary tree node.
@@ -43,7 +43,27 @@ class Solution:
         if not root:
             return 0
 
-        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
+        depth = 0
+        queue = deque()
+        queue.append(root)
+
+        while queue:
+            size = len(queue)
+
+            while size > 0:
+                front = queue.popleft()
+
+                if front.left:
+                    queue.append(front.left)
+
+                if front.right:
+                    queue.append(front.right)
+
+                size -= 1
+
+            depth += 1
+
+        return depth
 
 
 myobj = Solution()
