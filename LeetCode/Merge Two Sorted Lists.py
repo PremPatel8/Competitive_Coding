@@ -31,6 +31,9 @@ Memory Usage: 13.7 MB """
 #         self.next = next
 class Solution:
     def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
+        a = l1
+        b = l2
+
         if not a or b and a.val > b.val:
             a, b = b, a
         if a:
