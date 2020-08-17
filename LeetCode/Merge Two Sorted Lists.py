@@ -17,11 +17,11 @@ Resources:
 """
 """ 208 / 208 test cases passed.
 	Status: Accepted
-Runtime: 32 ms
-Memory Usage: 13.8 MB """
+Runtime: 36 ms
+Memory Usage: 13.6 MB """
 
 # Solution techniques are
-# Time complexity : O(n) Space complexity : O(1) Optimized iterative solution
+# Time complexity : O(n) Space complexity : O(1) Recursive solution
 
 
 # Definition for singly-linked list.
@@ -31,19 +31,15 @@ Memory Usage: 13.8 MB """
 #         self.next = next
 class Solution:
     def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
-        dummy = cur = ListNode(0)
-        while l1 and l2:
-            if l1.val < l2.val:
-                cur.next = l1
-                l1 = l1.next
-            else:
-                cur.next = l2
-                l2 = l2.next
-            cur = cur.next
+        if not l1 or not l2:
+            return l1 or l2
 
-        cur.next = l1 or l2
-
-        return dummy.next
+        if l1.val < l2.val:
+            l1.next = self.mergeTwoLists(l1.next, l2)
+            return l1
+        else:
+            l2.next = self.mergeTwoLists(l1, l2.next)
+            return l2
 
 
 myobj = Solution()
