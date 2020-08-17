@@ -22,10 +22,10 @@ Could you do it in O(n) time and O(1) space?
 Resources:
 
 """
-""" 208 / 208 test cases passed.
+""" 26 / 26 test cases passed.
 	Status: Accepted
-Runtime: 34 ms
-Memory Usage: 13.7 MB """
+Runtime: 64 ms
+Memory Usage: 24 MB """
 
 # Solution techniques are
 # Time complexity : O(n) Space complexity : O(1) two pointer with reversing the second half of the linked list
