@@ -37,10 +37,10 @@ Explanation: The root node's value is 5 but its right child's value is 4.
 Resources:
 
 """
-""" 39 / 39 test cases passed.
+""" 75 / 75 test cases passed.
 	Status: Accepted
-Runtime: 36 ms
-Memory Usage: 15 MB """
+Runtime: 36/45 ms
+Memory Usage: 16.3 MB """
 
 # Solution techniques are Recursion, Iteration using Stack and DFS, Inorder traversal
 # Time complexity : O(n) Space complexity : O(n) Recursive solution Time - since we visit each node exactly once, Space - since we keep up to the entire tree.
