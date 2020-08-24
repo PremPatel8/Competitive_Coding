@@ -39,11 +39,11 @@ Resources:
 """
 """ 75 / 75 test cases passed.
 	Status: Accepted
-Runtime: 36/45 ms
-Memory Usage: 16.3 MB """
+Runtime: 44 ms
+Memory Usage: 16 MB """
 
 # Solution techniques are Recursion, Iteration using Stack and DFS, Inorder traversal
-# Time complexity : O(n) Space complexity : O(n) Recursive solution Time - since we visit each node exactly once, Space - since we keep up to the entire tree.
+# Time complexity : O(n) Space complexity : O(n) Iteration using Stack and DFS. Time - since we visit each node exactly once., Space - since we keep up to the entire tree.
 
 
 # Definition for a binary tree node.
@@ -53,22 +53,25 @@ Memory Usage: 16.3 MB """
 #         self.left = left
 #         self.right = right
 class Solution:
-    def isValidBST(self, root: TreeNode) -> bool:
-        def helper(node, lower=float('-inf'), upper=float('inf')):
-            if not node:
-                return True
-
-            val = node.val
-            if val <= lower or val >= upper:
-                return False
-
-            if not helper(node.right, val, upper):
-                return False
-            if not helper(node.left, lower, val):
-                return False
+    def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        if not root:
             return True
 
-        return helper(root)
+        stack = [(root, float('-inf'), float('inf')), ]
+        while stack:
+            root, lower, upper = stack.pop()
+            if not root:
+                continue
+            val = root.val
+            if val <= lower or val >= upper:
+                return False
+            stack.append((root.right, val, upper))
+            stack.append((root.left, lower, val))
+        return True
 
 
 myobj = Solution()
