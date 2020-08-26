@@ -31,11 +31,11 @@ Resources:
 """
 """ 34 / 34 test cases passed.
 	Status: Accepted
-Runtime: 28 ms
-Memory Usage: 14.1 MB """
+Runtime: 32 ms
+Memory Usage: 14.3 MB """
 
-# Solution techniques are BFS
-# Time complexity : O(n) Space complexity : O(n) BFS solution using Queue
+# Solution techniques are BFS, DFS
+# Time complexity : O(n) Space complexity : O(N) + O(h) for stack space, DFS using Pre-Order traversal
 
 
 # Definition for a binary tree node.
@@ -124,30 +124,19 @@ def prettyPrintTree(node, prefix="", isLeft=True):
 #         self.right = right
 class Solution:
     def levelOrder(self, root: TreeNode) -> List[List[int]]:
-        res = []
+        result = []
+        self.helper(root, 0, result)
+        return result
 
+    def helper(self, root, level, result):
         if root is None:
-            return res
+            return
+        if len(result) <= level:
+            result.append([])
 
-        queue = deque()
-        queue.append(root)
-
-        while queue:
-            level = []
-
-            for _ in range(len(queue)):
-                node = queue.popleft()
-
-                level.append(node.val)
-
-                if node.left:
-                    queue.append(node.left)
-                if node.right:
-                    queue.append(node.right)
-
-            res.append(level)
-
-        return res
+        result[level].append(root.val)
+        self.helper(root.left, level+1, result)
+        self.helper(root.right, level+1, result)
 
 
 def main():
