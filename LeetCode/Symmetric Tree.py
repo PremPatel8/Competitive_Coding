@@ -29,11 +29,11 @@ Resources:
 """
 """ 195 / 195 test cases passed.
 	Status: Accepted
-Runtime: 36 ms
-Memory Usage: 14.1 MB """
+Runtime: 32 ms
+Memory Usage: 13.8 MB """
 
 # Solution techniques are Recursive and Iterative using queue (like BFS)
-# Time complexity : O(n) Space complexity : O(n) Recursive solution
+# Time complexity : O(n) Space complexity : O(n) Iterative solution using queue (like BFS)
 """ Complexity Analysis
 Time complexity : O(n) Because we traverse the entire input tree once, the total run time is O(n), where n is the total number of nodes in the tree.
 Space complexity : The number of recursive calls is bound by the height of the tree. In the worst case, the tree is linear and the height is in O(n). 
@@ -49,18 +49,31 @@ Therefore, space complexity due to recursive calls on the stack is O(n)O(n)O(n) 
 #         self.right = right
 class Solution:
     def isSymmetric(self, root: TreeNode) -> bool:
-
-        def isSymmetric(t1, t2):
-            if not t1 and not t2:
-                return True
-            elif not t1 or not t2:
-                return False
-            return (t1.val == t2.val) and isSymmetric(t1.right, t2.left) and isSymmetric(t1.left, t2.right)
-
         if not root:
             return True
 
-        return isSymmetric(root.left, root.right)
+        queue = deque()
+
+        queue.append(root.left)
+        queue.append(root.right)
+
+        while queue:
+            t1 = queue.pop()
+            t2 = queue.pop()
+
+            if not t1 and not t2:
+                continue
+            elif not t1 or not t2:
+                return False
+            elif t1.val != t2.val:
+                return False
+
+            queue.append(t1.left)
+            queue.append(t2.right)
+            queue.append(t1.right)
+            queue.append(t2.left)
+
+        return True
 
 
 myobj = Solution()
