@@ -28,7 +28,7 @@ Constraints:
 1 <= n <= 45
 
 Resources:
-
+https://leetcode.com/explore/interview/card/top-interview-questions-easy/97/dynamic-programming/569/discuss/25296/3-4-short-lines-in-every-language
 """
 """ 45 / 45 test cases passed.
 	Status: Accepted
@@ -113,4 +113,12 @@ public class Solution {
 Complexity Analysis
 Time complexity : O(n)O(n)O(n). Single loop upto nnn is required to calculate nthn^{th}nth fibonacci number.
 Space complexity : O(1)O(1)O(1). Constant space is used. 
+ """
+
+""" 
+def climbStairs(self, n):
+    a = b = 1
+    for _ in range(n):
+        a, b = b, a + b
+    return a
  """
