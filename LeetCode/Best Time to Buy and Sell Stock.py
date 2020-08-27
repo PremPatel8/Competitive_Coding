@@ -28,11 +28,11 @@ Resources:
 """
 """ 200 / 200 test cases passed.
 	Status: Accepted
-Runtime: 64 ms
-Memory Usage: 15.2 MB """
+Runtime: 60 ms
+Memory Usage: 14.9 MB """
 
 # Solution techniques are
-# Time complexity : O(n) Space complexity : O(1) Iterative Greedy solution
+# Time complexity : O(n) Space complexity : O(1) Iterative Greedy pythonic solution
 """ 
 Complexity Analysis
 Time complexity : O(n) Only a single pass is needed.
@@ -46,10 +46,9 @@ class Solution:
         max_profit = 0
 
         for price in prices:
-            if price < min_price:
-                min_price = price
-            elif price-min_price > max_profit:
-                max_profit = price-min_price
+            min_price = min(min_price, price)
+            profit = price - min_price
+            max_profit = max(max_profit, profit)
 
         return max_profit
 
