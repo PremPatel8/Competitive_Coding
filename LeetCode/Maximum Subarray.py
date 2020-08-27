@@ -21,19 +21,22 @@ Resources:
 """
 """ 202 / 202 test cases passed.
 	Status: Accepted
-Runtime: 60 ms
-Memory Usage: 14.5 MB """
+Runtime: 68 ms
+Memory Usage: 14.6 MB """
 
 # Solution techniques are
-# Time complexity : O(n) Space complexity : O(1) DP Kadane's Algorithm solution
+# Time complexity : O(n) Space complexity : O(1) DP Kadane's Algorithm Pythonic solution
 
 
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+
         curr_sum = max_sum = nums[0]
 
-        for i in range(1, len(nums)):
-            curr_sum = max(curr_sum+nums[i], nums[i])
+        for num in nums[1:]:
+            curr_sum = max(curr_sum+num, num)
             max_sum = max(max_sum, curr_sum)
 
         return max_sum
