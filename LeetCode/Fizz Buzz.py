@@ -39,22 +39,23 @@ Resources:
 """ 8 / 8 test cases passed.
 	Status: Accepted
 Runtime: 40 ms
-Memory Usage: 14.9 MB """
+Memory Usage: 14.8 MB """
 
 # Solution techniques are
-# Time complexity : O(n) Space complexity : O(1) Iterative String Concatenation solution
+# Time complexity : O(n) Space complexity : O(1) Iterative String Concatenation & Dict / Hash Map solution
 
 
 class Solution:
     def fizzBuzz(self, n: int) -> List[str]:
         output = []
+        fizz_buzz_dict = {3: "Fizz", 5: "Buzz"}
 
         for num in range(1, n+1):
             res = ""
-            if num % 3 == 0:
-                res += "Fizz"
-            if num % 5 == 0:
-                res += "Buzz"
+
+            for key in fizz_buzz_dict.keys():
+                if num % key == 0:
+                    res += fizz_buzz_dict[key]
 
             if not res:
                 res = str(num)
