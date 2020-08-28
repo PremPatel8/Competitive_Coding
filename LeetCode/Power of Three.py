@@ -27,22 +27,16 @@ Resources:
 """
 """ 21038 / 21038 test cases passed.
 	Status: Accepted
-Runtime: 80 ms
+Runtime: 76 ms
 Memory Usage: 13.8 MB """
 
 # Solution techniques are
-# Time complexity : O(log3n) Space complexity : O(1) Naive Iterative solution
+# Time complexity : O(1) Space complexity : O(1) Optimized Integer Limitations solution
 
 
 class Solution:
     def isPowerOfThree(self, n: int) -> bool:
-        if n <= 0:
-            return False
-
-        while n % 3 == 0:
-            n = n / 3
-
-        return True if n == 1 else False
+        return n > 0 == 3**19 % n
 
 
 myobj = Solution()
