@@ -30,25 +30,22 @@ https://www.programiz.com/python-programming/operators
 """ 149 / 149 test cases passed.
 	Status: Accepted
 Runtime: 32 ms
-Memory Usage: 13.7 MB """
+Memory Usage: 14 MB """
 
 # Solution techniques are Bit Manipulation
-# Time complexity : O(1) Space complexity : O(1) Bit Manipulation trick using XOR and AND t&(t-1) trick
-""" 
-Each iteration of t & (t-1) removes the most right bit from your number. You increase the counter until your number becomes 0.
- """
+# Time complexity : O(1) Space complexity : O(1) Div and Mod solution
 
 
 class Solution:
     def hammingDistance(self, x: int, y: int) -> int:
-        res = 0
-        xor_val = x ^ y
+        ans = 0
 
-        while xor_val:
-            res += 1
-            xor_val = xor_val & (xor_val-1)
+        while x or y:
+            ans += (x % 2) ^ (y % 2)
+            x //= 2
+            y //= 2
 
-        return res
+        return ans
 
 
 myobj = Solution()
