@@ -35,22 +35,20 @@ Resources:
 """
 """ 601 / 601 test cases passed.
 	Status: Accepted
-Runtime: 20 ms
-Memory Usage: 13.8 MB """
+Runtime: 28 ms
+Memory Usage: 14 MB """
 
 # Solution techniques are
-# Time complexity : O(1) Space complexity : O(1) Bit Manipulation Loop and Flip
+# Time complexity : O(1) Space complexity : O(1) Bit Manipulation trick
 
 
 class Solution:
     def hammingWeight(self, n: int) -> int:
         res = 0
-        mask = 1
 
-        for _ in range(32):
-            if n & mask:
-                res += 1
-            mask <<= 1
+        while n:
+            n &= n - 1
+            res += 1
 
         return res
 
