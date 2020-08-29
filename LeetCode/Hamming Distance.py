@@ -30,22 +30,22 @@ https://www.programiz.com/python-programming/operators
 """ 149 / 149 test cases passed.
 	Status: Accepted
 Runtime: 32 ms
-Memory Usage: 14 MB """
+Memory Usage: 13.8 MB """
 
 # Solution techniques are Bit Manipulation
-# Time complexity : O(1) Space complexity : O(1) Div and Mod solution
+# Time complexity : O(1) Space complexity : O(1) Bit Manipulation using rigt shift
 
 
 class Solution:
     def hammingDistance(self, x: int, y: int) -> int:
-        ans = 0
+        count = 0
+        n = x ^ y
 
-        while x or y:
-            ans += (x % 2) ^ (y % 2)
-            x //= 2
-            y //= 2
+        while(n):
+            count += n & 1
+            n >>= 1
 
-        return ans
+        return count
 
 
 myobj = Solution()
