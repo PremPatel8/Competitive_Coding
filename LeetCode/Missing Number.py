@@ -26,7 +26,7 @@ Resources:
 """ runtime """
 
 # Solution techniques are
-# Time complexity : O(n**2) Space complexity : O(n) My solution using set intersection
+# Time complexity : O(n**2) Space complexity : O(n) My solution using set intersection optimized
 
 
 class Solution:
@@ -34,8 +34,7 @@ class Solution:
         if not nums or len(nums) == 0:
             return 0
 
-        num_set = set(range(len(nums)+1))
-        return [i for i in num_set-set(nums)][0]
+        return (set(range(len(nums)+1)) - set(nums)).pop()
 
 
 myobj = Solution()
