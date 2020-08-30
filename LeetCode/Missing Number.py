@@ -23,20 +23,19 @@ Resources:
 
 """
 
-""" 122 / 122 test cases passed.
-	Status: Accepted
-Runtime: 128 ms
-Memory Usage: 15.2 MB """
+""" runtime """
 
 # Solution techniques are
-# Time complexity : O(n) Space complexity : O(1) Gauss' Formula sum of the first nnn natural numbers solution
+# Time complexity : O(n**2) Space complexity : O(n) My solution using set intersection
 
 
 class Solution:
     def missingNumber(self, nums: List[int]) -> int:
-        expected_sum = len(nums)*(len(nums)+1)//2
-        actual_sum = sum(nums)
-        return expected_sum - actual_sum
+        if not nums or len(nums) == 0:
+            return 0
+
+        num_set = set(range(len(nums)+1))
+        return [i for i in num_set-set(nums)][0]
 
 
 myobj = Solution()
