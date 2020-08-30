@@ -23,18 +23,26 @@ Resources:
 
 """
 
-""" runtime """
+""" 122 / 122 test cases passed.
+	Status: Accepted
+Runtime: 140 ms
+Memory Usage: 15.1 MB """
 
 # Solution techniques are
-# Time complexity : O(n**2) Space complexity : O(n) My solution using set intersection optimized
+# Time complexity : O(n) Space complexity : O(1) Alt Gauss' solution
 
 
 class Solution:
     def missingNumber(self, nums: List[int]) -> int:
-        if not nums or len(nums) == 0:
-            return 0
+        actual_sum = expected_sum = 0
+        n = 1
 
-        return (set(range(len(nums)+1)) - set(nums)).pop()
+        for no in nums:
+            actual_sum += no
+            expected_sum += n
+            n += 1
+
+        return expected_sum-actual_sum
 
 
 myobj = Solution()
