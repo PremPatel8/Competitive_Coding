@@ -25,11 +25,18 @@ Resources:
 
 """ 15 / 15 test cases passed.
 	Status: Accepted
-Runtime: 24 ms
+Runtime: 30 ms
 Memory Usage: 13.9 MB """
 
 # Solution techniques are
-# Time complexity : O(numRows**2) Space complexity : O(numRows**2) DP Soluion
+# Time complexity : O(numRows**2) Space complexity : O(numRows**2) Offset sum trick
+""" 
+ Any row can be constructed using the offset sum of the previous row. Example:
+
+    1 3 3 1 0 
+ +  0 1 3 3 1
+ =  1 4 6 4 1
+ """
 
 
 class Solution:
@@ -39,22 +46,13 @@ class Solution:
         elif numRows == 1:
             return [[1]]
 
-        triangle = []
+        res = [[1]]
+        for _ in range(1, numRows):
+            map_ = map(lambda x, y: x+y, [0] + res[-1], res[-1] + [0])
 
-        for row_num in range(numRows):
-            # The first and last row elements are always 1.
-            row = [None for _ in range(row_num+1)]
+            res.append(list(map_))
 
-            row[0], row[-1] = 1, 1
-
-            # Each triangle element is equal to the sum of the elements
-            # above-and-to-the-left and above-and-to-the-right.
-            for j in range(1, len(row)-1):
-                row[j] = triangle[row_num-1][j-1] + triangle[row_num-1][j]
-
-            triangle.append(row)
-
-        return triangle
+        return res
 
 
 myobj = Solution()
