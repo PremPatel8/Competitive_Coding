@@ -29,7 +29,7 @@ Runtime: 36 ms
 Memory Usage: 13.9 MB """
 
 # Solution techniques are Set, Floyd Cycle detection algorithm,
-# Time complexity : O(λ + μ) Space complexity : O() Floyd Cycle detection algorithm
+# Time complexity : O(n log n) Space complexity : O(n log n) Set solution
 """ Let S be any finite set, f be any function from S to itself, and x0 be any element of S. 
 For any i > 0, let xi = f(xi − 1). Let μ be the smallest index such that the value xμ reappears infinitely often within the sequence of values xi, 
 and let λ (the loop length) be the smallest positive integer such that xμ = xλ + μ. The cycle detection problem is the task of finding λ and μ. """
@@ -37,19 +37,27 @@ and let λ (the loop length) be the smallest positive integer such that xμ = x�
 
 class Solution:
     def isHappy(self, n: int) -> bool:
-        def digitSquareSum(n):
-            return sum(int(i) ** 2 for i in str(n))
+        squareSet = set()
 
-        slow = digitSquareSum(n)
-        fast = digitSquareSum(digitSquareSum(n))
+        squareSum = lastDigit = 0
 
-        while slow != fast:
-            slow = digitSquareSum(slow)
-            fast = digitSquareSum(digitSquareSum(fast))
+        while (n not in squareSet):
+            squareSet.add(n)
+            squareSum = 0
 
-        return fast == 1
+            while n > 0:
+                lastDigit = n % 10
+                squareSum += lastDigit*lastDigit
+                n = n // 10
+
+            if squareSum == 1:
+                return True
+            else:
+                n = squareSum
+
+        return False
 
 
 myobj = Solution()
-inpt = 20
+inpt = 19
 print(myobj.isHappy(inpt))
