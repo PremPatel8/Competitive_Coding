@@ -27,27 +27,18 @@ Resources:
 
 """ 46 / 46 test cases passed.
 	Status: Accepted
-Runtime: 176 ms
-Memory Usage: 15.4 MB """
+Runtime: 160 ms
+Memory Usage: 15.3 MB """
 
-# Solution techniques are Frequency Dictionary, Sorting, 
+# Solution techniques are Frequency Dictionary, Sorting,
 
-# Time complexity : O(n) Space complexity : O(n) Frequency Dictionary solution
+# Time complexity : O(n log n) Space complexity : O(1) Sorting Solution
 
 
 class Solution:
     def majorityElement(self, nums: List[int]) -> int:
-        freqDict = defaultdict(int)
-        highestFreq = 0
-        mostFreq = 0
-
-        for num in nums:
-            freqDict[num] += 1
-            if freqDict[num] > mostFreq:
-                mostFreq = freqDict[num]
-                highestFreq = num
-
-        return highestFreq
+        nums.sort()
+        return nums[len(nums)//2]
 
 
 myobj = Solution()
