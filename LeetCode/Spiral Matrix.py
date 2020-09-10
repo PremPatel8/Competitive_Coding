@@ -34,7 +34,10 @@ Resources:
 
 """
 
-""" runtime """
+""" 22 / 22 test cases passed.
+	Status: Accepted
+Runtime: 32 ms
+Memory Usage: 13.9 MB """
 
 # Solution techniques are Simulation, Layer-by-Layer
 
