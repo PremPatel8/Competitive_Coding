@@ -1,5 +1,5 @@
 from typing import List
-from collections import defaultdict
+from collections import Counter
 
 """
 Problem Name: 4Sum II
@@ -32,29 +32,18 @@ Resources:
 
 """ 48 / 48 test cases passed.
 	Status: Accepted
-Runtime: 292 ms
-Memory Usage: 55.5 MB """
+Runtime: 280 ms
+Memory Usage: 34.6 MB """
 
 # Solution techniques are
 
-# Time complexity : O(n**2) Space complexity : O(n**2) using Dict to keep track of all A+B combination freq counts and then all -(C+D) counts 
-# since a + b + c + d = 0 => a + b = -(c + d)
+# Time complexity : O(n**2) Space complexity : O(n**2) Optimized solution using counter and list comprehension
 
 
 class Solution:
     def fourSumCount(self, A: List[int], B: List[int], C: List[int], D: List[int]) -> int:
-        AB_dict = defaultdict(int)
-        count = 0
-
-        for i in A:
-            for j in B:
-                AB_dict[i+j] += 1
-
-        for i in C:
-            for j in D:
-                count += AB_dict[-(i+j)]
-
-        return count
+        AB = Counter(a+b for a in A for b in B)
+        return sum(AB[-c-d] for c in C for d in D)
 
 
 myobj = Solution()
