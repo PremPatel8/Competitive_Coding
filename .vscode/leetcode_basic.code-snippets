@@ -1,0 +1,44 @@
+{
+	// Place your Competitive_Coding workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+	"leetcode basic template": {
+		"prefix": "leet",
+		"body": [
+		  "from typing import List",
+		  "",
+		  "\"\"\"",
+		  "Problem Name: $1",
+		  "",
+		  "Problem Section: $2",
+		  "",
+		  "Problem Statement:",
+		  "$3",
+		  "",
+		  "Resources:",
+		  "\"\"\"",
+		  "",
+		  "\"\"\" runtime \"\"\"",
+		  "",
+		  "# Solution techniques are",
+		  "",
+		  "# Time complexity : O() Space complexity : O()",
+		  "",
+		  "",
+		  "$0class Solution:",
+		  "    def calculate(self, s: str) -> int:",
+		  "        pass",
+		  "",
+		  "",
+		  "myobj = Solution()",
+		  "inpt = ${4:input}",
+		  "print(myobj.${5:function_name}(inpt))",
+		  ""
+		],
+		"description": "leetcode basic template"
+	  }
+}
