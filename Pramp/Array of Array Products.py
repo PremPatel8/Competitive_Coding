@@ -39,18 +39,18 @@ class Solution:
         if len(arr) == 1 or len(arr) == 0:
             return []
 
-        prefix = [1]
-        postfix = [1]*len(arr)
         output = []
+        product = 1
 
-        for i in range(len(arr)-1):
-            prefix.append(arr[i] * prefix[i])
+        for i in range(len(arr)):
+            output.append(product)
+            product = product * arr[i]
 
-        for i in range(len(arr)-1, 0, -1):
-            postfix[i-1] = arr[i] * postfix[i]
+        product = 1
 
-        for x, y in zip(prefix, postfix):
-            output.append(x*y)
+        for i in range(len(arr)-1, -1, -1):
+            output[i] = output[i] * product
+            product = product * arr[i]
 
         return output
 
