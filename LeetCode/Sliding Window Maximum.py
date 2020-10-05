@@ -80,13 +80,13 @@ class Solution:
         res = []
 
         for i, num in enumerate(nums):
+            if mono_deque and mono_deque[0] == i-k:
+                mono_deque.popleft()
+
             while mono_deque and nums[mono_deque[-1]] < num:
                 mono_deque.pop()
 
             mono_deque.append(i)
-
-            if mono_deque[0] == i-k:
-                mono_deque.popleft()
 
             if i >= k-1:
                 res.append(nums[mono_deque[0]])
