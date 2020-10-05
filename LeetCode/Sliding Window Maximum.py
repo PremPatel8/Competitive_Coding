@@ -80,7 +80,7 @@ class Solution:
         res = []
 
         for i, num in enumerate(nums):
-            if mono_deque and mono_deque[0] == i-k:
+            if mono_deque and mono_deque[0] <= i-k:
                 mono_deque.popleft()
 
             while mono_deque and nums[mono_deque[-1]] < num:
