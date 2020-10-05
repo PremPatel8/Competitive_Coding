@@ -7,7 +7,10 @@ Problem Name: Sliding Window Maximum
 Problem Section:
 
 Problem Statement:
-You are given an array of integers nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position.
+You are given an array of integers nums, there is a sliding window of size k
+which is moving from the very left of the array to the very right.
+You can only see the k numbers in the window. Each time the sliding window
+moves right by one position.
 
 Return the max sliding window.
 
@@ -51,27 +54,13 @@ Resources:
 """
 
 """ 59 / 59 test cases passed.
-	Status: Accepted
+Status: Accepted
 Runtime: 1336 ms
 Memory Usage: 30 MB """
 
 # Solution techniques are Monotonic Queue using Deque
 
 # Time complexity : O(n) Space complexity : O(k)
-
-
-# class monoqueue:
-#     m_deque = deque()
-
-#     def push_ele(self, ele):
-#         while len(monoqueue.m_deque) > 0 and monoqueue.m_deque[-1] < ele:
-#             monoqueue.m_deque.pop(0)  # deQueue
-#         monoqueue.m_deque.append(ele)
-
-#     def max_ele():
-#         return monoqueue.m_deque[-1]
-
-#     def pop_ele(self, ele):
 
 
 class Solution:
