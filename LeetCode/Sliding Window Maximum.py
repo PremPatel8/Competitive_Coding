@@ -67,6 +67,11 @@ class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
         mono_deque = deque()
         res = []
+        # Index in mono queue increasing (lowest / initial index to last index)
+        # Values of array at those index decreasing (Highest value to lowest value left to right)
+        # Leftmost index value in mono queue corresponds to highest value in current window so far
+        # Pop the left most index value in mono queue if it's outside the current elements windows leftmost index
+        # Starting from right side check for any value less than current array num and pop them
 
         for i, num in enumerate(nums):
             if mono_deque and mono_deque[0] <= i-k:
