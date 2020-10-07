@@ -99,18 +99,18 @@ class BinarySearchTree:
 
     """ Iterative implementation """
 
-    def find_largest_smaller_key(self, num):
-        res = -1
-        currnode = self.root
+    # def find_largest_smaller_key(self, num):
+    #     res = -1
+    #     currnode = self.root
 
-        while currnode:
-            if currnode.key <= num:
-                res = currnode.key
-                currnode = currnode.right
-            else:
-                currnode = currnode.left
+    #     while currnode:
+    #         if currnode.key <= num:
+    #             res = currnode.key
+    #             currnode = currnode.right
+    #         else:
+    #             currnode = currnode.left
 
-        return res
+    #     return res
 
     """ Recursive implementation """
 
@@ -135,6 +135,45 @@ class BinarySearchTree:
 
     #     res = helper(currnode)
 
+    #     return res
+
+    """ My Recursive solution """
+
+    def find_largest_smaller_key(self, num):
+        prev_node = None
+
+        def inorder_sorted(curr_node):
+            if curr_node:
+                inorder_sorted(curr_node.left)
+
+                if curr_node.key < num:
+                    nonlocal prev_node
+                    prev_node = curr_node
+                else:
+                    return prev_node.key
+
+                inorder_sorted(curr_node.right)
+
+        res = inorder_sorted(bst.root)
+
+        return res
+
+    """ Python 2.x sol nonlocal alternative solution """
+    # def find_largest_smaller_key(self, num):
+    #     d = {'prev_node' : None}
+
+    #     def inorder_sorted(curr_node):
+    #         if curr_node:
+    #             inorder_sorted(curr_node.left)
+
+    #             if curr_node.key < num:
+    #                 d['prev_node'] = curr_node
+    #             else:
+    #                 return d['prev_node'].key
+
+    #             inorder_sorted(curr_node.right)
+
+    #     res = inorder_sorted(bst.root)
     #     return res
 
     # Given a binary search tree and a number, inserts a
