@@ -1,5 +1,5 @@
 from typing import List
-import bisect
+import heapq
 
 """
 Problem Name: 378. Kth Smallest Element in a Sorted Matrix
@@ -30,36 +30,32 @@ Resources:
 
 """ 85 / 85 test cases passed.
 	Status: Accepted
-Runtime: 152 ms
-Memory Usage: 19.9 MB """
+Runtime: 204 ms
+Memory Usage: 20 MB """
 
 # Solution techniques are Binary Search, Heap
 
-# Time complexity : O(n log n) Space complexity : O(1)
-# The time complexity is O(n * log(n) * log(N)), where N is the search space that ranges from the smallest element to the biggest element.
-# You can argue that int implies N = 2^32, so log(N) is constant. In a way, this is an O(n * log(n)) solution.
+# Time complexity : O(k * log n) Space complexity : O(n)
+# The time complexity is O(k * log n), so the worst-case and average-case time complexity is O(n^2 * log n). Space complexity is O(n).
 
 
 class Solution:
     def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
-        lo = matrix[0][0]
-        hi = matrix[-1][-1]
+        heap = [(row[0], i, 0) for i, row in enumerate(matrix)]
+        heapq.heapify(heap)
+        ret = 0
 
-        while lo < hi:
-            mid = (lo+hi)//2
-            no_ele_less_than_mid = 0
+        for _ in range(k):
+            ret, i, j = heapq.heappop(heap)
+            if j+1 < len(matrix[0]):
+                heapq.heappush(heap, (matrix[i][j+1], i, j+1))
 
-            for row in matrix:
-                no_ele_less_than_mid += bisect.bisect_right(row, mid)
-
-            if no_ele_less_than_mid < k:
-                lo = mid+1
-            else:
-                hi = mid
-        return lo
+        return ret
 
 
 myobj = Solution()
-matrix = [[1,  5,  9], [10, 11, 13], [12, 13, 15]]
+matrix = [[1,  5,  9],
+          [10, 11, 13],
+          [12, 13, 15]]
 k = 8
 print(myobj.kthSmallest(matrix, k))
