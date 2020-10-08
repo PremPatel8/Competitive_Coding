@@ -26,6 +26,7 @@ Note:
 You may assume k is always valid, 1 ≤ k ≤ n2.
 
 Resources:
+https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/discuss/85193/Binary-Search-Heap-and-Sorting-comparison-with-concise-code-and-1-liners-Python-72-ms
 """
 
 """ 85 / 85 test cases passed.
