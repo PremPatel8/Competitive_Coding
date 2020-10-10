@@ -13,7 +13,10 @@ Follow up: Can you sort the linked list in O(n logn) time and O(1) memory (i.e. 
 Resources:
 """
 
-""" runtime """
+""" 16 / 16 test cases passed.
+	Status: Accepted
+Runtime: 208 ms
+Memory Usage: 23.3 MB """
 
 # Solution techniques are Top Down Merge Sort, Bottom Up Merge Sort
 
