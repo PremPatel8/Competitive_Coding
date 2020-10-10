@@ -86,6 +86,11 @@ class Solution:
 
     #     return dummy.next
 
+    """ 133 / 133 test cases passed.
+        Status: Accepted
+        Runtime: 116 ms
+        Memory Usage: 17.7 MB """
+
     def mergeKLists(self, lists):
         amount = len(lists)
         interval = 1
