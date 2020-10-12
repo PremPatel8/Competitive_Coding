@@ -24,8 +24,8 @@ https://leetcode.com/problems/maximum-performance-of-a-team/discuss/741822/Met-t
 
 """ 53 / 53 test cases passed.
 	Status: Accepted
-Runtime: 400 ms
-Memory Usage: 34.4 MB """
+Runtime: 384 ms
+Memory Usage: 29.8 MB """
 
 # Solution techniques are Sort based on efficiency, use min heap to store k element speeds and to pop elements with speed less than curr element speed and calculate running best speed for curr element efficiency
 
@@ -34,12 +34,13 @@ Memory Usage: 34.4 MB """
 
 class Solution:
     def maxPerformance(self, n: int, speed: List[int], efficiency: List[int], k: int) -> int:
-        people = sorted(zip(speed, efficiency), key=lambda x: -x[1])
+        # people = sorted(zip(speed, efficiency), key=lambda x: -x[1])
+        people = sorted(zip(efficiency, speed), reverse=True)
 
         result, sum_speed = 0, 0
         min_heap = []
 
-        for i, (s, e) in enumerate(people):
+        for i, (e, s) in enumerate(people):
             if i < k:
                 sum_speed += s
                 heapq.heappush(min_heap, s)
@@ -48,7 +49,7 @@ class Solution:
 
             result = max(result, sum_speed * e)
 
-        return result % 1000000007
+        return result % ((10**9)+7)
 
 
 myobj = Solution()
