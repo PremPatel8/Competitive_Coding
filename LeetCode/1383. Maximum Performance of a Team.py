@@ -20,6 +20,7 @@ We have the maximum performance of the team by selecting engineer 2 (with speed=
 
 Resources:
 https://leetcode.com/problems/maximum-performance-of-a-team/discuss/741822/Met-this-problem-in-my-interview!!!-(Python3-greedy-with-heap)
+https://leetcode.com/problems/maximum-performance-of-a-team/discuss/539687/JavaC%2B%2BPython-Priority-Queue
 """
 
 """ 53 / 53 test cases passed.
@@ -50,6 +51,17 @@ class Solution:
             result = max(result, sum_speed * e)
 
         return result % ((10**9)+7)
+
+        """ def maxPerformance(self, n, speed, efficiency, k):
+        h = []
+        res = sSum = 0
+        for e, s in sorted(zip(efficiency, speed), reverse=1):
+            heapq.heappush(h, s)
+            sSum += s
+            if len(h) > k:
+                sSum -= heapq.heappop(h)
+            res = max(res, sSum * e)
+        return res % (10**9 + 7) """
 
 
 myobj = Solution()
