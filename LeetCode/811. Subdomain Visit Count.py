@@ -24,7 +24,10 @@ We will visit "google.mail.com" 900 times, "yahoo.com" 50 times, "intel.mail.com
 Resources:
 """
 
-""" runtime """
+""" 52 / 52 test cases passed.
+	Status: Accepted
+Runtime: 48 ms
+Memory Usage: 14.1 MB """
 
 # Solution techniques are iterate input split on space and then '.' update freq dict
 
