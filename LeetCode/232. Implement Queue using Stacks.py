@@ -57,7 +57,7 @@ Memory Usage: 14.2 MB
 push values to input stack, pop or peek values from the output stack, if at any point output stack is empty 
 pop all values from input stack and push to output stack first, then pop or peek from output stack """
 
-# Time complexity : Push O(1), Pop O(n) Space complexity : O(n)
+# Time complexity : Push, Pop Amortized O(1) per operation Worst case O(n), Space complexity : O(n)
 
 
 class MyQueue:
@@ -65,42 +65,54 @@ class MyQueue:
     def __init__(self):
         self.in_stack = []
         self.out_stack = []
+        self.front = None
 
+    # Time complexity : O(1) Аppending an element to a stack is an O(1) operation. Space complexity : O(n) We need additional memory to store the queue elements
     def push(self, x: int) -> None:
+        if not self.in_stack:
+            self.front = x
         self.in_stack.append(x)
+
+    """ 
+    Time complexity: Amortized O(1), Worst-case O(n) In the worst case scenario when stack s2 is empty, 
+    the algorithm pops nnn elements from stack s1 and pushes n elements to s2, where n is the queue size. 
+    This gives 2n operations, which is O(n). But when stack s2 is not empty the algorithm has O(1) time complexity. Space complexity : O(1)
+    """
 
     def pop(self) -> int:
         if not self.out_stack:
             while self.in_stack:
-                tmp = self.in_stack.pop()
-                self.out_stack.append(tmp)
-            return self.out_stack.pop()
-        else:
-            return self.out_stack.pop()
+                self.out_stack.append(self.in_stack.pop())
+
+        return self.out_stack.pop()
+
+    """ Time complexity : O(1). The front element was either previously calculated or returned as a top element of stack s2. 
+    Therefore complexity is O(1) Space complexity : O(1). """
 
     def peek(self) -> int:
-        if not self.out_stack:
-            while self.in_stack:
-                tmp = self.in_stack.pop()
-                self.out_stack.append(tmp)
-            return self.out_stack[-1]
-        else:
+        if self.out_stack:
             return self.out_stack[-1]
 
+        return self.front
+
+    # Time complexity : O(1). Space complexity : O(1).
     def empty(self) -> bool:
-        if not self.in_stack and not self.out_stack:
-            return True
-        else:
-            return False
+        return not (self.in_stack) and not (self.out_stack)
 
 
 # Your MyQueue object will be instantiated and called as such:
+# output = []
+# obj = MyQueue()
+# output.append(None)
+# output.append(obj.push(1))
+# output.append(obj.push(2))
+# output.append(obj.peek())
+# output.append(obj.pop())
+# output.append(obj.empty())
+# print(output)
+
 output = []
 obj = MyQueue()
 output.append(None)
-output.append(obj.push(1))
-output.append(obj.push(2))
-output.append(obj.peek())
-output.append(obj.pop())
 output.append(obj.empty())
 print(output)
