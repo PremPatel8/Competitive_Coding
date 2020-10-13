@@ -35,9 +35,9 @@ Runtime: 252 ms
 Memory Usage: 15.3 MB
 """
 
-# Solution techniques are iterate through array and update dict with [freq, Last Seen Index, Subarray len so far]
+# Solution techniques are iterate through array multiple times to generate left, right and freq count dicts, to get max freq count and again to get min subarray len
 
-# Time complexity : O(n) Space complexity : O(1)
+# Time complexity : O(n) Space complexity : O(n) 
 
 """
 1, 2, 2, 3, 1, 4, 2
@@ -54,33 +54,22 @@ Memory Usage: 15.3 MB
 
 class Solution:
     def findShortestSubArray(self, nums: List[int]) -> int:
-        if len(nums) == 1:
-            return 1
+        left, right, count = {}, {}, {}
 
-        freq_degree = defaultdict(list)
-        res = len(nums)
-        max_freq = 0
+        for i, x in enumerate(nums):
+            if x not in left:
+                left[x] = i
+            right[x] = i
+            count[x] = count.get(x, 0) + 1
 
-        for i, num in enumerate(nums):
-            if not freq_degree[num]:
-                freq_degree[num].append(1)
-                freq_degree[num].append(i)
-                freq_degree[num].append(1)
-            else:
-                freq_degree[num][0] += 1
-                temp = freq_degree[num][1]
-                freq_degree[num][1] = i
-                freq_degree[num][2] += i-temp
+        ans = len(nums)
+        degree = max(count.values())
 
-                if freq_degree[num][0] >= max_freq:
-                    if freq_degree[num][0] > max_freq:
-                        res = freq_degree[num][2]
-                    else:
-                        res = min(res, freq_degree[num][2])
+        for x in count:
+            if count[x] == degree:
+                ans = min(ans, right[x] - left[x] + 1)
 
-                    max_freq = freq_degree[num][0]
-
-        return res if max_freq != 0 else 1
+        return ans
 
 
 myobj = Solution()
