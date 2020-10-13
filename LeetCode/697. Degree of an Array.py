@@ -31,13 +31,13 @@ Resources:
 runtime: 
 89 / 89 test cases passed.
 	Status: Accepted
-Runtime: 216 ms
-Memory Usage: 15.2 MB
+Runtime: 232 ms
+Memory Usage: 15 MB
 """
 
 # Solution techniques are iterate through array multiple times to generate left, right and freq count dicts, to get max freq count and again to get min subarray len
 
-# Time complexity : O(n) Space complexity : O(n) 
+# Time complexity : O(n) Space complexity : O(n)
 
 """
 1, 2, 2, 3, 1, 4, 2
@@ -54,22 +54,26 @@ Memory Usage: 15.2 MB
 
 class Solution:
     def findShortestSubArray(self, nums: List[int]) -> int:
-        left, right, count = {}, {}, {}
+        left_idx, freq_count, res, degree = {}, {}, 0, 0
 
-        for i, x in enumerate(nums):
-            if x not in left:
-                left[x] = i
-            right[x] = i
-            count[x] = count.get(x, 0) + 1
+        for i, num in enumerate(nums):
+            if num not in left_idx:
+                left_idx[num] = i
+            # left_idx.setdefault(num, i)
 
-        ans = len(nums)
-        degree = max(count.values())
+            # freq_count[num] = freq_count.get(num, 0) + 1
+            if num not in freq_count:
+                freq_count[num] = 1
+            else:
+                freq_count[num] += 1
 
-        for x in count:
-            if count[x] == degree:
-                ans = min(ans, right[x] - left[x] + 1)
+            if freq_count[num] > degree:
+                degree = freq_count[num]
+                res = i - left_idx[num] + 1
+            elif freq_count[num] == degree:
+                res = min(res, i - left_idx[num] + 1)
 
-        return ans
+        return res
 
 
 myobj = Solution()
