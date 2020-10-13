@@ -31,8 +31,8 @@ Resources:
 runtime: 
 89 / 89 test cases passed.
 	Status: Accepted
-Runtime: 252 ms
-Memory Usage: 15.3 MB
+Runtime: 216 ms
+Memory Usage: 15.2 MB
 """
 
 # Solution techniques are iterate through array multiple times to generate left, right and freq count dicts, to get max freq count and again to get min subarray len
