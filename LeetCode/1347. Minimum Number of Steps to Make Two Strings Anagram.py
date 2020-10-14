@@ -31,8 +31,14 @@ Constraints:
 
 
 Resources:
+https://leetcode.com/problems/minimum-number-of-steps-to-make-two-strings-anagram/discuss/503450/JavaPython-3-Count-occurrences-and-sum-the-difference-w-analysis.
+https://leetcode.com/problems/minimum-number-of-steps-to-make-two-strings-anagram/discuss/503535/Python-3-(two-lines)-(beats-100)
 
 runtime: 
+63 / 63 test cases passed.
+	Status: Accepted
+Runtime: 112 ms
+Memory Usage: 14.8 MB
 
 """
 
@@ -43,17 +49,11 @@ runtime:
 
 class Solution:
     def minSteps(self, s: str, t: str) -> int:
-        res = 0
+        s_freq = collections.Counter(s)
+        t_freq = collections.Counter(t)
+        freq_diff = s_freq - t_freq
 
-        freq_count_s = collections.Counter(s)
-
-        for ch in t:
-            if freq_count_s[ch] > 0:
-                freq_count_s[ch] -= 1
-            else:
-                res += 1
-
-        return res
+        return sum(max(0, freq_diff[s_chr]) for s_chr in s_freq)
 
 
 myobj = Solution()
