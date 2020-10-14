@@ -31,6 +31,7 @@ Memory Usage: 14 MB
 
 # Solution techniques are generate a list of center indexes and left and right index for each center, 
 # keep expanding leaft and right index so long as the chars at those indexes match and the indexs are within the bound 0 and len(string)
+# Alt solution using DP
 
 # Time complexity : O(n**2) Space complexity : O(1)
 
@@ -50,6 +51,44 @@ class Solution:
                 right += 1
 
         return res
+
+    # def countSubstrings(self, s: str) -> int:
+	#     L, r = len(s), 0
+	#     for i in range(L):
+	#     	for a,b in [(i,i),(i,i+1)]:
+	#     		while a >= 0 and b < L and s[a] == s[b]: a -= 1; b += 1
+	#     		r += (b-a)//2
+	#     return r
+
+    """ DP Solution """
+    # def countSubstrings(self, s):
+    # if not s:
+    #     return 0
+
+    # n = len(s)
+    # table = [[False for x in range(n)] for y in range(n)]
+    # count = 0
+
+    # # Every isolated char is a palindrome
+    # for i in range(n):
+    #     table[i][i] = True
+    #     count += 1
+
+    # # Check for a window of size 2
+    # for i in range(n-1):
+    #     if s[i] == s[i+1]:
+    #         table[i][i+1] = True
+    #         count += 1
+
+    # # Check windows of size 3 and more
+    # for k in range(3, n+1):
+    #     for i in range(n-k+1):
+    #         j = i+k-1
+    #         if table[i+1][j-1] and s[i] == s[j]:
+    #             table[i][j] = True
+    #             count += 1
+
+    # return count
 
 
 myobj = Solution()
