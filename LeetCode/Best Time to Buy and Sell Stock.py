@@ -55,4 +55,4 @@ class Solution:
 
 myobj = Solution()
 inpt = [7, 1, 5, 3, 6, 4]
-print(myobj.maxProfit(inpt))
+print(f"{myobj.maxProfit(inpt)} == 5 => {myobj.maxProfit(inpt)==5}")
