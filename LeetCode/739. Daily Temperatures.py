@@ -17,12 +17,15 @@ Note: The length of temperatures will be in the range [1, 30000]. Each temperatu
 Resources:
 
 runtime: 
-
+38 / 38 test cases passed.
+	Status: Accepted
+Runtime: 504 ms
+Memory Usage: 19.6 MB
 """
 
 # Solution techniques are
 
-# Time complexity : O() Space complexity : O()
+# Time complexity : O(n2) Space complexity : O(n) My Sol ?
 
 
 class Solution:
