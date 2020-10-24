@@ -15,17 +15,18 @@ For example, given the list of temperatures T = [73, 74, 75, 71, 69, 72, 76, 73]
 Note: The length of temperatures will be in the range [1, 30000]. Each temperature will be an integer in the range [30, 100]. 
 
 Resources:
+https://leetcode.com/problems/daily-temperatures/discuss/397728/Easy-Python-O(n)-time-O(1)-space-beat-99.9
 
 runtime: 
 38 / 38 test cases passed.
 	Status: Accepted
-Runtime: 504 ms
-Memory Usage: 19.6 MB
+Runtime: 480 ms
+Memory Usage: 18.5 MB
 """
 
 # Solution techniques are
 
-# Time complexity : O(n2) Space complexity : O(n) My Sol ?
+# Time complexity : O(n) Space complexity : O(n) Optimized Stack solution
 
 
 class Solution:
@@ -34,15 +35,11 @@ class Solution:
         res = [0] * len(T)
 
         for i, temp in enumerate(T):
-            if not seen_stack:
-                seen_stack.append((i, temp))
-            else:
-                while seen_stack and seen_stack[-1][1] < temp:
-                    old_i, old_temp = seen_stack.pop()
+            while seen_stack and temp > T[seen_stack[-1]]:
+                old_i = seen_stack.pop()
+                res[old_i] = i - old_i
 
-                    res[old_i] = i - old_i
-
-                seen_stack.append((i, temp))
+            seen_stack.append(i)
 
         return res
 
