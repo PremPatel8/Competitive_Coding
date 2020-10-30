@@ -29,7 +29,10 @@ These are the only two combinations.
 Resources:
 
 runtime: 
-
+170 / 170 test cases passed.
+	Status: Accepted
+Runtime: 100 ms
+Memory Usage: 14.2 MB
 """
 
 # Solution techniques are Backtracking / DFS
@@ -41,11 +44,11 @@ class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         res = []
 
-        self.dfs(candidates, target, [], res)
+        self.backtrack(candidates, target, [], res)
 
         return res
 
-    def dfs(self, candidates, target, curr_combination, res):
+    def backtrack(self, candidates, target, curr_combination, res):
         if target < 0:
             return
 
@@ -54,7 +57,7 @@ class Solution:
             return
 
         for i in range(len(candidates)):
-            self.dfs(candidates[i:], target-candidates[i], curr_combination+[candidates[i]], res)
+            self.backtrack(candidates[i:], target-candidates[i], curr_combination+[candidates[i]], res)
 
 
 myobj = Solution()
