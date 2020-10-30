@@ -30,33 +30,30 @@ Resources:
 runtime: 
 61 / 61 test cases passed.
 	Status: Accepted
-Runtime: 96 ms
+Runtime: 92 ms
 Memory Usage: 15.4 MB
 """
 
-# Solution techniques are DP
+# Solution techniques are Optimized DP, resusing input grid to save space
 
-# Time complexity : O(nm) Space complexity : O(nm)
+# Time complexity : O(nm) Space complexity : O(1)
 
 
 class Solution:
     def minPathSum(self, grid: List[List[int]]) -> int:
         rows = len(grid)
         columns = len(grid[0])
-        dp = [[0 for _ in range(columns)] for _ in range(rows)]
 
         for r in range(rows):
             for c in range(columns):
-                dp[r][c] += grid[r][c]
-
                 if r > 0 and c > 0:
-                    dp[r][c] += min(dp[r-1][c], dp[r][c-1])
+                    grid[r][c] += min(grid[r-1][c], grid[r][c-1])
                 elif r > 0:
-                    dp[r][c] += dp[r-1][c]
+                    grid[r][c] += grid[r-1][c]
                 elif c > 0:
-                    dp[r][c] += dp[r][c-1]
+                    grid[r][c] += grid[r][c-1]
 
-        return dp[-1][-1]
+        return grid[-1][-1]
 
 
 myobj = Solution()
