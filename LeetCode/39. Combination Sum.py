@@ -39,18 +39,22 @@ runtime:
 
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
-        ret = []
-        self.dfs(candidates, target, [], ret)
-        return ret
+        res = []
 
-    def dfs(self, nums, target, path, ret):
+        self.dfs(candidates, target, [], res)
+
+        return res
+
+    def dfs(self, candidates, target, curr_combination, res):
         if target < 0:
             return
+
         if target == 0:
-            ret.append(path)
+            res.append(curr_combination)
             return
-        for i in range(len(nums)):
-            self.dfs(nums[i:], target-nums[i], path+[nums[i]], ret)
+
+        for i in range(len(candidates)):
+            self.dfs(candidates[i:], target-candidates[i], curr_combination+[candidates[i]], res)
 
 
 myobj = Solution()
