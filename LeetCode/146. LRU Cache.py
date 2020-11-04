@@ -54,6 +54,8 @@ Constraints:
 
 
 Resources:
+https://leetcode.com/problems/lru-cache/discuss/45952/Python-concise-solution-with-comments-(Using-OrderedDict).
+https://leetcode.com/problems/lru-cache/discuss/45926/Python-Dict-%2B-Double-LinkedList
 
 runtime: 
 18 / 18 test cases passed.
@@ -83,7 +85,7 @@ class LRUCache:
 
     def put(self, key: int, value: int) -> None:
         if key in self.keyDict:
-            self.keyDict.move_to_end(key)
+            del self.keyDict[key]
         else:
             if len(self.keyDict) >= self.capacity:
                 self.keyDict.popitem(last=False)
