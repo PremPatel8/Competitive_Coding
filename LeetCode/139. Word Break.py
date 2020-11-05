@@ -33,7 +33,8 @@ Memory Usage: 14.2 MB
 
 # Solution techniques are DP array
 
-# Time complexity : O(n) Space complexity : O(n)
+# Time complexity : O(s^2*k) or(s^3)  Space complexity : O(n)
+#  String loop + word loop + slicing/comparison (takes s time each), k = number of words
 
 """ 
 ["cats", "dog", "sand", "and", "cat"]
@@ -50,7 +51,7 @@ class Solution:
 
         for i in range(len(s)):
             for word in wordDict:
-                # does the word end at this index AND (did a word end before the start of current word OR does this curr word start from the beginning of the string)
+                # does the current word end at this index AND (did a word end before the start of current word OR does this current word start from the beginning of the string)
                 if word == s[i-len(word)+1 : i+1] and (dp[i-len(word)] or i-len(word) == -1):
                     dp[i] = True
 
