@@ -33,8 +33,7 @@ Memory Usage: 14.2 MB
 
 # Solution techniques are DP array
 
-# Time complexity : O(s^2*k) or(s^3)  Space complexity : O(n)
-#  String loop + word loop + slicing/comparison (takes s time each), k = number of words
+# Time complexity : O()  Space complexity : O()
 
 """ 
 ["cats", "dog", "sand", "and", "cat"]
@@ -47,21 +46,24 @@ F F F F F F F F F
 
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
-        dp = [False] * len(s)
+        strLen = len(s)
+        wordDict = set(wordDict)
+        dp = [False] * (strLen+1) # dp[i] means s[:i+1] can be segmented into words in the wordDicts
+        dp[0] = True
 
-        for i in range(len(s)):
-            for word in wordDict:
-                # does the current word end at this index AND (did a word end before the start of current word OR does this current word start from the beginning of the string)
-                if word == s[i-len(word)+1 : i+1] and (dp[i-len(word)] or i-len(word) == -1):
-                    dp[i] = True
+        for i in range(strLen):
+            if dp[i]:
+                for j in range(i, strLen):
+                    if dp[i] and s[i: j+1] in wordDict:
+                        dp[j+1] = True
 
         return dp[-1]
 
 
 myobj = Solution()
-# s = "catsandog"
-# wordDict = ["cats", "dog", "sand", "and", "cat"]
+s = "catsandog"
+wordDict = ["cats", "dog", "sand", "and", "cat"]
 
-s = "leetcode"
-wordDict = ["leet", "code"]
+# s = "leetcode"
+# wordDict = ["leet", "code"]
 print(myobj.wordBreak(s, wordDict))
