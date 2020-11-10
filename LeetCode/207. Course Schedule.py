@@ -1,5 +1,6 @@
 from typing import List
-from collections import defaultdict
+from collections import deque
+
 
 """
 Problem Name: 207. Course Schedule
@@ -47,27 +48,29 @@ Memory Usage: 15.1 MB
 
 
 class Solution:
+    # Algorithm: BFS Topological Sorting
+    # Time: O(E + V)
+    # Space: O(E + V)
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        G = [[] for i in range(numCourses)]
-        degree = [0] * numCourses
+        graph = [[] for _ in range(numCourses)]
+        indegree = [0, ] * numCourses
 
-        for j, i in prerequisites:
-            G[i].append(j)
-            degree[j] += 1
+        for to_, from_ in prerequisites:
+            graph[from_].append(to_)
+            indegree[to_] += 1
 
-        bfs = [i for i in range(numCourses) if degree[i] == 0]
+        queue = deque(v for v in range(numCourses) if indegree[v] == 0)
+        n = len(queue)
 
-        # print(f"bfs = {bfs}")
-        # print(f"degree = {degree}")
-        # print(f"G = {G}")
+        while queue and n != numCourses:
+            v = queue.popleft()
+            for to_ in graph[v]:
+                indegree[to_] -= 1
+                if indegree[to_] == 0:
+                    n += 1
+                    queue.append(to_)
 
-        for i in bfs:
-            for j in G[i]:
-                degree[j] -= 1
-                if degree[j] == 0:
-                    bfs.append(j)
-
-        return len(bfs) == numCourses
+        return n == numCourses
 
 
 myobj = Solution()
