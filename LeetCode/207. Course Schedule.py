@@ -34,6 +34,7 @@ Constraints:
 
 Resources:
 https://youtu.be/2l22FRtU45M?list=TLPQMDkxMTIwMjAsLK6Zf6XLXg&t=847
+https://leetcode.com/problems/course-schedule/discuss/441722/Python-99-time-and-100-space.-Collection-of-solutions-with-explanation
 
 runtime: 
 46 / 46 test cases passed.
