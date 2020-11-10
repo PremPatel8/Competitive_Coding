@@ -41,46 +41,38 @@ Runtime: 580 ms
 Memory Usage: 15.1 MB
 """
 
-# Solution techniques are Kahn's algorithm
+# Solution techniques are Optimized BFS Kahn's algorithm
 
-# Time complexity : O(N+E) Space complexity : O(N)?
+# Time complexity : O(V+E) Space complexity : O(V+E)
 
 
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        inDegree = [0]*numCourses
-        zeroDegree = set()
+        G = [[] for i in range(numCourses)]
+        degree = [0] * numCourses
 
-        for i, j in prerequisites:
-            inDegree[i] += 1
+        for j, i in prerequisites:
+            G[i].append(j)
+            degree[j] += 1
 
-        for i in range(numCourses):
-            if inDegree[i] == 0:
-                zeroDegree.add(i)
+        bfs = [i for i in range(numCourses) if degree[i] == 0]
 
-        if len(zeroDegree) == 0:
-            return False
+        # print(f"bfs = {bfs}")
+        # print(f"degree = {degree}")
+        # print(f"G = {G}")
 
-        while zeroDegree:
-            course = zeroDegree.pop()
+        for i in bfs:
+            for j in G[i]:
+                degree[j] -= 1
+                if degree[j] == 0:
+                    bfs.append(j)
 
-            for i, j in prerequisites:
-                if course == j:
-                    inDegree[i] -= 1
-
-                    if inDegree[i] == 0:
-                        zeroDegree.add(i)
-
-        for num in inDegree:
-            if num != 0:
-                return False
-
-        return True
+        return len(bfs) == numCourses
 
 
 myobj = Solution()
 numCourses = 2
-prerequisites = [[1, 0], [0, 1]]
-# prerequisites = [[1, 0]]
+# prerequisites = [[1, 0], [0, 1]]
+prerequisites = [[1, 0]]
 
 print(myobj.canFinish(numCourses, prerequisites))
