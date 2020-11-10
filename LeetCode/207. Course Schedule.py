@@ -42,35 +42,46 @@ Runtime: 580 ms
 Memory Usage: 15.1 MB
 """
 
-# Solution techniques are Optimized BFS Kahn's algorithm
+# Solution techniques are DFS Solution
 
 # Time complexity : O(V+E) Space complexity : O(V+E)
 
 
 class Solution:
-    # Algorithm: BFS Topological Sorting
-    # Time: O(E + V)
-    # Space: O(E + V)
-    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+    def canFinish(self, numCourses, prerequisites):
+        """
+        :type numCourses: int
+        :type prerequisites: List[List[int]]
+        :rtype: bool
+        """
         graph = [[] for _ in range(numCourses)]
-        indegree = [0, ] * numCourses
-
-        for to_, from_ in prerequisites:
-            graph[from_].append(to_)
-            indegree[to_] += 1
-
-        queue = deque(v for v in range(numCourses) if indegree[v] == 0)
-        n = len(queue)
-
-        while queue and n != numCourses:
-            v = queue.popleft()
-            for to_ in graph[v]:
-                indegree[to_] -= 1
-                if indegree[to_] == 0:
-                    n += 1
-                    queue.append(to_)
-
-        return n == numCourses
+        visited = [0 for _ in range(numCourses)]
+        # create graph
+        for pair in prerequisites:
+            x, y = pair
+            graph[x].append(y)
+        # visit each node
+        for i in range(numCourses):
+            if not self.dfs(graph, visited, i):
+                return False
+        return True
+    
+    def dfs(self, graph, visited, i):
+        # if ith node is marked as being visited, then a cycle is found
+        if visited[i] == -1:
+            return False
+        # if it is done visted, then do not visit again
+        if visited[i] == 1:
+            return True
+        # mark as being visited
+        visited[i] = -1
+        # visit all the neighbours
+        for j in graph[i]:
+            if not self.dfs(graph, visited, j):
+                return False
+        # after visit all the neighbours, mark it as done visited
+        visited[i] = 1
+        return True
 
 
 myobj = Solution()
