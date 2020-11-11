@@ -157,45 +157,24 @@ class Solution:
 # if yes then print out one of all the orders.
 
     """ 46 / 46 test cases passed.
-        Status: Accepted
-    Runtime: 84 ms
-    Memory Usage: 15.2 MB """
+	Status: Accepted
+Runtime: 88 ms
+Memory Usage: 15.3 MB """
 
-    def topoBFS(self, numNodes, edgesList):
-        # Note: for consistency with other solutions above, we keep building
-        # an adjacency list here. We can also merge this step with the next step.
-        adjList = self.buildAdjacencyList(numNodes, edgesList)
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        adjList = [[] for _ in range(numCourses)]
+        inDegrees = [0] * numCourses
 
-        # 1. A list stores No. of incoming edges of each vertex
-        inDegrees = [0] * numNodes
-        for v1, v2 in edgesList:
-            # v2v1 form a directed edge
-            inDegrees[v1] += 1
+        for c1, c2 in prerequisites:
+            adjList[c2].append(c1)
+            inDegrees[c1] += 1
 
-        # 2. a queue of all vertices with no incoming edge
-        # at least one such node must exist in a non-empty acyclic graph
-        # vertices in this queue have the same order as the eventual topological
-        # sort
-        queue = []
-        for v in range(numNodes):
-            if inDegrees[v] == 0:
-                queue.append(v)
-
-        # initialize count of visited vertices
-        count = 0
-        # an empty list that will contain the final topological order
-        topoOrder = []
+        queue = deque(v for v in range(numCourses) if inDegrees[v] == 0)
+        visited = 0
 
         while queue:
-            # a. pop a vertex from front of queue
-            # depending on the order that vertices are removed from queue,
-            # a different solution is created
-            v = queue.pop(0)
-            # b. append it to topoOrder
-            topoOrder.append(v)
-
-            # increase count by 1
-            count += 1
+            v = queue.popleft()
+            visited += 1
 
             # for each descendant of current vertex, reduce its in-degree by 1
             for des in adjList[v]:
@@ -204,13 +183,7 @@ class Solution:
                 if inDegrees[des] == 0:
                     queue.append(des)
 
-        if count != numNodes:
-            return None  # graph has at least one cycle
-        else:
-            return topoOrder
-
-    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        return True if self.topoBFS(numCourses, prerequisites) else False
+        return visited == numCourses
 
 
 myobj = Solution()
