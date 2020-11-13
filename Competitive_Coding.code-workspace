@@ -11,6 +11,7 @@
 			"**/.project": true,
 			"**/.settings": true,
 			"**/.factorypath": true
-		}
+		},
+		"python.pythonPath": "C:\\Users\\PremP\\AppData\\Local\\Programs\\Python\\Python39\\python.exe"
 	}
 }
