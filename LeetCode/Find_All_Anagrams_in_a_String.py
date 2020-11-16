@@ -35,7 +35,7 @@ https://leetcode.com/problems/find-all-anagrams-in-a-string/discuss/92007/Slidin
 runtime:
 36 / 36 test cases passed.
 	Status: Accepted
-Runtime: 92 ms
+Runtime: 88 ms
 Memory Usage: 15.1 MB
 
 """
@@ -78,20 +78,28 @@ class Solution:
         return res """
 
     def findAnagrams(self, s: str, p: str) -> List[int]:
-        p_dict = defaultdict(int)
         result = []
+        p_len = len(p)
+        s_len = len(s)
+
+        if p_len > s_len:
+            return result
+
+        p_dict = defaultdict(int)
 
         for chr in p:
             p_dict[chr] += 1
 
         start = end = 0
 
-        while end < len(s):
-            if s[end] in p_dict and p_dict[s[end]] > 0:
-                p_dict[s[end]] -= 1
+        while end < s_len:
+            ch = s[end]
+
+            if ch in p_dict and p_dict[ch] > 0:
+                p_dict[ch] -= 1
                 end += 1
 
-                if end-start == len(p):
+                if end-start == p_len:
                     result.append(start)
 
             elif start == end:
