@@ -30,14 +30,19 @@ The substring with start index = 6 is "bac", which is an anagram of "abc".
 
 Resources:
 https://leetcode.com/problems/find-all-anagrams-in-a-string/discuss/636988/Sliding-Window-or-HashTable-or-Java-Explained-with-Diagram-Beats-99
+https://leetcode.com/problems/find-all-anagrams-in-a-string/discuss/92007/Sliding-Window-algorithm-template-to-solve-all-the-Leetcode-substring-search-problem.
 
 runtime:
+36 / 36 test cases passed.
+	Status: Accepted
+Runtime: 92 ms
+Memory Usage: 15.1 MB
 
 """
 
 # Solution techniques are
 
-# Time complexity : O(S) Space complexity : O(1)
+# Time complexity : O(n) Space complexity : O(1)
 """ Time Complexity - O(S)
 Each array element element would be traversed at most twice . First time by windowEnd to decrement the value, then by windowStart to increment . Best case would be when none of the array elements are part of anagram.
 eg - P = 'abc' S = 'xyzr' . Here, both windowEnd and windowStart would be incremented at same time.
