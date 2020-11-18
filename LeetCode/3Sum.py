@@ -1,6 +1,33 @@
 from typing import List
 import collections
 
+"""
+Problem Name: 15. 3Sum
+
+Problem URL: https://leetcode.com/problems/3sum/
+
+Problem Section: Array, 2 pointers
+
+Problem Statement:
+Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
+
+Notice that the solution set must not contain duplicate triplets.
+
+Example 1:
+Input: nums = [-1,0,1,2,-1,-4]
+Output: [[-1,-1,2],[-1,0,1]]
+
+Resources:
+
+runtime: 
+
+"""
+
+# Solution techniques are
+
+# Time complexity : O() Space complexity : O()
+
+
 # Solution using 2 pointer
 # class Solution:
 #     def threeSum(self, nums: List[int]) -> List[List[int]]:
@@ -37,7 +64,43 @@ import collections
 
 #         return output
 
-# Solution using Dict / Hash Map / Set
+""" 318 / 318 test cases passed.
+       Status: Accepted
+       Runtime: 832 ms
+       Memory Usage: 17.3 MB """
+""" Two pointer approach """
+
+# def threeSum(self, nums: List[int]) -> List[List[int]]:
+#     res = []
+#     nums.sort()
+
+#     for i in range(len(nums)-2):
+#         if i > 0 and nums[i] == nums[i-1]:
+#             continue
+
+#         left_idx, right_idx = i+1, len(nums)-1
+
+#         while left_idx < right_idx:
+#             s = nums[i] + nums[left_idx] + nums[right_idx]
+
+#             if s < 0:
+#                 left_idx += 1
+#             elif s > 0:
+#                 right_idx -= 1
+#             else:
+#                 res.append([nums[i], nums[left_idx], nums[right_idx]])
+#                 while left_idx < right_idx and nums[left_idx] == nums[left_idx+1]:
+#                     left_idx += 1
+#                 while left_idx < right_idx and nums[right_idx] == nums[right_idx-1]:
+#                     right_idx -= 1
+
+#                 left_idx += 1
+#                 right_idx -= 1
+
+#     return res
+
+
+# Solution using Dict / Hash Map and Set
 
 """ 318 / 318 test cases passed.
 	Status: Accepted
@@ -79,41 +142,6 @@ class Solution:
                     ans.append([sorted_keys[i], sorted_keys[j], num])
 
         return ans
-
-    """ 318 / 318 test cases passed.
-    Status: Accepted
-    Runtime: 832 ms
-    Memory Usage: 17.3 MB """
-    """ Two pointer approach """
-
-    # def threeSum(self, nums: List[int]) -> List[List[int]]:
-    #     res = []
-    #     nums.sort()
-
-    #     for i in range(len(nums)-2):
-    #         if i > 0 and nums[i] == nums[i-1]:
-    #             continue
-
-    #         left_idx, right_idx = i+1, len(nums)-1
-
-    #         while left_idx < right_idx:
-    #             s = nums[i] + nums[left_idx] + nums[right_idx]
-
-    #             if s < 0:
-    #                 left_idx += 1
-    #             elif s > 0:
-    #                 right_idx -= 1
-    #             else:
-    #                 res.append([nums[i], nums[left_idx], nums[right_idx]])
-    #                 while left_idx < right_idx and nums[left_idx] == nums[left_idx+1]:
-    #                     left_idx += 1
-    #                 while left_idx < right_idx and nums[right_idx] == nums[right_idx-1]:
-    #                     right_idx -= 1
-
-    #                 left_idx += 1
-    #                 right_idx -= 1
-
-    #     return res
 
 
 myobj = Solution()
