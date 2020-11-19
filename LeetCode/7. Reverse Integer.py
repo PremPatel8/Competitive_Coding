@@ -29,11 +29,11 @@ Space Complexity: O(1).
 
 # Solution techniques are
 
-# Time complexity : O() Space complexity : O() sol with better syntax
+# Time complexity : O() Space complexity : O()
 
 
 class Solution:
-    def reverse(self, x: int) -> int:
+    """ def reverse(self, x: int) -> int:
         res = 0
         sign = -1 if x < 0 else 1
         x = abs(x)
@@ -42,7 +42,19 @@ class Solution:
             res = res * 10 + x % 10
             x //= 10
 
-        return 0 if res > pow(2, 31) else sign*res
+        return 0 if res > pow(2, 31) else sign*res """
+
+    # String reverse sol
+    def reverse(self, x: int) -> int:
+        sign = -1 if x < 0 else 1
+        x = abs(x)
+        res = 0
+
+        rev_str_x = str(x)[::-1]
+        res = int(rev_str_x)
+
+        return 0 if res > pow(2, 31) else res * sign
+        # return res*sign if -(2**31)-1 < res < 2**31 else 0
 
 
 myobj = Solution()
