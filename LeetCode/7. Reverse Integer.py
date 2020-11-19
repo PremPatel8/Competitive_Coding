@@ -15,6 +15,8 @@ Assume we are dealing with an environment that could only store integers within 
 For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.
 
 Resources:
+https://leetcode.com/problems/reverse-integer/discuss/4527/A-Python-solution-O(n)-58ms
+https://leetcode.com/problems/reverse-integer/discuss/132861/3-lines-Python-Solution
 
 runtime: 
 1032 / 1032 test cases passed.
