@@ -29,7 +29,7 @@ Space Complexity: O(1).
 
 # Solution techniques are
 
-# Time complexity : O() Space complexity : O()
+# Time complexity : O() Space complexity : O() sol with better syntax
 
 
 class Solution:
@@ -39,16 +39,10 @@ class Solution:
         x = abs(x)
 
         while x != 0:
-            pop = x % 10
-            newRes = res*10 + pop
+            res = res * 10 + x % 10
+            x //= 10
 
-            if newRes > (2**31-1) or newRes < (-2**31):
-                return 0
-
-            res = newRes
-            x = x // 10
-
-        return sign*res
+        return 0 if res > pow(2, 31) else sign*res
 
 
 myobj = Solution()
