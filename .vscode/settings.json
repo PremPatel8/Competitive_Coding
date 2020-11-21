@@ -11,7 +11,8 @@
         "-s",
         "./tests",
         "-p",
-        "test_*.py"
+        "test_*.py",
+        "*.py"
     ],
     "python.testing.pytestArgs": [
         "LeetCode"
