@@ -1,5 +1,4 @@
 from typing import List
-import pytest
 
 """
 Problem Name: 7. Reverse Integer
@@ -67,5 +66,17 @@ class Solution:
 # inpt = 0  # output = 0
 # print(myobj.reverse(inpt))
 
-def test_reverse():
+def test_reverse_positive_integer():
     assert Solution().reverse(123) == 321
+
+
+def test_reverse_negative_integer():
+    assert Solution().reverse(-123) == -321
+
+
+def test_reverse_integer_zero_end():
+    assert Solution().reverse(120) == 21
+
+
+def test_reverse_0():
+    assert Solution().reverse(0) == 0
