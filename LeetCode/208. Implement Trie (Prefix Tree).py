@@ -31,6 +31,7 @@ Resources:
 https://leetcode.com/problems/implement-trie-prefix-tree/discuss/58834/AC-Python-Solution
 https://medium.com/@info.gildacademy/a-simpler-way-to-implement-trie-data-structure-in-python-efa6a958a4f2
 https://albertauyeung.github.io/2020/06/15/python-trie.html
+https://leetcode.com/problems/implement-trie-prefix-tree/discuss/58953/AC-Python-solution-using-defaultdict
 
 runtime:
 15 / 15 test cases passed.
@@ -72,9 +73,9 @@ class Trie:
         for ch in word:
             if ch not in curr.children:
                 return False
-            curr = curr.children.get(ch)
+            curr = curr.children[ch]
 
-        return True if curr and curr.word_end else False
+        return curr.word_end
 
     def startsWith(self, prefix: str) -> bool:
         curr = self.root
@@ -82,7 +83,7 @@ class Trie:
         for ch in prefix:
             if ch not in curr.children:
                 return False
-            curr = curr.children.get(ch)
+            curr = curr.children[ch]
 
         return True
 
