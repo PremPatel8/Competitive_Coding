@@ -33,44 +33,58 @@ https://medium.com/@info.gildacademy/a-simpler-way-to-implement-trie-data-struct
 https://albertauyeung.github.io/2020/06/15/python-trie.html
 https://leetcode.com/problems/implement-trie-prefix-tree/discuss/58953/AC-Python-solution-using-defaultdict
 https://leetcode.com/problems/implement-trie-prefix-tree/discuss/58927/Compact-Python-solution
+https://leetcode.com/problems/implement-trie-prefix-tree/discuss/362916/Simple-Python-solution-(beats-99-runtime-95-memory)
+https://www.kite.com/python/answers/how-to-create-a-trie-in-python
+https://www.geeksforgeeks.org/trie-insert-and-search/
 
 runtime:
 15 / 15 test cases passed.
 	Status: Accepted
-Runtime: 136 ms
-Memory Usage: 27.8 MB
+Runtime: 232 ms
+Memory Usage: 33.8 MB
 
 """
 
-# Solution techniques are efficient nested dict solution
+# Solution techniques are alt size 26 char array sol
 
-# Time complexity : O() Space complexity : O()
+# Time complexity : O(M) Space complexity : O()
+# where M is maximum string length and N is number of keys in tree
+# If we store keys in binary search tree, a well balanced BST will need time proportional to M * log N
+
+
+class TrieNode:
+
+    def __init__(self):
+        self.children = [None]*26
+        self.word_end = False
 
 
 class Trie:
 
     def __init__(self):
-        self.root = {}
+        self.root = TrieNode()
 
     def insert(self, word: str) -> None:
         curr = self.root
 
-        for letter in word:
-            if letter not in curr:
-                curr[letter] = {}
-            curr = curr[letter]
+        for i, letter in enumerate(word):
+            index = ord(letter)-ord('a')
+            if not curr.children[index]:
+                curr.children[index] = TrieNode()
+            curr = curr.children[index]
 
-        curr["."] = True
+        curr.word_end = True
 
     def search(self, word: str, word_search=True) -> bool:
         curr = self.root
 
-        for letter in word:
-            if letter not in curr:
+        for i, letter in enumerate(word):
+            index = ord(letter)-ord('a')
+            if not curr.children[index]:
                 return False
-            curr = curr[letter]
+            curr = curr.children[index]
 
-        return "." in curr if word_search else True
+        return curr.word_end if word_search else True
 
     def startsWith(self, prefix: str) -> bool:
         return self.search(prefix, False)
