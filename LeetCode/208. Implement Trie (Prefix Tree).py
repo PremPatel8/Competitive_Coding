@@ -67,7 +67,7 @@ class Trie:
     def insert(self, word: str) -> None:
         curr = self.root
 
-        for i, letter in enumerate(word):
+        for letter in word:
             index = ord(letter)-ord('a')
             if not curr.children[index]:
                 curr.children[index] = TrieNode()
@@ -78,7 +78,7 @@ class Trie:
     def search(self, word: str, word_search=True) -> bool:
         curr = self.root
 
-        for i, letter in enumerate(word):
+        for letter in word:
             index = ord(letter)-ord('a')
             if not curr.children[index]:
                 return False
