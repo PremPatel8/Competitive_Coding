@@ -37,46 +37,40 @@ https://leetcode.com/problems/implement-trie-prefix-tree/discuss/58927/Compact-P
 runtime:
 15 / 15 test cases passed.
 	Status: Accepted
-Runtime: 164 ms
-Memory Usage: 33.2 MB
+Runtime: 136 ms
+Memory Usage: 27.8 MB
 
 """
 
-# Solution techniques are defaultdict sol with compact startsWith function
+# Solution techniques are efficient nested dict solution
 
 # Time complexity : O() Space complexity : O()
-
-
-class TrieNode():
-
-    def __init__(self):
-        self.children = defaultdict(TrieNode)
-        self.word_end = False
 
 
 class Trie:
 
     def __init__(self):
-        self.root = TrieNode()
+        self.root = {}
 
     def insert(self, word: str) -> None:
         curr = self.root
 
-        for ch in word:
-            # If ch not in children defaultdict will create a new TrieNode automatically
-            curr = curr.children[ch]
+        for letter in word:
+            if letter not in curr:
+                curr[letter] = {}
+            curr = curr[letter]
 
-        curr.word_end = True
+        curr["."] = True
 
     def search(self, word: str, word_search=True) -> bool:
         curr = self.root
 
-        for ch in word:
-            if ch not in curr.children:
+        for letter in word:
+            if letter not in curr:
                 return False
-            curr = curr.children[ch]
+            curr = curr[letter]
 
-        return curr.word_end if word_search else True
+        return "." in curr if word_search else True
 
     def startsWith(self, prefix: str) -> bool:
         return self.search(prefix, False)
