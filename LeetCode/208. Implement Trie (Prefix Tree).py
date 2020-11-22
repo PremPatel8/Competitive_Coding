@@ -28,16 +28,19 @@ All inputs are guaranteed to be non-empty strings.
 
 
 Resources:
+https://leetcode.com/problems/implement-trie-prefix-tree/discuss/58834/AC-Python-Solution
+https://medium.com/@info.gildacademy/a-simpler-way-to-implement-trie-data-structure-in-python-efa6a958a4f2
+https://albertauyeung.github.io/2020/06/15/python-trie.html
 
 runtime:
 15 / 15 test cases passed.
 	Status: Accepted
-Runtime: 200 ms
-Memory Usage: 33.3 MB
+Runtime: 164 ms
+Memory Usage: 33.2 MB
 
 """
 
-# Solution techniques are My Solution using Dict
+# Solution techniques are defaultdict small optimized sol
 
 # Time complexity : O() Space complexity : O()
 
@@ -45,7 +48,7 @@ Memory Usage: 33.3 MB
 class TrieNode():
 
     def __init__(self):
-        self.children = defaultdict()
+        self.children = defaultdict(TrieNode)
         self.word_end = False
 
 
@@ -55,32 +58,31 @@ class Trie:
         self.root = TrieNode()
 
     def insert(self, word: str) -> None:
-        root = self.root
+        curr = self.root
 
         for ch in word:
-            if ch not in root.children:
-                root.children[ch] = TrieNode()
-            root = root.children.get(ch)
+            # If ch not in children defaultdict will create a new TrieNode automatically
+            curr = curr.children[ch]
 
-        root.word_end = True
+        curr.word_end = True
 
     def search(self, word: str) -> bool:
-        root = self.root
+        curr = self.root
 
         for ch in word:
-            if ch not in root.children:
+            if ch not in curr.children:
                 return False
-            root = root.children.get(ch)
+            curr = curr.children.get(ch)
 
-        return True if root and root.word_end else False
+        return True if curr and curr.word_end else False
 
     def startsWith(self, prefix: str) -> bool:
-        root = self.root
+        curr = self.root
 
         for ch in prefix:
-            if ch not in root.children:
+            if ch not in curr.children:
                 return False
-            root = root.children.get(ch)
+            curr = curr.children.get(ch)
 
         return True
 
