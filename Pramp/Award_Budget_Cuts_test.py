@@ -1,11 +1,9 @@
 def find_grants_cap(grantsArray, newBudget):
     grantsArray.sort(reverse=True)
     grantsArray.append(0)
-    grantsArrSum = sum(grantsArray)
-    # grantsArrayLen = len(grantsArray)
     grantsAffectedSum = 0
 
-    surplus = grantsArrSum-newBudget
+    surplus = sum(grantsArray)-newBudget
 
     if surplus <= 0:
         return grantsArray[0]
@@ -13,14 +11,14 @@ def find_grants_cap(grantsArray, newBudget):
     grantsAffectedSum += grantsArray[0]
 
     for i, grant in enumerate(grantsArray[1:], start=1):
-        newGrantsSum = grantsAffectedSum - i*grant
+        reductionAmtAffectedGrants = grantsAffectedSum - i*grant
 
-        updatedSumDelta = grantsArrSum-newGrantsSum
+        newSurplus = surplus-reductionAmtAffectedGrants
 
-        if updatedSumDelta - newBudget <= 0:
-            diff = newBudget-updatedSumDelta
+        if newSurplus <= 0:
+            moneyLeft = abs(newSurplus)
 
-            return grant + (abs(diff) / float(i))
+            return grant + (abs(moneyLeft) / float(i))
 
         grantsAffectedSum += grant
 
