@@ -1,3 +1,10 @@
+"""
+Time Complexity: sorting the grants array takes O(N⋅log(N)), calculating the surplus is O(N) due to the grants summation, 
+and finally the for loop takes another O(N). In total, the time complexity is O(N⋅log(N)) before sorting and O(N) after sorting.
+Space Complexity: throughout the algorithm we used only a constant amount of auxiliary space. The space complexity is therefore O(1).
+"""
+
+
 def find_grants_cap(grantsArray, newBudget):
     grantsArray.sort(reverse=True)
     grantsArray.append(0)
@@ -5,19 +12,25 @@ def find_grants_cap(grantsArray, newBudget):
 
     surplus = sum(grantsArray)-newBudget
 
+    # if surplus is less than or equal to 0 then we can directly use the largest grant value as cap
     if surplus <= 0:
         return grantsArray[0]
 
+    # this variable will keep the running total of all the original grant values that will be affected by the temp new cap
     grantsAffectedSum += grantsArray[0]
 
     for i, grant in enumerate(grantsArray[1:], start=1):
+        # this variable will have the total amount we reduce the affected grants by when we choose the current grant as the cap
         reductionAmtAffectedGrants = grantsAffectedSum - i*grant
 
-        newSurplus = surplus-reductionAmtAffectedGrants
+        # the surplus amount left after subtracting the affected grants total reduction amount
+        surplusLeft = surplus-reductionAmtAffectedGrants
 
-        if newSurplus <= 0:
-            moneyLeft = abs(newSurplus)
+        if surplusLeft <= 0:
+            # the amount of money we are leaving on the table if we make the max cap as the current grant value
+            moneyLeft = abs(surplusLeft)
 
+            # we divide the money that is left by the number of affected grants and add it to the current grant which is the lower bound on the cap value
             return grant + (moneyLeft / float(i))
 
         grantsAffectedSum += grant
