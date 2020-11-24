@@ -5,7 +5,7 @@ Space Complexity: throughout the algorithm we used only a constant amount of aux
 """
 
 
-def find_grants_cap(grantsArray, newBudget):
+""" def find_grants_cap(grantsArray, newBudget):
     grantsArray.sort(reverse=True)
     grantsArray.append(0)
     grantsAffectedSum = 0
@@ -33,30 +33,49 @@ def find_grants_cap(grantsArray, newBudget):
             # we divide the money that is left by the number of affected grants and add it to the current grant which is the lower bound on the cap value
             return grant + (moneyLeft / float(i))
 
-        grantsAffectedSum += grant
+        grantsAffectedSum += grant """
 
 
-""" def find_grants_cap(grantsArray, newBudget):
-    n = len(grantsArray)
+""" 
+E.g:
 
+  2+45, 2+45, 2+45, 2+45, 2, 0 - if 2+45 = 47 is cap
+  2,  2,   2,   2,  2, 0 - if 2 was cap
+ 50,  50,  50,  50, 2, 0 - if 50 was cap
+100,  100, 100, 50, 2, 0 - if 100 was cap
+120,  120, 100, 50, 2, 0 - if 120 was cap
+1000, 120, 100, 50, 2, 0 - Original grants array without 0
+
+"""
+
+
+def find_grants_cap(grantsArray, newBudget):
     grantsArray.sort(reverse=True)
 
     grantsArray.append(0)
+
+    grantsArrLen = len(grantsArray)
 
     surplus = sum(grantsArray) - newBudget
 
     if (surplus <= 0):
         return grantsArray[0]
 
-    i = 0
-    for j in range(n):
-        i = j
-        surplus -= (j+1) * (grantsArray[j] - grantsArray[j+1])
+    j = 0
+
+    for i in range(grantsArrLen-1):
+        # starting from grantsArray[i+1] that is considering value as index 1 as max cap
+        # Take the delta with left value at index i
+        # Multiply delta with the number of grants that will be affected by new cap which is i+1 and subtract this total amount from the surplus
+        surplus -= (i+1) * (grantsArray[i] - grantsArray[i+1])
 
         if (surplus <= 0):
+            # when the remaining surplus value becomes less than or equal to 0 we have found the index of the grant which is the lower bound of the cap value which is at i+1
+            j = i
             break
 
-    return grantsArray[i+1] + (-surplus / float(i+1)) """
+    # the abs(surplus) is the amount of money left on the table, we divide it by the number of affected grants and add it to cap grant
+    return grantsArray[j+1] + (abs(surplus) / float(j+1))
 
 
 # res = find_grants_cap(
