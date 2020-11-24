@@ -18,7 +18,7 @@ def find_grants_cap(grantsArray, newBudget):
         if newSurplus <= 0:
             moneyLeft = abs(newSurplus)
 
-            return grant + (abs(moneyLeft) / float(i))
+            return grant + (moneyLeft / float(i))
 
         grantsAffectedSum += grant
 
