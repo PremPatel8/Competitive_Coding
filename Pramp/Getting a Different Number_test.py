@@ -19,9 +19,9 @@ def get_different_number(arr):
         temp = arr[i]
 
         while temp < arrLen and arr[temp] != temp:
-            tmp = arr[temp]
-            arr[temp] = temp
-            temp = tmp
+            arr[temp], temp = temp, arr[temp]
+            # Fails:
+            # temp, arr[temp] = arr[temp], temp
 
     for i in range(arrLen):
         if arr[i] != i:
