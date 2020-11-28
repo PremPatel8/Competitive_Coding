@@ -5,6 +5,9 @@
 5: 10, 3 - 2.154
 6: 160, 3 - 5.429 """
 
+# Binary Search approach
+# Time Complexity - O(log x), Space Complexity - O(1)
+
 
 def root(x, n):
     if x*n == 0:
@@ -12,12 +15,13 @@ def root(x, n):
 
     lowerBound = 0
     upperBound = max(1, x)
-    approxRoot = (upperBound + lowerBound) / 2
+
+    approxRoot = float(upperBound + lowerBound) / 2
 
     while (approxRoot - lowerBound >= 0.001):
-        if ((approxRoot**n) > x):
+        if (pow(approxRoot, n) > x):
             upperBound = approxRoot
-        elif ((approxRoot**n) < x):
+        elif (pow(approxRoot, n) < x):
             lowerBound = approxRoot
         else:
             break
@@ -27,7 +31,7 @@ def root(x, n):
     return approxRoot
 
 
-def root1(a, n):
+""" def root1(a, n):
     if a * n == 0:
         return 0
     x0, x1 = a, 0
@@ -36,7 +40,8 @@ def root1(a, n):
         if x0 == x1:
             break
         x0 = x1
-    return x0
+    return x0 """
 
 
-print(root(7, 3))
+# print(root(7, 3))
+print(root(3, 2))
