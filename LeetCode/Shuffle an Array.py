@@ -22,11 +22,17 @@ Resources:
 runtime: 
 10 / 10 test cases passed.
 	Status: Accepted
-Runtime: 284 ms
-Memory Usage: 19.4 MB
+Runtime: 340 ms
+Memory Usage: 19.6 MB
 """
 
-# Solution techniques are
+# Solution techniques are Fisher-Yates Algorithm
+""" The Fisher-Yates algorithm is remarkably similar to the brute force solution. 
+On each iteration of the algorithm, we generate a random integer between the current index and the last index of the array. 
+Then, we swap the elements at the current index and the chosen index - this simulates drawing (and removing) the element from the hat, 
+as the next range from which we select a random index will not include the most recently processed one. 
+One small, yet important detail is that it is possible to swap an element with itself - otherwise, 
+some array permutations would be more likely than others. """
 
 # Time complexity : O(n) Space complexity : O(n)
 
@@ -34,13 +40,22 @@ Memory Usage: 19.4 MB
 class Solution:
 
     def __init__(self, nums: List[int]):
-        self.original_arr = nums
+        self.array = nums
+        self.original_arr = list(nums)
 
     def reset(self) -> List[int]:
+        self.array = self.original_arr
+        self.original_arr = list(self.original_arr)
+        return self.array
+
         return self.original_arr
 
     def shuffle(self) -> List[int]:
-        return random.sample(self.original_arr, len(self.original_arr))
+        for i in range(len(self.array)):
+            swap_idx = random.randrange(i, len(self.array))
+            self.array[i], self.array[swap_idx] = self.array[swap_idx], self.array[i]
+
+        return self.array
 
 
 # Your Solution object will be instantiated and called as such:
