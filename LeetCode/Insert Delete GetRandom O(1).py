@@ -24,7 +24,15 @@ There will be at least one element in the data structure when getRandom is calle
 Resources:
 
 runtime: 
+18 / 18 test cases passed.
+	Status: Accepted
+Runtime: 104 ms
+Memory Usage: 18.5 MB
 
+18 / 18 test cases passed.
+	Status: Accepted
+Runtime: 96 ms
+Memory Usage: 18.4 MB
 """
 
 # Solution techniques are use List with Dict
@@ -47,15 +55,17 @@ class RandomizedSet:
 
     def remove(self, val: int) -> bool:
         if val in self.pos:
-            idx, last = self.pos[val], self.nums[-1]
-            self.nums[idx], self.pos[last] = last, idx
-            self.nums.pop()
-            self.pos.pop(val, 0)
+            idx = self.pos[val] # get val index in list
+            last = self.nums[-1] # get the last addition
+            self.nums[idx] = last # overwrite val index with last addition
+            self.pos[last] = idx # update the last addition's index to it's new spot
+            self.nums.pop() # get rid of the last addition from it's original spot
+            del self.pos[val] # we don't need pop-or-default semantics here, del will work
             return True
         return False
 
     def getRandom(self) -> int:
-        return self.nums[random.randint(0, len(self.nums) - 1)]
+        return random.choice(self.nums)
 
 
 # Your RandomizedSet object will be instantiated and called as such:
