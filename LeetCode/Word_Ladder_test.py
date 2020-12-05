@@ -63,49 +63,46 @@ Combining the above steps, the overall space complexity is O(M2×N)O({M}^2 \time
 
 class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
-        if endWord not in wordList or not endWord or not beginWord or not wordList:
+        if endWord not in wordList:
             return 0
 
-        # Since all words are of same length.
-        L = len(beginWord)
-
-        # Dictionary to hold combination of words that can be formed,
-        # from any given word. By changing one letter at a time.
-        all_combo_dict = defaultdict(list)
+        intermediateDict = defaultdict(list)
+        seen = set()
+        shortestPathLen = 0
 
         for word in wordList:
-            for i in range(L):
-                # Key is the generic word
-                # Value is a list of words which have the same intermediate generic word.
-                all_combo_dict[word[:i] + "*" + word[i+1:]].append(word)
+            for i in range(len(word)):
+                temp = word[:i]+'*'+word[i+1:]
 
-        # Queue for BFS
-        queue = deque([(beginWord, 1)])
+                intermediateDict[temp].append(word)
 
-        # Visited to make sure we don't repeat processing same word.
-        visited = {beginWord: True}
+        def BFS(currWord, count):
+            processQueue = deque()
 
-        while queue:
-            current_word, level = queue.popleft()
+            processQueue.append((currWord, count))
+            seen.add(currWord)
 
-            for i in range(L):
-                # Intermediate words for current word
-                intermediate_word = current_word[:i] + "*" + current_word[i+1:]
+            while processQueue:
+                word, cnt = processQueue.popleft()
 
-                # Next states are all the words which share the same intermediate state.
-                for word in all_combo_dict[intermediate_word]:
-                    # If at any point if we find what we are looking for
-                    # i.e. the end word - we can return with the answer.
-                    if word == endWord:
-                        return level + 1
-                    # Otherwise, add it to the BFS Queue. Also mark it visited
-                    if word not in visited:
-                        visited[word] = True
-                        queue.append((word, level + 1))
+                for i in range(len(word)):
+                    interWord = word[:i]+'*'+word[i+1:]
 
-                all_combo_dict[intermediate_word] = []
+                    for adjWord in intermediateDict[interWord]:
+                        if adjWord == endWord:
+                            return cnt+1
 
-        return 0
+                        if adjWord not in seen:
+                            seen.add(adjWord)
+                            processQueue.append((adjWord, cnt+1))
+
+                    intermediateDict[interWord] = []
+
+            return 0
+
+        shortestPathLen = BFS(beginWord, 1)
+
+        return shortestPathLen
 
 
 # myobj = Solution()
