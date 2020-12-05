@@ -44,7 +44,8 @@ runtime:
 
 """ 
 x - y = k
-y = x-k
+x = k + y
+y = x - k
 """
 
 
@@ -62,8 +63,21 @@ def find_pairs_with_given_difference(arr, k):
     return res
 
 
+def find_pairs_with_given_difference(arr, k):
+    arrSet = set(arr)
+    out = []
+
+    for elem in arr:
+        if k + elem in arrSet:
+            out.append([k + elem, elem])
+    return out
+
+
 arr = [0, -1, -2, 2, 1]
 k = 1
 # output: [[1, 0], [0, -1], [-1, -2], [2, 1]]
 
 print(find_pairs_with_given_difference(arr, k))
+
+# tinutomson@gmail.com
+# tinutomson@yahoo.com
