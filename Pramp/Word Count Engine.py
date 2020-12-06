@@ -33,12 +33,16 @@ def word_count_engine(document):
     # print("freqDict - ", freqDict)
 
     # Python 3.X saves the insertion order of dict, so we only have to sort by freq
-    sorted_words = sorted(
-        freqDict.keys(), key=lambda wrd: freqDict[wrd][0], reverse=True)
+    # For Python 2.X we have to sort twice, once by the word index in ascending order and then by the freq in descending order
+    index_sorted_words = sorted(
+        freqDict.keys(), key=lambda wrd: freqDict[wrd][1])
+
+    freq_sorted_words = sorted(
+        index_sorted_words, key=lambda wrd: freqDict[wrd][0], reverse=True)
 
     # print("sorted_words - ", sorted_words)
 
-    for word in sorted_words:
+    for word in freq_sorted_words:
         wrdFreq = freqDict[word][0]
         output.append([word, str(wrdFreq)])
 
