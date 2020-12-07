@@ -34,6 +34,10 @@ Surrounded regions shouldn’t be on the border, which means that any 'O' on the
 
 
 Resources:
+https://leetcode.com/problems/surrounded-regions/discuss/691646/Python-O(mn)-3-colors-dfs-explained
+https://leetcode.com/problems/surrounded-regions/discuss/41652/Python-easy-to-understand-DFS-and-BFS-solutions
+https://leetcode.com/problems/surrounded-regions/discuss/41630/9-lines-Python-148-ms
+
 https://leetcode.com/problems/surrounded-regions/discuss/171506/It's-important-to-master-all-3-methods%3A-DFS-BFS-Union-Find
 
 
