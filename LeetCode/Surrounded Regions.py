@@ -1,5 +1,6 @@
-from typing import List
+from typing import Deque, List
 from itertools import product
+from collections import deque
 
 """
 Problem Name: Surrounded Regions
@@ -37,18 +38,19 @@ Resources:
 runtime: 
 59 / 59 test cases passed.
 	Status: Accepted
-Runtime: 136 ms
-Memory Usage: 15.5 MB
+Runtime: 128 ms
+Memory Usage: 15.7 MB
 """
 
-# Solution techniques are Optimized DFS solution
-# first add all border elements row, col as tuples to a stack
-# Then pop row, col tuples from the stack till stack is not empty, for each row, col, if it's a valid coordinate and the value at the coordinate is "O"
+# Solution techniques are Optimized Iterative BFS solution
+# first add all border elements row, col where element is "O" as tuples to a queue
+# Then FIFO pop (using popleft) the row, col tuples from the queue till queue is not empty,
+# for each row, col, if it's a valid coordinate and the value at the coordinate is "O"
 # Change the "O" to "T" as this "O" is not surrounded and cannot be captured
-# append the top, bottom, left and right coordinates for the current coordinate to the stack and repeate from step 1 till stack is exhausted (Iterative DFS)
+# append the top, bottom, left and right coordinates for the current coordinate to the queue and repeate from step 1 till queue is exhausted (Iterative BFS)
 # Then iterate over each element in the matrix and convert all O's to X's and all T's back to O's
 
-# Time complexity : O(m*n) where m and n are sizes of our board, Space complexity : O(mn) for the stack
+# Time complexity : O(m*n) where m and n are sizes of our board, Space complexity : O(mn) for the queue
 
 
 class Solution:
@@ -58,20 +60,20 @@ class Solution:
 
         rows = len(board)
         cols = len(board[0])
-        stack = []
+        queue = deque()
 
-        # Adding border elements to stack
+        # Adding coordinates of border elements that are "O" to queue
         for k in range(max(rows, cols)):
             for i, j in ((k, 0), (k, cols-1), (0, k), (rows-1, k)):
                 if 0 <= i < rows and 0 <= j < cols and board[i][j] == "O":
-                    stack.append((i, j))
+                    queue.append((i, j))
 
-        while stack:
-            i, j = stack.pop()
+        while queue:
+            i, j = queue.popleft()
 
             if 0 <= i < rows and 0 <= j < cols and board[i][j] == "O":
                 board[i][j] = "T"
-                stack.extend([(i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1)])
+                queue.extend([(i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1)])
 
         # board[:] = [['X' if c != 'T' else 'O' for c in row] for row in board]
         for row in range(rows):
