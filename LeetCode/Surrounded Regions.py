@@ -37,8 +37,8 @@ Resources:
 runtime: 
 59 / 59 test cases passed.
 	Status: Accepted
-Runtime: 160 ms
-Memory Usage: 16.5 MB
+Runtime: 172 ms
+Memory Usage: 16.7 MB
 """
 
 # Solution techniques are
@@ -76,9 +76,10 @@ class Solution:
             dfs(0, j)
             dfs(rows-1, j)
 
-        # product used to find the cartesian product
-        for i, j in product(range(rows), range(cols)):
-            board[i][j] = "X" if board[i][j] != "T" else "O"
+        # iterating over matrix without product function
+        for row in range(rows):
+            for col in range(cols):
+                board[row][col] = "X" if board[row][col] != "T" else "O"
 
         print(board)
 
