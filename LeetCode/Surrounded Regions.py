@@ -37,7 +37,7 @@ Resources:
 runtime: 
 59 / 59 test cases passed.
 	Status: Accepted
-Runtime: 188 ms
+Runtime: 136 ms
 Memory Usage: 15.5 MB
 """
 
@@ -63,7 +63,8 @@ class Solution:
         # Adding border elements to stack
         for k in range(max(rows, cols)):
             for i, j in ((k, 0), (k, cols-1), (0, k), (rows-1, k)):
-                stack.append((i, j))
+                if 0 <= i < rows and 0 <= j < cols and board[i][j] == "O":
+                    stack.append((i, j))
 
         while stack:
             i, j = stack.pop()
