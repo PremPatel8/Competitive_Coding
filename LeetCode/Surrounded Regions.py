@@ -37,15 +37,18 @@ Resources:
 runtime: 
 59 / 59 test cases passed.
 	Status: Accepted
-Runtime: 172 ms
-Memory Usage: 16.7 MB
+Runtime: 188 ms
+Memory Usage: 15.5 MB
 """
 
-# Solution techniques are
-# first DFS all the border elements and mark all O's as T (these O's are not surrounded by X and will not be captured)
+# Solution techniques are Optimized DFS solution
+# first add all border elements row, col as tuples to a stack
+# Then pop row, col tuples from the stack till stack is not empty, for each row, col, if it's a valid coordinate and the value at the coordinate is "O"
+# Change the "O" to "T" as this "O" is not surrounded and cannot be captured
+# append the top, bottom, left and right coordinates for the current coordinate to the stack and repeate from step 1 till stack is exhausted (Iterative DFS)
 # Then iterate over each element in the matrix and convert all O's to X's and all T's back to O's
 
-# Time complexity : O(m*n) where m and n are sizes of our board, Space complexity : O(mn) if you count the call stack
+# Time complexity : O(m*n) where m and n are sizes of our board, Space complexity : O(mn) for the stack
 
 
 class Solution:
@@ -55,28 +58,21 @@ class Solution:
 
         rows = len(board)
         cols = len(board[0])
+        stack = []
 
-        def dfs(i, j):
-            if i < 0 or j < 0 or i >= rows or j >= cols or board[i][j] != "O":
-                return
+        # Adding border elements to stack
+        for k in range(max(rows, cols)):
+            for i, j in ((k, 0), (k, cols-1), (0, k), (rows-1, k)):
+                stack.append((i, j))
 
-            board[i][j] = 'T'
-            neib_list = [[i+1, j], [i-1, j], [i, j-1], [i, j+1]]
+        while stack:
+            i, j = stack.pop()
 
-            for x, y in neib_list:
-                dfs(x, y)
+            if 0 <= i < rows and 0 <= j < cols and board[i][j] == "O":
+                board[i][j] = "T"
+                stack.extend([(i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1)])
 
-        # processing left and right border elements
-        for i in range(0, rows):
-            dfs(i, 0)
-            dfs(i, cols-1)
-
-        # processing top and bottom border elements
-        for j in range(0, cols):
-            dfs(0, j)
-            dfs(rows-1, j)
-
-        # iterating over matrix without product function
+        # board[:] = [['X' if c != 'T' else 'O' for c in row] for row in board]
         for row in range(rows):
             for col in range(cols):
                 board[row][col] = "X" if board[row][col] != "T" else "O"
