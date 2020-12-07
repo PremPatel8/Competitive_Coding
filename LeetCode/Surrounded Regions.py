@@ -1,4 +1,5 @@
 from typing import List
+from itertools import product
 
 """
 Problem Name: Surrounded Regions
@@ -34,17 +35,17 @@ Surrounded regions shouldn’t be on the border, which means that any 'O' on the
 Resources:
 
 runtime: 
-
+59 / 59 test cases passed.
+	Status: Accepted
+Runtime: 160 ms
+Memory Usage: 16.5 MB
 """
 
 # Solution techniques are
+# first DFS all the border elements and mark all O's as T (these O's are not surrounded by X and will not be captured)
+# Then iterate over each element in the matrix and convert all O's to X's and all T's back to O's
 
-# Time complexity : O() Space complexity : O()
-""" 
-Iterate through each element in the matrix
-if ele is O and it's not been visited added to visited
-check if ele is not a boarder element, if not border do DFS search for connected O's and replace them with X
-"""
+# Time complexity : O(m*n) where m and n are sizes of our board, Space complexity : O(mn) if you count the call stack
 
 
 class Solution:
@@ -55,56 +56,31 @@ class Solution:
         rows = len(board)
         cols = len(board[0])
 
-        visited = [[False] * cols for _ in range(rows)]
-
-        def dfs(row, col, region):
-            if row < 0 or row >= rows or col < 0 or col >= cols:
+        def dfs(i, j):
+            if i < 0 or j < 0 or i >= rows or j >= cols or board[i][j] != "O":
                 return
 
-            currEle = board[row][col]
+            board[i][j] = 'T'
+            neib_list = [[i+1, j], [i-1, j], [i, j-1], [i, j+1]]
 
-            if currEle == "O" and not visited[row][col]:
-                region.append((row, col))
-                visited[row][col] = True
+            for x, y in neib_list:
+                dfs(x, y)
 
-                dfs(row-1, col, region)
-                dfs(row+1, col, region)
-                dfs(row, col-1, region)
-                dfs(row, col+1, region)
+        # processing left and right border elements
+        for i in range(0, rows):
+            dfs(i, 0)
+            dfs(i, cols-1)
 
-                return region
-            else:
-                return
+        # processing top and bottom border elements
+        for j in range(0, cols):
+            dfs(0, j)
+            dfs(rows-1, j)
 
-        def borderEle(row, col):
-            """ element is on the border if the any index of top, bottom, left or right ele is out of bounds of matrix
-            top = row-1, y
-            bottom = row+1, y
-            left = row, col-1
-            right = row, col+1
-            """
+        # product used to find the cartesian product
+        for i, j in product(range(rows), range(cols)):
+            board[i][j] = "X" if board[i][j] != "T" else "O"
 
-            if row-1 < 0 or row+1 >= rows or col-1 < 0 or col+1 >= cols:
-                return True
-
-            return False
-
-        for rw in range(rows):
-            for cw in range(cols):
-                currEle = board[rw][cw]
-
-                if currEle == "O" and not visited[rw][cw]:
-                    # visited[rw][cw] = True
-
-                    if not borderEle(rw, cw):
-                        region = dfs(rw, cw, [])
-                        print(f"region = {region}")
-
-                        if region:
-                            for r, c in region:
-                                board[r][c] = "X"
-
-        print(f"board = {board}")
+        print(board)
 
 
 myobj = Solution()
@@ -112,4 +88,4 @@ inpt = [['X', 'X', 'X', 'X'],
         ['X', 'O', 'O', 'X'],
         ['X', 'X', 'O', 'X'],
         ['X', 'O', 'X', 'X']]
-print(myobj.solve(inpt))
+myobj.solve(inpt)
