@@ -34,53 +34,57 @@ Surrounded regions shouldn’t be on the border, which means that any 'O' on the
 
 
 Resources:
+https://leetcode.com/problems/surrounded-regions/discuss/171506/It's-important-to-master-all-3-methods%3A-DFS-BFS-Union-Find
+
 
 runtime: 
 59 / 59 test cases passed.
 	Status: Accepted
-Runtime: 128 ms
-Memory Usage: 15.7 MB
+Runtime: 144 ms
+Memory Usage: 15.8 MB
 """
 
-# Solution techniques are Optimized Iterative BFS solution
-# first add all border elements row, col where element is "O" as tuples to a queue
-# Then FIFO pop (using popleft) the row, col tuples from the queue till queue is not empty,
-# for each row, col, if it's a valid coordinate and the value at the coordinate is "O"
-# Change the "O" to "T" as this "O" is not surrounded and cannot be captured
-# append the top, bottom, left and right coordinates for the current coordinate to the queue and repeate from step 1 till queue is exhausted (Iterative BFS)
-# Then iterate over each element in the matrix and convert all O's to X's and all T's back to O's
+# Solution techniques are Union Find solution
 
-# Time complexity : O(m*n) where m and n are sizes of our board, Space complexity : O(mn) for the queue
+# Time complexity : O(), Space complexity : O()
 
 
 class Solution:
     def solve(self, board: List[List[str]]) -> None:
-        if not board or len(board) < 3 or len(board[0]) < 3:
+        parents = {}
+
+        for r in range(len(board)):
+            for c in range(len(board[r])):
+                if r == 0 or r == len(board)-1 or c == 0 or c == len(board[0])-1:
+                    self.traverse(board, parents, r, c, -1, -1)
+
+        for r in range(len(board)):
+            for c in range(len(board[r])):
+                if board[r][c] == 'O' and parents.get((r, c)) != (-1, -1):
+                    board[r][c] = 'X'
+
+        # print(board)
+
+    def traverse(self, board, parents, r, c, pr, pc):
+        if (r, c) in parents or r < 0 or r > len(board)-1 or c < 0 or c > len(board[0])-1 or board[r][c] != 'O':
             return
+        else:
+            parentCurr = self.find((r, c), parents)
+            parentPrev = self.find((pr, pc), parents)
+            if parentCurr != parentPrev:
+                parents[parentCurr] = parentPrev
+            self.traverse(board, parents, r+1, c, r, c)
+            self.traverse(board, parents, r-1, c, r, c)
+            self.traverse(board, parents, r, c+1, r, c)
+            self.traverse(board, parents, r, c-1, r, c)
 
-        rows = len(board)
-        cols = len(board[0])
-        queue = deque()
-
-        # Adding coordinates of border elements that are "O" to queue
-        for k in range(max(rows, cols)):
-            for i, j in ((k, 0), (k, cols-1), (0, k), (rows-1, k)):
-                if 0 <= i < rows and 0 <= j < cols and board[i][j] == "O":
-                    queue.append((i, j))
-
-        while queue:
-            i, j = queue.popleft()
-
-            if 0 <= i < rows and 0 <= j < cols and board[i][j] == "O":
-                board[i][j] = "T"
-                queue.extend([(i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1)])
-
-        # board[:] = [['X' if c != 'T' else 'O' for c in row] for row in board]
-        for row in range(rows):
-            for col in range(cols):
-                board[row][col] = "X" if board[row][col] != "T" else "O"
-
-        print(board)
+    def find(self, node, parents):
+        if node not in parents:
+            parents[node] = node
+            return node
+        if parents[node] != node:
+            parents[node] = self.find(parents[node], parents)
+        return parents[node]
 
 
 myobj = Solution()
