@@ -67,42 +67,32 @@ class Solution:
             return 0
 
         intermediateDict = defaultdict(list)
-        seen = set()
-        shortestPathLen = 0
+        wordListSet = set(wordList)
 
         for word in wordList:
             for i in range(len(word)):
                 temp = word[:i]+'*'+word[i+1:]
-
                 intermediateDict[temp].append(word)
 
-        def BFS(currWord, count):
-            processQueue = deque()
+        queue = deque([[beginWord, 1]])
 
-            processQueue.append((currWord, count))
-            seen.add(currWord)
+        while queue:
+            currWord, length = queue.popleft()
 
-            while processQueue:
-                word, cnt = processQueue.popleft()
+            if currWord == endWord:
+                return length
 
-                for i in range(len(word)):
-                    interWord = word[:i]+'*'+word[i+1:]
+            for i in range(len(currWord)):
+                interWord = currWord[:i]+'*'+currWord[i+1:]
 
-                    for adjWord in intermediateDict[interWord]:
-                        if adjWord == endWord:
-                            return cnt+1
+                for adjWord in intermediateDict[interWord]:
+                    if adjWord in wordListSet:
+                        wordListSet.remove(adjWord)
+                        queue.append((adjWord, length+1))
 
-                        if adjWord not in seen:
-                            seen.add(adjWord)
-                            processQueue.append((adjWord, cnt+1))
+                intermediateDict[interWord] = []
 
-                    intermediateDict[interWord] = []
-
-            return 0
-
-        shortestPathLen = BFS(beginWord, 1)
-
-        return shortestPathLen
+        return 0
 
 
 # myobj = Solution()
