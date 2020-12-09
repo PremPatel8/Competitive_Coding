@@ -23,37 +23,38 @@ Constraints:
 
     [output] array.integer
 """
+# Time complexity: O(n log m), space O(1)
+
 def find_duplicates(arr1, arr2):
-  arr1Len = len(arr1)
-  arr2Len = len(arr2)
-  output = []
-  
-  biggerArr, smallerArr = (arr1, arr2) if arr1Len > arr2Len else (arr2, arr1)
-  
-  print(biggerArr)
-  print(smallerArr)
-  
-  def presentInBiggerArr(num):
-    left = 0
-    right = len(biggerArr)-1
-    
-    while left <= right:
-      print(left, right)
-      mid = (left+right) // 2
-      print(biggerArr[mid])
-      
-      if biggerArr[mid] < num:
-        left = mid+1
-      elif biggerArr[mid] > num:
-        right = mid-1
-      else:
-        return True
-      
-    return False
-        
-  
-  for num in smallerArr:
-    if presentInBiggerArr(num):
-      output.append(num)
-  
-  return output
+    arr1Len = len(arr1)
+    arr2Len = len(arr2)
+    output = []
+
+    biggerArr, smallerArr = (arr1, arr2) if arr1Len > arr2Len else (arr2, arr1)
+
+    def presentInBiggerArr(num):
+        left = 0
+        right = len(biggerArr)-1
+
+        while left <= right:
+            mid = (left+right) // 2
+
+            if biggerArr[mid] < num:
+                left = mid+1
+            elif biggerArr[mid] > num:
+                right = mid-1
+            else:
+                return True
+
+        return False
+
+    for num in smallerArr:
+        if presentInBiggerArr(num):
+            output.append(num)
+
+    return output
+
+
+arr1 = [1, 2, 3, 5, 6, 7]
+arr2 = [3, 6, 7, 8, 20]
+print(find_duplicates(arr1, arr2))
