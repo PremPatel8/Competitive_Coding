@@ -31,6 +31,7 @@ Time Complexity: every call of drawHTree invokes 9 expressions whose time comple
 Space Complexity: recursive calls add overhead since we store them in the execution stack. The space occupied in the stack will be then O(D), in the worst case scenario. The stack space occupied will be no more than O(D) at any given point since a sibling drawHTree will not be called before the current one being executed returns (i.e. finishes its execution).
 """
 
+
 def drawLine(x1, y1, x2, y2):
     print(x1, y1, x2, y2)
 
@@ -41,16 +42,23 @@ def drawHTree(x, y, line_len, depth):
 
     half_line = line_len / 2
 
+    x0 = x - half_line
+    x1 = x + half_line
+    y0 = y - half_line
+    y1 = y + half_line
+
     # Horizontal
-    drawLine(x-half_line, y, x+half_line, y)
+    drawLine(x0, y, x1, y)
 
     # Left Vertical
-    drawLine(x-half_line, y+half_line, x-half_line, y-half_line)
+    drawLine(x0, y1, x0, y0)
 
     # Right Vertical
-    drawLine(x+half_line, y+half_line, x+half_line, y-half_line)
+    drawLine(x1, y1, x1, y0)
 
-    drawHTree(x-half_line, y+half_line, line_len/math.sqrt(2), depth - 1)
-    drawHTree(x+half_line, y+half_line, line_len/math.sqrt(2), depth - 1)
-    drawHTree(x+half_line, y-half_line, line_len/math.sqrt(2), depth - 1)
-    drawHTree(x-half_line, y-half_line, line_len/math.sqrt(2), depth - 1)
+    newLineLen = line_len/math.sqrt(2)
+
+    drawHTree(x0, y1, newLineLen, depth - 1)
+    drawHTree(x1, y1, newLineLen, depth - 1)
+    drawHTree(x1, y0, newLineLen, depth - 1)
+    drawHTree(x0, y0, newLineLen, depth - 1)
