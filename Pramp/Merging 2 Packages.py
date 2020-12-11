@@ -25,23 +25,35 @@ Constraints:
  """
 
 
+# def get_indices_of_item_wights(arr, limit):
+#     seen = {}
+#     output = []
+
+#     for index, item in enumerate(arr):
+#         comp = limit-item
+#         # print(index, item)
+
+#         if comp in seen:
+#             # print(comp)
+#             index_comp = seen[comp]
+#             output.append(index)
+#             output.append(index_comp)
+#         else:
+#             seen[item] = index
+
+#     return output
+
 def get_indices_of_item_wights(arr, limit):
+    if not arr:
+        return []
+
     seen = {}
-    output = []
-
-    for index, item in enumerate(arr):
-        comp = limit-item
-        # print(index, item)
-
-        if comp in seen:
-            # print(comp)
-            index_comp = seen[comp]
-            output.append(index)
-            output.append(index_comp)
+    for i, a in enumerate(arr):
+        if a in seen:
+            return [i, seen[a]]
         else:
-            seen[item] = index
-
-    return output
+            seen[limit-a] = i
+    return []
 
 
 arr = [4, 6, 10, 15, 16]
