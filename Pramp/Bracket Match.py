@@ -27,6 +27,10 @@ Constraints:
 
     [output] integer
 """
+""" 
+Time Complexity - O(n)
+Space Complexity - O(n)
+"""
 
 
 def bracket_match(text):
