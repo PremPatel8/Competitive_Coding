@@ -27,29 +27,37 @@ Constraints:
 
     [output] integer
 """
-""" 
+""" Space optimized solution
 Time Complexity - O(n)
-Space Complexity - O(n)
+Space Complexity - O(1)
+
+Notice that a string of matching brackets is a string that follows these rules:
+the number of '(' and the number of ')' are equal i.e. every open bracket is matched with a closing bracket.
+There cannot be a closing bracket before an opening bracket, i.e. in every prefix of the string, the number of '(' is equal or greater than the number of ')'.
+
+To check how many brackets we need to add an existing string, we need to keep track of the number of '(' and the number of ')', or more accurately the difference between the number of '(' and the number of ')'. We iterate through the string, and count the difference between the open and close brackets, if at some point there are more ')' than '(' [i.e. diffCount < 0], it means that to fix the string, we must add an '(' somewhere before the current position (for example, the beginning of the string). Thus, in our algorithm we’ll add 1 to the answer and also increment the number of '(' by one in our difference counter. This promises the second rule is correct in our string.
+
+To make sure the first rule is correct, we simply take the difference between the '(' and the ')' in the text, and add it to the answer, since at the end of the string if the number isn’t equal, we’ll simply add ')' to the end of the text (or '(' to the beginning).
 """
 
 
 def bracket_match(text):
-    stack = []
+    diffCount = 0
     res = 0
-    op_brackets = {"(": ")"}
 
-    for bracket in text:
-        if bracket in op_brackets:
-            stack.append(bracket)
-        else:
-            if stack:
-                stack_top = stack.pop()
-                if op_brackets[stack_top] != bracket:
-                    res += 1
-            else:
-                res += 1
+    for i in range(len(text)):
+        currBrac = text[i]
 
-    res += len(stack)
+        if currBrac == "(":
+            diffCount += 1
+        elif currBrac == ")":
+            diffCount -= 1
+
+        if diffCount < 0:
+            diffCount += 1
+            res += 1
+
+    res += diffCount
     return res
 
 
