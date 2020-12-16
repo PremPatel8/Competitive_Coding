@@ -37,8 +37,8 @@ Evernote note
 runtime: 
 113 / 113 test cases passed.
 	Status: Accepted
-Runtime: 212 ms
-Memory Usage: 14.8 MB
+Runtime: 228 ms
+Memory Usage: 14.7 MB
 """
 
 # Solution techniques are Disjoint Set, Union Find
@@ -49,60 +49,54 @@ Memory Usage: 14.8 MB
 # In practice time complexity is almost linear
 
 
-class Disjoint_Set():
-    def __init__(self, nodes):
+class Solution:
+    def __init__(self):
+        # Key - node , Value - size of the set/tree/component rooted at given node
         self.size = defaultdict(int)
-        self.parents = defaultdict(int)
-        self.initialize(nodes)
-        self.largestSet = 0
+        # Key - node , Value - Parent/Root node
+        self.root = defaultdict(int)
 
-    def initialize(self, nodes):
-        for n in nodes:
-            self.parents[n] = n
-            self.size[n] = 1
-
-    # Optimized using Union by Size / Rank
+    # Optimized using Union by Size / Rank (Merge smaller trees to larger trees, to maintain balance and keep trees flat)
     def union(self, node_A, node_B):
-        root_A = self.find(node_A)
-        root_B = self.find(node_B)
+        root_A = self.findRoot(node_A)
+        root_B = self.findRoot(node_B)
 
         if root_A != root_B:
             if self.size[root_A] < self.size[root_B]:
-                self.parents[root_A] = root_B
+                self.root[root_A] = root_B
                 self.size[root_B] += self.size[root_A]
-                self.largestSet = max(self.largestSet, self.size[root_B])
             else:
-                self.parents[root_B] = root_A
+                self.root[root_B] = root_A
                 self.size[root_A] += self.size[root_B]
-                self.largestSet = max(self.largestSet, self.size[root_A])
 
-    # Optimized using Path Compression
-    def find(self, node):
-        if self.parents[node] == node:
+    # Optimized using Path Compression (Make every other node in path point to it's grandparent, keeps trees flat)
+    def findRoot(self, node):
+        if self.root[node] == node:
             return node
 
-        self.parents[node] = self.find(self.parents[node])
+        self.root[node] = self.findRoot(self.root[node])
 
-        return self.parents[node]
+        return self.root[node]
 
+    # returns true if both nodes have the same parent (i.e they are linked) else false
+    def find(self, node_A, node_B):
+        return self.findRoot(node_A) == self.findRoot(node_B)
 
-class Solution:
     def findCircleNum(self, M: List[List[int]]) -> int:
         rows = len(M)
         cols = len(M[0])
         res = rows
-        students = [studNum for studNum in range(rows)]
-        ds = Disjoint_Set(students)
 
-        for i in range(rows):
-            for j in range(cols):
-                if i != j and M[i][j] == 1:
-                    parent_a = ds.find(i)
-                    parent_b = ds.find(j)
+        for studentNum in range(rows):
+            self.root[studentNum] = studentNum
+            self.size[studentNum] = 1
 
-                    if parent_a != parent_b:
-                        ds.union(i, j)
-                        res -= 1
+        for i in range(rows-1):
+            for j in range(i+1, cols):
+                if i != j and M[i][j] == 1 and not self.find(i, j):
+                    self.union(i, j)
+                    res -= 1
+
         return res
 
 
