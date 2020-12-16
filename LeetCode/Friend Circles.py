@@ -37,8 +37,8 @@ Evernote note
 runtime: 
 113 / 113 test cases passed.
 	Status: Accepted
-Runtime: 228 ms
-Memory Usage: 14.7 MB
+Runtime: 196 ms
+Memory Usage: 14.8 MB
 """
 
 # Solution techniques are Disjoint Set, Union Find
@@ -50,51 +50,45 @@ Memory Usage: 14.7 MB
 
 
 class Solution:
-    def __init__(self):
-        # Key - node , Value - size of the set/tree/component rooted at given node
-        self.size = defaultdict(int)
-        # Key - node , Value - Parent/Root node
-        self.root = defaultdict(int)
-
-    # Optimized using Union by Size / Rank (Merge smaller trees to larger trees, to maintain balance and keep trees flat)
-    def union(self, node_A, node_B):
-        root_A = self.findRoot(node_A)
-        root_B = self.findRoot(node_B)
-
-        if root_A != root_B:
-            if self.size[root_A] < self.size[root_B]:
-                self.root[root_A] = root_B
-                self.size[root_B] += self.size[root_A]
-            else:
-                self.root[root_B] = root_A
-                self.size[root_A] += self.size[root_B]
-
-    # Optimized using Path Compression (Make every other node in path point to it's grandparent, keeps trees flat)
-    def findRoot(self, node):
-        if self.root[node] == node:
-            return node
-
-        self.root[node] = self.findRoot(self.root[node])
-
-        return self.root[node]
-
-    # returns true if both nodes have the same parent (i.e they are linked) else false
-    def find(self, node_A, node_B):
-        return self.findRoot(node_A) == self.findRoot(node_B)
-
     def findCircleNum(self, M: List[List[int]]) -> int:
+        # Optimized using Union by Size / Rank (Merge smaller trees to larger trees, to maintain balance and keep trees flat)
+        def union(node_A, node_B):
+            root_A = findRoot(node_A)
+            root_B = findRoot(node_B)
+
+            if size[root_A] < size[root_B]:
+                root[root_A] = root_B
+                size[root_B] += size[root_A]
+            else:
+                root[root_B] = root_A
+                size[root_A] += size[root_B]
+
+        # Optimized using Path Compression (Make every other node in path point to it's grandparent, keeps trees flat)
+        def findRoot(node):
+            if root[node] == node:
+                return node
+
+            root[node] = findRoot(root[node])
+
+            return root[node]
+
         rows = len(M)
         cols = len(M[0])
         res = rows
+        # Key - node , Value - size of the set/tree/component rooted at given node
+        size = defaultdict(int)
+        # Key - node , Value - Parent/Root node
+        root = defaultdict(int)
 
+        # Initializing root and size dicts with default values, each node is it's own root and each node has a size of 1 initially
         for studentNum in range(rows):
-            self.root[studentNum] = studentNum
-            self.size[studentNum] = 1
+            root[studentNum] = studentNum
+            size[studentNum] = 1
 
         for i in range(rows-1):
             for j in range(i+1, cols):
-                if i != j and M[i][j] == 1 and not self.find(i, j):
-                    self.union(i, j)
+                if i != j and M[i][j] == 1 and findRoot(i) != findRoot(j):
+                    union(i, j)
                     res -= 1
 
         return res
