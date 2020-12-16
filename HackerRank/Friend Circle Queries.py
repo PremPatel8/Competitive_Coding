@@ -13,39 +13,44 @@ from collections import defaultdict
 
 class Disjoint_Set():
     def __init__(self, nodes):
+        # Key - node , Value - size of the set/tree/component rooted at given node
         self.size = defaultdict(int)
-        self.parents = defaultdict(int)
+        # Key - node , Value - Parent/Root node
+        self.roots = defaultdict(int)
         self.initialize(nodes)
         self.largestSet = 0
 
     def initialize(self, nodes):
         for n in nodes:
-            self.parents[n] = n
+            self.roots[n] = n
             self.size[n] = 1
 
-    # Optimized using Union by Size / Rank
+    # Optimized using Union by Size / Rank (Merge smaller trees to larger trees, to maintain balance and keep trees flat)
     def union(self, node_A, node_B):
-        root_A = self.find(node_A)
-        root_B = self.find(node_B)
+        root_A = self.findRoot(node_A)
+        root_B = self.findRoot(node_B)
 
         if root_A != root_B:
             if self.size[root_A] < self.size[root_B]:
-                self.parents[root_A] = root_B
+                self.roots[root_A] = root_B
                 self.size[root_B] += self.size[root_A]
                 self.largestSet = max(self.largestSet, self.size[root_B])
             else:
-                self.parents[root_B] = root_A
+                self.roots[root_B] = root_A
                 self.size[root_A] += self.size[root_B]
                 self.largestSet = max(self.largestSet, self.size[root_A])
 
-    # Optimized using Path Compression
-    def find(self, node):
-        if self.parents[node] == node:
+    # Optimized using Path Compression (Make every other node in path point to it's grandparent, keeps trees flat)
+    def findRoot(self, node):
+        if self.roots[node] == node:
             return node
 
-        self.parents[node] = self.find(self.parents[node])
+        self.roots[node] = self.findRoot(self.roots[node])
 
-        return self.parents[node]
+        return self.roots[node]
+
+    def find(self, node_A, node_B):
+        return self.findRoot(node_A) == self.findRoot(node_B)
 
     def largest_friend_circle(self):
         return self.largestSet
