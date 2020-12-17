@@ -37,59 +37,31 @@ Evernote note
 runtime: 
 113 / 113 test cases passed.
 	Status: Accepted
-Runtime: 196 ms
-Memory Usage: 14.8 MB
+Runtime: 224 ms
+Memory Usage: 15 MB
 """
 
-# Solution techniques are Disjoint Set, Union Find
+# Solution techniques are DFS
 
-# Time complexity : O((M+N) lg*N) for Weigted Union + Path Compression solution, Space complexity : O(n)
-# Starting from an empty data structure, any sequenceof M union and find operations on N objects takes O(N + M lg* N) time.
-# lg*N - number of times needed to take the lg of a number until reaching 1
-# In practice time complexity is almost linear
+# Time complexity : O(), Space complexity : O()
 
 
 class Solution:
     def findCircleNum(self, M: List[List[int]]) -> int:
-        # Optimized using Union by Size / Rank (Merge smaller trees to larger trees, to maintain balance and keep trees flat)
-        def union(node_A, node_B):
-            root_A = findRoot(node_A)
-            root_B = findRoot(node_B)
+        def check_friends_DFS(student: int) -> None:
+            for friend, isFriend in enumerate(M[student]):
+                if isFriend and friend not in seen:
+                    seen.add(friend)
+                    check_friends_DFS(friend)
 
-            if size[root_A] < size[root_B]:
-                root[root_A] = root_B
-                size[root_B] += size[root_A]
-            else:
-                root[root_B] = root_A
-                size[root_A] += size[root_B]
+        res = 0
+        seen = set()
 
-        # Optimized using Path Compression (Make every other node in path point to it's grandparent, keeps trees flat)
-        def findRoot(node):
-            if root[node] == node:
-                return node
-
-            root[node] = findRoot(root[node])
-
-            return root[node]
-
-        rows = len(M)
-        cols = len(M[0])
-        res = rows
-        # Key - node , Value - size of the set/tree/component rooted at given node
-        size = defaultdict(int)
-        # Key - node , Value - Parent/Root node
-        root = defaultdict(int)
-
-        # Initializing root and size dicts with default values, each node is it's own root and each node has a size of 1 initially
-        for studentNum in range(rows):
-            root[studentNum] = studentNum
-            size[studentNum] = 1
-
-        for i in range(rows-1):
-            for j in range(i+1, cols):
-                if i != j and M[i][j] == 1 and findRoot(i) != findRoot(j):
-                    union(i, j)
-                    res -= 1
+        for studentNum in range(len(M)):
+            if studentNum not in seen:  # Found the start of a new circle.
+                res += 1
+                seen.add(studentNum)
+                check_friends_DFS(studentNum)
 
         return res
 
