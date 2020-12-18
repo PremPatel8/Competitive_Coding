@@ -52,3 +52,23 @@ class Solution:
                 curr = curr.next
 
         return head
+
+# Set based sol for unsorted Linked List, Time O(n), Space O(1)
+
+""" def deleteDuplicates(self, head: ListNode) -> ListNode:
+        curr = head
+        prev = None
+        seen = set()
+
+        while curr:
+            currval = curr.val
+
+            if currval in seen:
+                prev.next = curr.next
+            else:
+                seen.add(currval)
+                prev = curr
+            
+            curr = curr.next
+
+        return head """
