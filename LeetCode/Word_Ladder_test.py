@@ -47,19 +47,37 @@ runtime:
 
 class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
-        return 5
+        level = 0
+
+        if endWord not in wordList:
+            return level
+
+        intermediate_words = {}
+
+        for word in wordList:
+            for i in range(len(word)):
+                temp = word[:i]+"*"+word[i+1:]
+
+                if temp in intermediate_words:
+                    intermediate_words[temp].append(word)
+                else:
+                    intermediate_words[temp] = [word]
+
+        # print(f"intermediate_state = {intermediate_words}")
+
+        
 
 
-# myobj = Solution()
-# beginWord = "hit",
-# endWord = "cog",
-# wordList = ["hot", "dot", "dog", "lot", "log", "cog"]
-# print(myobj.ladderLength(beginWord, endWord, wordList))
+myobj = Solution()
+beginWord = "hit"
+endWord = "cog"
+wordList = ["hot", "dot", "dog", "lot", "log", "cog"]
+print(myobj.ladderLength(beginWord, endWord, wordList))
 
 
-def test_ladderLength():
+""" def test_ladderLength():
     beginWord = "hit",
     endWord = "cog",
     wordList = ["hot", "dot", "dog", "lot", "log", "cog"]
     output = 5
-    assert Solution().ladderLength(beginWord, endWord, wordList) == output
+    assert Solution().ladderLength(beginWord, endWord, wordList) == output """
