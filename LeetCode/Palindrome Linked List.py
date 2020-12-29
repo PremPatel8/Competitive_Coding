@@ -20,6 +20,8 @@ Follow up:
 Could you do it in O(n) time and O(1) space?
 
 Resources:
+https://www.youtube.com/watch?v=vHam6riSavo&feature=emb_logo
+https://leetcode.com/problems/palindrome-linked-list/discuss/953534/Two-pointer-solution-wvideo-whiteboard-explanation
 
 """
 """ 26 / 26 test cases passed.
@@ -43,18 +45,20 @@ class Solution:
         while fast and fast.next:
             fast = fast.next.next
             slow = slow.next
+
         # reverse the second half
-        node = None
+        prvnd = None
         while slow:
-            nxt = slow.next
-            slow.next = node
-            node = slow
-            slow = nxt
+            nxtnd = slow.next
+            slow.next = prvnd
+            prvnd = slow
+            slow = nxtnd
+
         # compare the first and second half nodes
-        while node:  # while node and head:
-            if node.val != head.val:
+        while prvnd:  # while node and head:
+            if prvnd.val != head.val:
                 return False
-            node = node.next
+            prvnd = prvnd.next
             head = head.next
         return True
 

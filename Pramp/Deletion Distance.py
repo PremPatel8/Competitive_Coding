@@ -18,7 +18,9 @@ I   2 1 2 3 4
 T   3 2 3 4 3
 
 base case:
-empty string - don't delete - 0
+both strings empty - don't delete - 0
+
+one of the strings empty = delete all chars from the other string
 
 if chars match:
 dp[i][j] = dp[i-1][j-1]
@@ -32,14 +34,12 @@ def deletion_distance(str1, str2):
     dp = [[0 for _ in range(len(str2)+1)] for _ in range(len(str1)+1)]
 
     for i in range(len(str1)+1):
-        dp[i][0] = i
-
-    for j in range(len(str2)+1):
-        dp[0][j] = j
-
-    for i in range(1, len(str1)+1):
-        for j in range(1, len(str2)+1):
-            if (str1[i-1] == str2[j-1]):
+        for j in range(len(str2)+1):
+            if i == 0:
+                dp[i][j] = j
+            elif j == 0:
+                dp[i][j] = i
+            elif (str1[i-1] == str2[j-1]):
                 dp[i][j] = dp[i-1][j-1]
             else:
                 dp[i][j] = min(dp[i][j-1], dp[i-1][j]) + 1
