@@ -103,9 +103,10 @@ class Solution:
             for i in range(len(word)):
                 temp = word[:i]+"*"+word[i+1:]
 
+
 def test_ladderLength():
     beginWord = "hit"
     endWord = "cog"
     wordList = ["hot", "dot", "dog", "lot", "log", "cog"]
     output = 5
-    assert Solution().ladderLength(beginWord, endWord, wordList) == output """
+    assert Solution().ladderLength(beginWord, endWord, wordList) == output
