@@ -14,11 +14,12 @@ Space Complexity
 O(n)\mathcal{O}(n)O(n) Linear space to store the heap.
  """
 import heapq
+from queue import PriorityQueue
 
 
 class Solution:
     # 584 milliseconds — faster than 66.67% in Python
-    def solve(self, tasks):
+    """ def solve(self, tasks):
         tasks.sort(key=lambda x: (x[1], x[2], x[0]))
         idx = 0
         time = tasks[0][1]
@@ -39,18 +40,55 @@ class Solution:
             time += dur
         while heap:
             res.append(heapq.heappop(heap)[1])
+        return res """
+
+    # 2321 milliseconds — faster than 1.33% in Python
+    # 1568 milliseconds — faster than 5.33% in Python
+    # 2291 milliseconds — faster than 1.33% in Python
+    def solve(self, tasks):
+        tasks.sort(key=lambda x: (x[1], x[2], x[0]))
+        idx = 0
+        time = tasks[0][1]
+        pq = PriorityQueue()
+        res = []
+
+        while idx < len(tasks):
+            while idx < len(tasks) and tasks[idx][1] <= time:
+                pq.put((tasks[idx][2], tasks[idx][0]))
+                idx += 1
+            if pq.empty():
+                time = tasks[idx][1]
+                continue
+            dur, ID = pq.get()
+            res.append(ID)
+            time += dur
+
+        while not pq.empty():
+            res.append(pq.get()[1])
+
         return res
 
 
-# input
-tasks = [
-    [0, 1, 5],
-    [1, 1, 5],
-    [2, 2, 2]
-]
+# input [id, queue_time, duration]
+# tasks = [
+#     [0, 1, 5],
+#     [1, 1, 5],
+#     [2, 2, 2]
+# ]
 
 # expected output
 # [0, 2, 1]
+
+# input
+tasks = [
+    [0, 2, 0],
+    [1, 2, 0],
+    [2, 3, 1],
+    [3, 1, 0]
+]
+
+# expected output
+# [3, 0, 1, 2]
 
 # actual output
 myobj = Solution()
