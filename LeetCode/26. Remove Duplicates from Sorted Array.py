@@ -30,9 +30,11 @@ Resources:
 	Status: Accepted
 Runtime: 88 ms
 Memory Usage: 15.7 MB """
-# Solution techniques are
 
-# Time complexity : O() Space complexity : O()
+# Solution techniques are using two pointers, One that would keep track of the current element in the original array and another one for just the unique elements.
+
+# Time complexity : O(n) Space complexity : O(1)
+# time complexity is O(n) since we only loop through all the elements once, space complexity is O(1) because we modify the array in place and don't use any other variables
 
 
 class Solution:
@@ -53,3 +55,28 @@ class Solution:
 myobj = Solution()
 inpt = [0, 0, 1, 1, 1, 2, 2, 3, 3, 4]
 print(myobj.removeDuplicates(inpt))
+
+
+# Alt solution with same time complexity O(n) but worse space complexity O(n) because the set would have n elements in worst case
+
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        orig = 0
+        curr = 1 
+        seen = set()
+        numsLen = len(nums)
+        
+        if not nums or numsLen == 0:
+            return 0
+        
+        seen.add(nums[orig])
+        
+        while curr < numsLen:
+            if nums[curr] not in seen:
+                orig += 1
+                nums[orig] = nums[curr]
+                seen.add(nums[curr])
+            
+            curr += 1
+            
+        return orig+1
