@@ -27,7 +27,8 @@ runtime:
 
 # Solution techniques are Backtracking
 
-# Time complexity : O() Space complexity : O()
+# Time complexity : O(n * m) ? Space complexity : O()
+# O(n ^ m) where n is the number of possibilities for each square (i.e., 9 in classic Sudoku) and m is the number of spaces that are blank.
 
 """ 
 The most straightforward way to build a sudoku solver is a recursive backtracking algorithm. In such an algorithm, we change one cell of the board (possibly multiple times) and call our function again to ask whether that board can be solved.
