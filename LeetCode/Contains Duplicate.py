@@ -48,6 +48,27 @@ class Solution:
 
         return False
 
+    # Optimized Set solution
+    """ 20 / 20 test cases passed.
+            Status: Accepted
+        Runtime: 120 ms
+        Memory Usage: 20 MB """
+
+    def containsDuplicate(self, nums: List[int]) -> bool:
+
+        if not nums or len(nums) == 0 or len(nums) == 1:
+            return False
+
+        seen = set()
+
+        for num in nums:
+            if num in seen:
+                return True
+            else:
+                seen.add(num)
+
+        return False
+
 
 myobj = Solution()
 # inpt = [1, 2, 3, 1]
