@@ -30,11 +30,16 @@ Resources:
 
 """
 
-""" runtime """
-
 # Solution techniques are Using Extra Array and Using Cyclic Replacements and using list reverse
 
-# Time complexity : O(n) Space complexity : O(n) Using Reverse
+# Time complexity : O(n) Space complexity : O(1) Using Reverse
+
+""" runtime 
+37 / 37 test cases passed.
+	Status: Accepted
+Runtime: 232 ms
+Memory Usage: 25.6 MB
+"""
 
 
 class Solution:
@@ -50,6 +55,31 @@ class Solution:
         self.reverse(nums, 0, n - 1)
         self.reverse(nums, 0, k - 1)
         self.reverse(nums, k, n - 1)
+
+    # My alt solution
+    """ runtime 
+    37 / 37 test cases passed.
+        Status: Accepted
+    Runtime: 224 ms
+    Memory Usage: 25.6 MB
+    """
+
+    def rotate(self, nums: List[int], k: int) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        numsLen = len(nums)
+        k = k % numsLen
+        nums.reverse()
+
+        def partialRotate(nums, start, end):
+            while start < end:
+                nums[start], nums[end] = nums[end], nums[start]
+                start += 1
+                end -= 1
+
+        partialRotate(nums, 0, k-1)
+        partialRotate(nums, k, len(nums)-1)
 
 
 myobj = Solution()
