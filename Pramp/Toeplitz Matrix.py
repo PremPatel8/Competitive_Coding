@@ -46,7 +46,7 @@ Space Complexity : O(N) - N is no of unique elements in matrix
 """
 
 
-def isToeplitz(arr):
+""" def isToeplitz(arr):
     rows = len(arr)
     cols = len(arr[0])
 
@@ -65,7 +65,7 @@ def isToeplitz(arr):
             else:
                 seen_dict[curr_ele] = col-row
 
-    return True
+    return True """
 
 
 # My sol using List Silicing
@@ -93,8 +93,28 @@ Space Complexity : O(K)
     return True """
 
 
+def isToeplitz(arr):
+    rowLen = len(arr)
+    colLen = len(arr[0])
+
+    if not rowLen or rowLen == 1 or not colLen or colLen == 1:
+        return True
+
+    for row in range(rowLen-1):
+        for col in range(colLen-1):
+            if arr[row][col] != arr[row+1][col+1]:
+                return False
+
+    return True
+
+
 inpt = [[1, 2, 3, 4],
         [5, 1, 2, 3],
         [6, 5, 1, 2]]
 # OP = True
-print(isToeplitz(inpt))
+
+inpt_1 = [[1, 2, 3, 4],
+          [5, 1, 9, 3],
+          [6, 5, 1, 2]]
+#  op = False
+print(isToeplitz(inpt_1))
