@@ -51,7 +51,10 @@ class Solution:
 
 
 # Frequency Counter solution with optimization to pick smaller list to generate smaller dict/counter and save space
-# Time - O(n), Space - O(n)
+# Time - O(n+m), Space - O(min(n,m))
+# where n and mare the lengths of the arrays. 
+# We iterate through the first, and then through the second array; 
+# insert and lookup operations in the hash map take a constant time.
 """ 55 / 55 test cases passed.
 	Status: Accepted
 Runtime: 44 ms
@@ -62,11 +65,11 @@ class Solution:
     def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
         res = []
 
-        # freqDict = defaultdict(int)
-        # for num in smallerNums:
-        #     freqDict[num] += 1
-
         (smallerNums, largerNums) = (nums1, nums2) if nums1 < nums2 else (nums2, nums1)
+
+        # freqCount = defaultdict(int)
+        # for num in smallerNums:
+        #     freqCount[num] += 1
 
         freqCount = Counter(smallerNums)
 
@@ -76,6 +79,35 @@ class Solution:
                 res.append(num)
 
         return res
+
+# Sorting solution
+""" You can recommend this method when the input is sorted, or when the output needs to be sorted. 
+Here, we sort both arrays (assuming they are not sorted) and use two pointers to find common numbers in a single scan. """
+""" 
+Time Complexity: O(nlog⁡n+mlog⁡m), where n and m are the lengths of the arrays. We sort two arrays independently, and then do a linear scan.
+
+Space Complexity: from O(log⁡n+log⁡m) to O(n+m), depending on the implementation of the sorting algorithm. 
+For the complexity analysis purposes, we ignore the memory required by inputs and outputs.
+"""
+class Solution:
+    def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        nums1.sort()
+        nums2.sort()
+
+        i = j = k = 0
+
+        while(i < len(nums1) and j < len(nums2)):
+            if nums1[i] < nums2[j]:
+                i += 1
+            elif nums1[i] > nums2[j]:
+                j += 1
+            else:
+                nums1[k] = nums1[i]
+                k += 1
+                i += 1
+                j += 1
+        
+        return nums1[:k]
 
 
 myobj = Solution()
