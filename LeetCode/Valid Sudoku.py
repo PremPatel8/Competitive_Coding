@@ -76,6 +76,73 @@ class Solution:
         return len(set(unit)) == len(unit)
 
 
+# My solution with alt is_unit_valid() function
+    """
+507 / 507 test cases passed.
+	Status: Accepted
+Runtime: 96 ms
+Memory Usage: 14.4 MB
+"""
+
+
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        rows = len(board)
+        cols = len(board[0])
+        rowCheck = self.checkRow(board)
+        colCheck = self.checkCol(board)
+        boxCheck = self.checkBox(board, rows, cols)
+
+        # print(f"rowCheck = {rowCheck}, colCheck = {colCheck}, boxCheck = {boxCheck}")
+
+        return rowCheck and colCheck and boxCheck
+
+    def checkRow(self, board):
+        for row in board:
+            if not self.is_unit_valid(row):
+                return False
+
+        return True
+
+    def checkCol(self, board):
+        for col in zip(*board):
+            if not self.is_unit_valid(col):
+                return False
+
+        return True
+
+    def checkBox(self, board, rows, cols):
+        # print(f"rows={rows}, cols = {cols}")
+
+        for i in range(0, rows, 3):
+            for j in range(0, cols, 3):
+                # print(f"i={i}, j={j}")
+
+                seen = set()
+                for r in range(rows//3):
+                    for c in range(cols//3):
+                        ele = board[i+r][j+c]
+
+                        if ele != '.':
+                            if ele in seen:
+                                return False
+                            else:
+                                seen.add(ele)
+        return True
+
+    def is_unit_valid(self, unit):
+        seen = set()
+
+        for ele in unit:
+            if ele != '.':
+                if ele in seen:
+                    return False
+                else:
+                    seen.add(ele)
+
+        return True
+
+
 myobj = Solution()
 # inpt = [
 #     ["5", "3", ".", ".", "7", ".", ".", ".", "."],
