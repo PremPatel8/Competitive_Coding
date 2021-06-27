@@ -1,5 +1,6 @@
 from typing import List
 from collections import Counter
+from collections import defaultdict
 """
 Problem Name: Intersection of Two Arrays II
 
@@ -47,6 +48,31 @@ class Solution:
         intersection = count1 & count2
 
         return list(intersection.elements())
+
+
+# Frequency Dict solution
+# Time - O(n), Space - O(n)
+""" 55 / 55 test cases passed.
+	Status: Accepted
+Runtime: 44 ms
+Memory Usage: 14.3 MB """
+
+
+class Solution:
+    def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        res = []
+
+        freqDict = defaultdict(int)
+
+        for num in nums1:
+            freqDict[num] += 1
+
+        for num in nums2:
+            if num in freqDict and freqDict[num] > 0:
+                freqDict[num] -= 1
+                res.append(num)
+
+        return res
 
 
 myobj = Solution()
