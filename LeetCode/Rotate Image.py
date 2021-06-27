@@ -51,7 +51,26 @@ class Solution:
             for j in range(i+1, size):
                 matrix[j][i], matrix[i][j] = matrix[i][j], matrix[j][i]
 
-        print(matrix)
+        return matrix
+
+
+    # My Alt sol
+    """ 21 / 21 test cases passed.
+          Status: Accepted
+        Runtime: 36 ms
+        Memory Usage: 14.4 MB """
+    def rotate(self, matrix: List[List[int]]) -> None:
+        for row in matrix:
+            row.reverse()
+
+        size = len(matrix)
+
+        for r in range(size-1):
+            for c in range(size-1-r):
+                # print(f"r={r}, c={c}")
+                matrix[r][c], matrix[size-1-c][size-1-r] = matrix[size-1-c][size-1-r], matrix[r][c]
+
+        return matrix
 
 
 myobj = Solution()
@@ -60,4 +79,9 @@ inpt = [
     [4, 5, 6],
     [7, 8, 9]
 ]
+
+""" Opt = [7, 4, 1],
+          [8, 5, 2],
+          [9, 6, 3] """
+
 print(myobj.rotate(inpt))
