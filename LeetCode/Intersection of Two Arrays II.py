@@ -50,7 +50,7 @@ class Solution:
         return list(intersection.elements())
 
 
-# Frequency Dict solution
+# Frequency Counter solution with optimization to pick smaller list to generate smaller dict/counter and save space
 # Time - O(n), Space - O(n)
 """ 55 / 55 test cases passed.
 	Status: Accepted
@@ -62,14 +62,17 @@ class Solution:
     def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
         res = []
 
-        freqDict = defaultdict(int)
+        # freqDict = defaultdict(int)
+        # for num in smallerNums:
+        #     freqDict[num] += 1
 
-        for num in nums1:
-            freqDict[num] += 1
+        (smallerNums, largerNums) = (nums1, nums2) if nums1 < nums2 else (nums2, nums1)
 
-        for num in nums2:
-            if num in freqDict and freqDict[num] > 0:
-                freqDict[num] -= 1
+        freqCount = Counter(smallerNums)
+
+        for num in largerNums:
+            if num in freqCount and freqCount[num] > 0:
+                freqCount[num] -= 1
                 res.append(num)
 
         return res
