@@ -1,6 +1,8 @@
 from collections import defaultdict
 
 # Your code took 86 milliseconds — faster than 7.45% in Python
+
+
 class UndergroundTunnel:
 
     def __init__(self):
@@ -38,7 +40,10 @@ class UndergroundTunnel:
 # Your code took 57 milliseconds — faster than 53.19% in Python
 class UndergroundTunnel:
     def __init__(self):
+        # key - userId, value - tuple of checkin station & checkin time
         self.users = {}
+        # key - tuple of checkin station and checkout station,
+        # value - tuple of total time taken by each user to travel between these two stations & count of users that travelled between these two stations
         self.stats = {}
 
     def checkIn(self, userId, station, timestamp):
@@ -46,9 +51,15 @@ class UndergroundTunnel:
 
     def checkOut(self, userId, station, timestamp):
         checkInStation, checkInTime = self.users[userId]
+
+        # travelTime is the time required for the current user to travel from checkin station to checkout station,
+        # it's the difference between checkout time and checkin Time
         travelTime = (timestamp - checkInTime)
-        totalTime, userCnt = self.stats.get((checkInStation, station), (0, 0))
-        self.stats[(checkInStation, station)] = (totalTime + travelTime, userCnt + 1)
+
+        currentTotalTime, currentUserCnt = self.stats.get(
+            (checkInStation, station), (0, 0))
+
+        self.stats[(checkInStation, station)] = (currentTotalTime + travelTime, currentUserCnt + 1)
 
     def averageTime(self, start, end):
         totalTime, userCnt = self.stats[(start, end)]
