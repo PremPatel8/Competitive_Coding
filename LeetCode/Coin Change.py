@@ -39,28 +39,111 @@ Memory Usage: 13.9 MB """
 
 
 class Solution:
+    # def coinChange(self, coins: List[int], amount: int) -> int:
+    #     coins.sort(reverse=True)
+    #     min_coins = float('inf')
+
+    #     def count_coins(start_coin, coin_count, remaining_amount):
+    #         nonlocal min_coins
+
+    #         if remaining_amount == 0:
+    #             min_coins = min(min_coins, coin_count)
+    #             return
+
+    #         # Iterate from largest coins to smallest coins
+    #         for i in range(start_coin, len(coins)):
+    #             remaining_coin_allowance = min_coins - coin_count
+    #             max_amount_possible = coins[i] * remaining_coin_allowance
+
+    #             if coins[i] <= remaining_amount and remaining_amount < max_amount_possible:
+    #                 count_coins(i, coin_count + 1, remaining_amount - coins[i])
+
+    #     count_coins(0, 0, amount)
+
+    #     return min_coins if min_coins < float('inf') else -1
+
+    """ 
+    Dynamic programming - Top down / Recursive + memo
+    Recursion Tree visualization for Coin Change - https://visualgo.net/en/recursion
+
+    Time complexity : O(S∗n). where S is the amount, n is denomination count. In the worst case the recursive tree of the algorithm has height of S and the algorithm solves only S subproblems because it caches precalculated solutions in a table. Each subproblem is computed with n iterations, one by coin denomination. Therefore there is O(S∗n) time complexity.
+
+    Space complexity : O(S), where S is the amount to change We use extra space for the memoization table.
+
+    """
+
+    # def coinChange(self, coins: List[int], amount: int) -> int:
+    #     if amount < 1:
+    #         return 0
+
+    #     def coinChange(coins, rem, count):
+    #         if rem < 0:
+    #             return -1
+
+    #         if rem == 0:
+    #             return 0
+
+    #         if count[rem-1] != 0:
+    #             return count[rem-1]
+
+    #         minval = float('inf')
+
+    #         for coin in coins:
+    #             res = coinChange(coins, rem-coin, count)
+
+    #             if res >= 0 and res < minval:
+    #                 minval = 1+res
+
+    #         count[rem-1] = minval if minval != float('inf') else -1
+    #         return count[rem - 1]
+
+    #     return coinChange(coins, amount, [0]*amount)
+
+    """ 
+    Dynamic programming - Bottom up / Iterative
+
+    Input: coins = [1,2,3], amount = 6
+    Output: 2
+    Explanation: 6 = 3 + 3
+
+    Coin = 1, x = [1,2,3,4,5,6]
+    dp[1] = min(dp[1], dp[0]+1)
+    dp[2] = min(dp[2], dp[1]+1)
+    dp[3] = min(dp[3], dp[2]+1)
+    dp[4] = min(dp[4], dp[3]+1)
+    dp[5] = min(dp[5], dp[4]+1)
+    dp[6] = min(dp[6], dp[5]+1)
+
+
+    Coin = 2, x = [2,3,4,5,6]
+    dp[2] = min(dp[2], dp[0]+1)
+    dp[3] = min(dp[3], dp[1]+1)
+    dp[4] = min(dp[4], dp[2]+1)
+    dp[5] = min(dp[5], dp[3]+1)
+    dp[6] = min(dp[6], dp[4]+1)
+
+
+    Coin = 3, x = [3,4,5,6]
+    dp[3] = min(dp[3], dp[0]+1)
+    dp[4] = min(dp[4], dp[1]+1)
+    dp[5] = min(dp[5], dp[2]+1)
+    dp[6] = min(dp[6], dp[3]+1)
+
+    for each amount the min number of coins is the overall minimmum of the min number of coins needed for amt-c1, amt-c2, amtc3 ....
+    for example dp[6] = min(dp[5], dp[4], dp[3]) if there were 3 coins [1,2,3] and amount needed was 6
+
+    For the iterative solution, we think in bottom-up manner. Before calculating F(i), we have to compute all minimum counts for amounts up to i. On each iteration i of the algorithm F(i) is computed as min⁡j=0…n−1 F(i−cj)+1
+
+    """
+
     def coinChange(self, coins: List[int], amount: int) -> int:
-        coins.sort(reverse=True)
-        min_coins = float('inf')
+        dp = [float('inf')] * (amount + 1)
+        dp[0] = 0
 
-        def count_coins(start_coin, coin_count, remaining_amount):
-            nonlocal min_coins
-
-            if remaining_amount == 0:
-                min_coins = min(min_coins, coin_count)
-                return
-
-            # Iterate from largest coins to smallest coins
-            for i in range(start_coin, len(coins)):
-                remaining_coin_allowance = min_coins - coin_count
-                max_amount_possible = coins[i] * remaining_coin_allowance
-
-                if coins[i] <= remaining_amount and remaining_amount < max_amount_possible:
-                    count_coins(i, coin_count + 1, remaining_amount - coins[i])
-
-        count_coins(0, 0, amount)
-
-        return min_coins if min_coins < float('inf') else -1
+        for coin in coins:
+            for x in range(coin, amount + 1):
+                dp[x] = min(dp[x], dp[x - coin] + 1)
+        return dp[amount] if dp[amount] != float('inf') else -1
 
 
 myobj = Solution()
