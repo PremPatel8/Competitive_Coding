@@ -102,6 +102,8 @@ class Solution:
     """ 
     Dynamic programming - Bottom up / Iterative
 
+    same time & space complexity as Top Down DP
+
     Input: coins = [1,2,3], amount = 6
     Output: 2
     Explanation: 6 = 3 + 3
