@@ -8,6 +8,7 @@ If they are the same size and they collide, they'll both explode (both numbers a
 If two rockets are moving in the same direction, they will never collide. 
 """
 
+# Your code took 420 milliseconds — faster than 10.82% in Python
 
 class Solution:
     def solve(self, nums):
