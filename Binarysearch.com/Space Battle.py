@@ -8,7 +8,7 @@ If they are the same size and they collide, they'll both explode (both numbers a
 If two rockets are moving in the same direction, they will never collide. 
 """
 
-# Your code took 324 milliseconds — faster than 23.39% in Python
+# Your code took 195 milliseconds — faster than 86.55% in Python
 
 
 class Solution:
@@ -16,33 +16,24 @@ class Solution:
         if len(nums) < 2:
             return nums
 
-        res = []
+        stack = []
 
         for num in nums:
-            if num < 0 and res and res[-1] > 0:
-                for lastRocket in reversed(res):
-                    lastRocketValue = abs(lastRocket)
-                    lastRocketDir = "left" if lastRocket < 0 else "right"
-
-                    if lastRocketDir == "right":
-                        if lastRocketValue == abs(num):
-                            res.pop()
-                            num = 0
-                            break
-                        elif lastRocketValue < abs(num):
-                            res.pop()
-                        elif lastRocketValue > abs(num):
-                            num = 0
-                            break
-                    else:
-                        break
-
-                if num != 0:
-                    res.append(num)
+            if num > 0:
+                stack.append(num)
             else:
-                res.append(num)
+                while stack and 0 < stack[-1] < abs(num):
+                    stack.pop()
 
-        return res
+                if not stack:
+                    stack.append(num)
+                else:
+                    if stack[-1] == abs(num) and stack[-1] > 0:
+                        stack.pop()
+                    elif stack[-1] < 0:
+                        stack.append(num)
+
+        return stack
 
 
 # nums = [-1, 1]
