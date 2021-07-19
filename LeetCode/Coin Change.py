@@ -104,6 +104,9 @@ class Solution:
 
     same time & space complexity as Top Down DP
 
+    Runtime: 1224 ms, faster than 84.25% of Python3 online submissions for Coin Change.
+    Memory Usage: 14.7 MB, less than 47.58% of Python3 online submissions for Coin Change.
+
     Input: coins = [1,2,3], amount = 6
     Output: 2
     Explanation: 6 = 3 + 3
@@ -138,14 +141,47 @@ class Solution:
 
     """
 
-    def coinChange(self, coins: List[int], amount: int) -> int:
-        dp = [float('inf')] * (amount + 1)
-        dp[0] = 0
+    # def coinChange(self, coins: List[int], amount: int) -> int:
+    #     dp = [float('inf')] * (amount + 1)
+    #     dp[0] = 0
 
-        for coin in coins:
-            for amt in range(coin, amount + 1):
-                dp[amt] = min(dp[amt], dp[amt - coin] + 1)
-        return dp[amount] if dp[amount] != float('inf') else -1
+    #     for coin in coins:
+    #         for amt in range(coin, amount + 1):
+    #             dp[amt] = min(dp[amt], dp[amt - coin] + 1)
+    #     return dp[amount] if dp[amount] != float('inf') else -1
+
+    
+    """ 
+    Iterative BFS Solution Optimimum
+    find the shortet path from 0 to required amount.
+
+    Runtime: 656 ms, faster than 97.64% of Python3 online submissions for Coin Change.
+    Memory Usage: 14.6 MB, less than 63.35% of Python3 online submissions for Coin Change.
+    """
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        """
+        Use BFS which is to find the shortest path from 0 to amount.
+        This is much faster than the above dp solution.
+        """
+        if not amount:  # Don't need any coin.
+            return 0
+
+        queue = deque([(0, 0)])
+        visited = [True] + [False] * amount
+        while queue:
+            totalCoins, currVal = queue.popleft()
+            totalCoins += 1  # Take a new coin.
+            for coin in coins:
+                nextVal = currVal + coin
+                if nextVal == amount:  # Find a combination.
+                    return totalCoins
+
+                if nextVal < amount:  # Could add more coins.
+                    if not visited[nextVal]:  # Current value not checked.
+                        visited[nextVal] = True  # Prevent checking again.
+                        queue.append((totalCoins, nextVal))
+
+        return -1  # Cannot find any combination.
 
 
 myobj = Solution()
