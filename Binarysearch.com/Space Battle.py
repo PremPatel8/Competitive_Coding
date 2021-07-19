@@ -8,7 +8,7 @@ If they are the same size and they collide, they'll both explode (both numbers a
 If two rockets are moving in the same direction, they will never collide. 
 """
 
-# Your code took 166 milliseconds — faster than 97.66% in Python
+# Your code took 165 milliseconds — faster than 97.66% in Python
 
 
 class Solution:
@@ -23,13 +23,15 @@ class Solution:
                 stack.append(num)
             else:
                 absNumVal = abs(num)
-                while stack and 0 < stack[-1] < absNumVal:
-                    stack.pop()
+                skipFlag = False
+                while stack and 0 < stack[-1] <= absNumVal:
+                    currVal = stack.pop()
+                    if currVal == absNumVal:
+                        skipFlag = True
+                        break
 
-                if not stack or stack[-1] < 0:
+                if not skipFlag and (not stack or stack[-1] < 0):
                     stack.append(num)
-                elif stack[-1] == absNumVal:
-                    stack.pop()
 
         return stack
 
