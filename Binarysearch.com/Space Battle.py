@@ -8,7 +8,8 @@ If they are the same size and they collide, they'll both explode (both numbers a
 If two rockets are moving in the same direction, they will never collide. 
 """
 
-# Your code took 420 milliseconds — faster than 10.82% in Python
+# Your code took 324 milliseconds — faster than 23.39% in Python
+
 
 class Solution:
     def solve(self, nums):
@@ -18,23 +19,25 @@ class Solution:
         res = []
 
         for num in nums:
-            if num < 0:
-                if res and res[-1] > 0:
-                    for lastRocket in reversed(res):
-                        lastRocketValue = abs(lastRocket)
-                        lastRocketDir = "left" if lastRocket < 0 else "right"
-                        if lastRocketValue == abs(num) and lastRocketDir == "right":
+            if num < 0 and res and res[-1] > 0:
+                for lastRocket in reversed(res):
+                    lastRocketValue = abs(lastRocket)
+                    lastRocketDir = "left" if lastRocket < 0 else "right"
+
+                    if lastRocketDir == "right":
+                        if lastRocketValue == abs(num):
                             res.pop()
                             num = 0
                             break
-                        elif lastRocketValue < abs(num) and lastRocketDir == "right":
+                        elif lastRocketValue < abs(num):
                             res.pop()
-                        elif lastRocketValue > abs(num) and lastRocketDir == "right":
+                        elif lastRocketValue > abs(num):
                             num = 0
                             break
-                    if num != 0:
-                        res.append(num)
-                else:
+                    else:
+                        break
+
+                if num != 0:
                     res.append(num)
             else:
                 res.append(num)
