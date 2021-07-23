@@ -21,6 +21,14 @@ Time Complexity
 
 We find all sublists with sum target with prefix sums. Let's say we're at index i and we know the prefix sum of [0, i] is acc. Then the sublist [a, i] has sum target exactly when the prefix sum [0, a) is acc - target.
 
+The sum of a sublist can be calculated quickly with prefix sums. E.g., sum of a sublist at range (b, e] is prefix[e] - prefix[b]. Keep track of the indexes of the prefix sums to assist finding the index of prefix[i] - target.
+
+(b, e] interval notation meaning, 
+A bracket - [ or ] - means that end of the range is inclusive -- it includes the element listed. 
+A parenthesis - ( or ) - means that end is exclusive and doesn't contain the listed element. 
+So for [first1, last1), the range starts with first1 (and includes it), but ends just before last1.
+or (b, e] - start at b but don't include it, end at e but include it
+
 O(n)\mathcal{O}(n)O(n) ‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎
 Space Complexity
 
@@ -38,23 +46,31 @@ Your code took 151 milliseconds — faster than 89.66% in Python
 
 # Solution techniques are
 
-# Time complexity : O() Space complexity : O()
+# Time complexity : O(n) Space complexity : O(n)
 
 
 class Solution:
     def solve(self, nums, target):
         res = 0
-        prefixSum = 0
-        seen = set([0])
+        currPrefixSum = 0
+        seen = set([0]) # need to add 0 for the case where the nums[i] value is equal to the target value
 
         for no in nums:
-            prefixSum += no
+            currPrefixSum += no
 
-            if (prefixSum-target) in seen:
+            # we are looking for sublists whose sum equals target, and a quick way to calculate the sum of a sublist of range (b,e] is
+            # prefixSum[e] - prefixSum[b]
+            # so if prefixSum[e] - prefixSum[b] = target then
+            # prefixSum[b] = prefixSum[e] - target
+            # if prefixSum[b] exists in our set that means we have found a sublist whose total equals target,
+            priorPrefixSum = currPrefixSum-target
+
+            if priorPrefixSum in seen:
                 res += 1
+                # we need to clear the set as we do not allow overlap between sublists
                 seen.clear()
 
-            seen.add(prefixSum)
+            seen.add(currPrefixSum)
 
         return res
 
