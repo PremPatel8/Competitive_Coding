@@ -13,13 +13,13 @@ Given a non-empty array of non-negative integers nums, the degree of this array 
 
 Your task is to find the smallest possible length of a (contiguous) subarray of nums, that has the same degree as nums.
 
- 
+
 
 Example 1:
 
 Input: nums = [1,2,2,3,1]
 Output: 2
-Explanation: 
+Explanation:
 The input array has a degree of 2 because both elements 1 and 2 appear twice.
 Of the subarrays that have the same degree:
 [1, 2, 2, 3, 1], [1, 2, 2, 3], [2, 2, 3, 1], [1, 2, 2], [2, 2, 3], [2, 2]
@@ -28,7 +28,7 @@ The shortest length is 2. So return 2.
 
 Resources:
 
-runtime: 
+runtime:
 89 / 89 test cases passed.
 	Status: Accepted
 Runtime: 232 ms
@@ -57,11 +57,16 @@ class Solution:
         left_idx, freq_count, res, degree = {}, {}, 0, 0
 
         for i, num in enumerate(nums):
-            if num not in left_idx:
-                left_idx[num] = i
+            # will set dict[key]=default if key is not already in dict.
             # left_idx.setdefault(num, i)
 
+            if num not in left_idx:
+                left_idx[num] = i
+
+            # returns a value for the given key. If key is not available then returns default value,
+            # None is returned if default not defined.
             # freq_count[num] = freq_count.get(num, 0) + 1
+
             if num not in freq_count:
                 freq_count[num] = 1
             else:
@@ -74,6 +79,70 @@ class Solution:
                 res = min(res, i - left_idx[num] + 1)
 
         return res
+
+    # get() and setdefault() function calls are expensive, slower than if/else
+    # but more readable
+    def findShortestSubArray(self, nums: List[int]) -> int:
+        left_idx, freq_count, res, degree = {}, {}, 0, 0
+
+        for i, num in enumerate(nums):
+            left_idx.setdefault(num, i)
+
+            updatedFreq = freq_count.get(num, 0) + 1
+
+            freq_count[num] = updatedFreq
+
+            currSubLen = i - left_idx[num] + 1
+
+            if updatedFreq > degree:
+                degree = updatedFreq
+                res = currSubLen
+            elif updatedFreq == degree:
+                res = min(res, currSubLen)
+
+        return res
+
+
+     """
+    Solution technique: My single Dict+Tuple solution
+
+    Time & Space Complexity:
+    Time = O(n)
+    Space = O(n) in worst case if each value in the array is unique
+
+    Runtime:
+    89 / 89 test cases passed.
+	Status: Accepted
+    Runtime: 240 ms
+    Memory Usage: 15.8 MB
+    """
+
+    def findShortestSubArray(self, nums: List[int]) -> int:
+        # key = each unique no in nums
+        # value = list of freq & leftmost index of each no in nums
+        freqDict = {}
+        highestDegree = smallestSubLen = 1
+
+        for currIdx, no in enumerate(nums):
+            if no not in freqDict:
+                freqDict[no] = (1, currIdx)
+            else:
+                currNoFreq, currNoLeftIdx = freqDict[no]
+
+                currNoFreq += 1
+
+                freqDict[no] = (currNoFreq, currNoLeftIdx)
+
+                currSubLen = currIdx-currNoLeftIdx+1
+
+                if currNoFreq > highestDegree:
+                    highestDegree = currNoFreq
+                    smallestSubLen = currSubLen
+                elif currNoFreq == highestDegree:
+                    smallestSubLen = min(
+                        smallestSubLen, currSubLen)
+
+        return smallestSubLen
 
 
 myobj = Solution()
