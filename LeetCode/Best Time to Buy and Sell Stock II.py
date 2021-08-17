@@ -3,7 +3,9 @@ from typing import List
 """
 Problem Name: Best Time to Buy and Sell Stock II
 
-Problem Section: Array
+Problem URL: https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/
+
+Problem Section: Array, DP, Greedy
 
 Problem Statement:
 Say you have an array prices for which the ith element is the price of a given stock on day i.
@@ -33,6 +35,13 @@ Memory Usage: 14.8 MB """
 
 # Solution technique is iterating through the prices and adding positive deltas to the profit
 
+""" 
+instead of looking for every peak following a valley, we can simply go on crawling over the slope and keep on adding the profit obtained from every consecutive transaction. 
+In the end,we will be using the peaks and valleys effectively, but we need not track the costs corresponding to the peaks and valleys along with the maximum profit, 
+but we can directly keep on adding the difference between the consecutive numbers of the array if the second number is larger than the first one, 
+and at the total sum we obtain will be the maximum profit.
+"""
+
 # Time complexity : O(n) Space complexity : O(1)
 
 
@@ -56,9 +65,17 @@ inpt = [1, 4, 2]
 print(myobj.maxProfit(inpt))
 
 
-
 """ 
-Alt solution
+# Alt solution Peak Valley Approach
+
+If we analyze the graph, we notice that the points of interest are the consecutive valleys and peaks.
+
+Mathematically speaking: TotalProfit=∑i(height(peaki)−height(valleyi)) Total Profit= \sum_{i}(height(peak_i)-height(valley_i)) TotalProfit=∑i​(height(peaki​)−height(valleyi​))
+
+The key point is we need to consider every peak immediately following a valley to maximize the profit. In case we skip one of the peaks (trying to obtain more profit), we will end up losing the profit over one of the transactions leading to an overall lesser profit.
+
+For example, in the above case, if we skip peakipeak_ipeaki​ and valleyjvalley_jvalleyj​ trying to obtain more profit by considering points with more difference in heights, the net profit obtained will always be lesser than the one obtained by including them, since CCC will always be lesser than A+BA+BA+B.
+
 class Solution {
     public int maxProfit(int[] prices) {
         int i = 0;
