@@ -6,7 +6,9 @@ Problem Name: 152. Maximum Product Subarray
 
 Problem URL: https://leetcode.com/problems/maximum-product-subarray/
 
-Problem Section: 
+Problem Section: Array, DP
+
+Problem Difficulty: Medium
 
 Problem Statement:
 Given an integer array nums, find the contiguous subarray within an array (containing at least one number) which has the largest product.
@@ -35,9 +37,12 @@ Runtime: 56 ms
 Memory Usage: 14.3 MB
 """
 
-# Solution techniques are
+# Solution techniques are DP, Kadane's algo with both min product so far and max product so far
+# since multiplying two negatives gives you a positive, we have to track both the min prouct till i-1 and max product till i-1
+# then max prod at index i is max(nums[i], maxProd[i-1]*nums[i], minProd[i-1]*nums[i])
+# To make it constant space, we can use two variables to track minProd and maxProd so far instead of two DP arrays
 
-# Time complexity : O(n) Space complexity : O()
+# Time complexity : O(n) Space complexity : O(1)
 
 
 class Solution:
