@@ -28,7 +28,17 @@ Resources:
 Runtime: 68 ms
 Memory Usage: 14.6 MB """
 
-# Solution techniques are
+# Solution techniques are Dynamic Programming and Kadane's Algo:
+
+# the max subarray sum at index i is either the max_sum for subarray ending at [i-1] + nums[i] or nums[i]
+# (either we extend the prev subarry by adding nums[i] or start a new subarray from index i)
+# find the max_price till index i, by using DP to keep track of max_price at each index i-1
+# We can use a DP array (Linear Space) to store the max_price of subarray till each index i
+# Then we can use the following formula to calculate min price at i:
+# local_maximum[i] = max(A[i]+local_maximum[i-1], A[i])
+# We can also convert it to (constant space) DP by storing the last curr sum in the curr_sum variable, as we only need the sum value till the last index
+# update max_sum if it's less than curr_sum at price i
+
 # Time complexity : O(n) Space complexity : O(1) DP Kadane's Algorithm Pythonic solution
 
 
