@@ -3,6 +3,8 @@ from typing import List
 """
 Problem Name: Best Time to Buy and Sell Stock
 
+Problem URL: https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
+
 Problem Section: Dynamic Programming
 
 Problem Statement:
@@ -31,7 +33,15 @@ Resources:
 Runtime: 60 ms
 Memory Usage: 14.9 MB """
 
-# Solution techniques are
+# Solution techniques are Dynamic Programming:
+# the max profit possible by selling a stock on day i is the difference between price on day i and smallest price seen before day i
+# find the min price seen so far till index i, by using DP to keep track of min price at each index i-1
+# We can use a DP array (Linear Space) to store the min price till each index i
+# Then we can use the following formula to calculate min price at i:
+# min_price[i] = min(price[i], min_price[i-1])
+# We can also convert it to (constant space) DP by storing the last min price in the min_price variable, as we only need the smallest value till the last index
+# calculate the profit by subtracting min price so far from price at i,
+# update max_profit if it's less than profit generated at price i
 # Time complexity : O(n) Space complexity : O(1) Iterative Greedy pythonic solution
 """ 
 Complexity Analysis
