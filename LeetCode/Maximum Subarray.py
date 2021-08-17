@@ -3,6 +3,10 @@ from typing import List
 """
 Problem Name: Maximum Subarray
 
+Problem URL: https://leetcode.com/problems/maximum-subarray/
+
+Problem Difficulty: Easy
+
 Problem Section: Dynamic Programming
 
 Problem Statement:
