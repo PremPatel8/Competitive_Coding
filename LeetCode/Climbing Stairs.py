@@ -43,6 +43,7 @@ Space complexity : O(n) dpdpdp array of size n is used.  """
 
 
 class Solution:
+    # Linear Space DP
     def climbStairs(self, n: int) -> int:
         if n == 1:
             return 1
@@ -57,6 +58,22 @@ class Solution:
             dp[i] = dp[i - 1] + dp[i - 2]
 
         return dp[n]
+
+    # Constant Space DP
+    def climbStairs(self, n: int) -> int:
+        if n == 1:
+            return 1
+
+        if not n:
+            return 0
+
+        first = 1
+        second = 2
+
+        for _ in range(3, n+1):
+            first, second = second, first+second
+
+        return second
 
 
 myobj = Solution()
