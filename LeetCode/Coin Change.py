@@ -70,6 +70,9 @@ class Solution:
 
     Space complexity : O(S), where S is the amount to change We use extra space for the memoization table.
 
+    Runtime - 1728 ms
+    Memory Usage - 20 MB
+
     """
 
     # def coinChange(self, coins: List[int], amount: int) -> int:
@@ -104,8 +107,8 @@ class Solution:
 
     same time & space complexity as Top Down DP
 
-    Runtime: 1224 ms, faster than 84.25% of Python3 online submissions for Coin Change.
-    Memory Usage: 14.7 MB, less than 47.58% of Python3 online submissions for Coin Change.
+    Runtime: 1176 ms
+    Memory Usage: 14.4 MB
 
     Input: coins = [1,2,3], amount = 6
     Output: 2
@@ -155,8 +158,8 @@ class Solution:
     Iterative BFS Solution Optimimum
     find the shortet path from 0 to required amount.
 
-    Runtime: 656 ms, faster than 97.64% of Python3 online submissions for Coin Change.
-    Memory Usage: 14.6 MB, less than 63.35% of Python3 online submissions for Coin Change.
+    Runtime: 640 ms
+    Memory Usage: 14.3 MB
     """
     def coinChange(self, coins: List[int], amount: int) -> int:
         """
@@ -193,7 +196,7 @@ print(myobj.coinChange(coins, amount))
 
 
 """
-# Alternate DFS Recursive
+# Alternate DFS Recursive TLE
 def coinChange(coins, amount):
     m = 2**31 - 1
 
@@ -221,7 +224,7 @@ def coinChange(coins, amount):
 """
 
 """ 
-   #  DFS Iterative
+   #  DFS Iterative TLE
     class Solution:
        def coinChange(self, coins, amount):
            coins.sort()
