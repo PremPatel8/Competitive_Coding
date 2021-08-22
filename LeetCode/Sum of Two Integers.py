@@ -5,7 +5,9 @@ Problem Name: Sum of Two Integers
 
 Problem URL: https://leetcode.com/explore/interview/card/top-interview-questions-medium/114/others/822/
 
-Problem Section: Math
+Problem Difficulty: Medium
+
+Problem Section: Math, Bit Manipulation
 
 Problem Statement:
 Calculate the sum of two integers a and b, but you are not allowed to use the operator + and -.
