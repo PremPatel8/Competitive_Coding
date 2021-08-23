@@ -30,6 +30,11 @@ Constraints:
 
 Resources:
 https://leetcode.com/articles/longest-increasing-subsequence/#
+Patience Sort
+https://www.cs.princeton.edu/courses/archive/spring13/cos423/lectures/LongestIncreasingSubsequence.pdf
+https://leetcode.com/problems/longest-increasing-subsequence/discuss/74824/JavaPython-Binary-search-O(nlogn)-time-with-explanation
+
+https://leetcode.com/problems/longest-increasing-subsequence/discuss/1326308
 
 Solution Techniques:
 Solution techniques are 
