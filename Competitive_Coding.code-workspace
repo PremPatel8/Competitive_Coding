@@ -12,6 +12,7 @@
 			"**/.settings": true,
 			"**/.factorypath": true
 		},
-		"jupyter.jupyterServerType": "local"
+		"jupyter.jupyterServerType": "local",
+		"debug.inlineValues": false
 	}
 }
