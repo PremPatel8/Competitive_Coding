@@ -9,6 +9,16 @@
 
     return arrLen """
 
+# Time O(N) Space O(N) Alt Set based solutin
+
+
+""" def get_different_number(arr):
+    seen = set(arr)
+
+    for no in range(2*31-1):
+        if no not in seen:
+            return no """
+
 # Time O(N), Space O(1) optimized sol
 
 
@@ -19,16 +29,12 @@ def get_different_number(arr):
         temp = arr[i]
 
         while temp < arrLen and arr[temp] != temp:
-            temp, arr[temp] = arr[temp], temp
+            next_index = arr[temp]
+            arr[temp] = temp
+            temp = next_index
 
     for i in range(arrLen):
         if arr[i] != i:
             return i
 
     return arrLen
-
-
-def test_get_different_number():
-    arr = [0, 1, 2, 3]
-    output = 4
-    assert get_different_number(arr) == output
