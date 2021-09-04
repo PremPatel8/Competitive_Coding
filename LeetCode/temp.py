@@ -73,9 +73,3 @@
 # print(connected_components_count(inpt))
 
 
-inpt = "aaa bbb ccc bbb ddd aaa bbb ppp"
-
-def top_n_most_frequent_word(inpt, count):
-    
-
-
