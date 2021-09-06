@@ -1,75 +1,39 @@
-# from collections import deque
+from collections import deque
 
 
-# def connected_components_count(graph):
-#     componentCount = 0
-#     visited = set()
+def island_count(grid):
+    if not grid or not grid[0]:
+        return 0
 
-#     for node in graph:
-#         if node not in visited:
-#             dfs_recursive(graph, node, visited)
-#             # dfs_iterative(graph, node, visited)
-#             # bfs_iterative(graph, node, visited)
-#             componentCount += 1
+    m, n = len(grid), len(grid[0])
+    count = 0
+    for i in range(m):
+        for j in range(n):
+            if grid[i][j] == '1':
+                bfs(grid, i, j)
+                count += 1
 
-#     return componentCount
-
-
-# def dfs_recursive(graph, node, visited):
-#     if node in visited:
-#         return
-
-#     visited.add(node)
-
-#     for neighbour in graph[node]:
-#         if neighbour not in visited:
-#             dfs_recursive(graph, neighbour, visited)
-
-#     return
+    return count
 
 
-# def dfs_iterative(graph, node, visited):
-#     stack = deque()
-#     stack.append(node)
+def is_valid(self, grid, r, c):
+    m, n = len(grid), len(grid[0])
+    if r < 0 or c < 0 or r >= m or c >= n:
+        return False
 
-#     while(stack):
-#         curr = stack.pop()
-
-#         if curr not in visited:
-#             visited.add(curr)
-
-#             for neighbour in graph[curr]:
-#                 if neighbour not in visited:
-#                     stack.append(neighbour)
-
-#     return True
+    return True
 
 
-# def bfs_iterative(graph, node, visited):
-#     queue = deque()
-#     queue.append(node)
+def bfs(self, grid, r, c):
+    queue = deque()
+    queue.append((r, c))
+    grid[r][c] = '0'
 
-#     while(queue):
-#         curr = queue.popleft()
-
-#         if curr not in visited:
-#             visited.add(curr)
-
-#             for neighbour in graph[curr]:
-#                 if neighbour not in visited:
-#                     queue.append(neighbour)
-
-
-# inpt = {
-#     0: [8, 1, 5],
-#     1: [0],
-#     5: [0, 8],
-#     8: [0, 5],
-#     2: [3, 4],
-#     3: [2, 4],
-#     4: [3, 2]
-# }  # -> 2
-
-# print(connected_components_count(inpt))
-
-
+    while queue:
+        directions = [(0, 1), (0, -1), (-1, 0), (1, 0)]
+        r, c = queue.popleft()
+        for d in directions:
+            nr, nc = r + d[0], c + d[1]
+            if self.is_valid(grid, nr, nc) and grid[nr][nc] == '1':
+                queue.append((nr, nc))
+                grid[nr][nc] = '0'
