@@ -69,7 +69,7 @@ Memory Usage: 23.4 MB
 # Time complexity : Get & Put O(1) Space complexity : O(n) number of key, val pairs
 
 
-class LRUCache:
+""" class LRUCache:
     def __init__(self, capacity: int):
         self.capacity = capacity
         self.keyDict = OrderedDict()
@@ -90,7 +90,73 @@ class LRUCache:
             if len(self.keyDict) >= self.capacity:
                 self.keyDict.popitem(last=False)
 
-        self.keyDict[key] = value
+        self.keyDict[key] = value """
+
+
+# Solution techniques are Dict with Key as key and value as Doubly Linked List node &
+# Doubly Linked List to maintain LRU order of Nodes with LRU node at tail and most recently used node at head
+
+# Time complexity : Get & Put O(1) Space complexity : O(n) number of key, val pairs
+
+
+class Node:
+    def __init__(self, key, val):
+        self.key = key
+        self.val = val
+        self.next = None
+        self.prev = None
+
+
+class LRUCache:
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.keyDict = {}
+        self.head = Node(0, 0)
+        self.tail = Node(0, 0)
+        self.head.next = self.tail
+        self.tail.prev = self.head
+
+    def addNode(self, node):
+        head_next = self.head.next
+        node.next = head_next
+        head_next.prev = node
+        self.head.next = node
+        node.prev = self.head
+
+    def removeNode(self, node):
+        next_node = node.next
+        prev_node = node.prev
+        prev_node.next = next_node
+        next_node.prev = prev_node
+
+    def moveNodeToFront(self, node):
+        self.removeNode(node)
+        self.addNode(node)
+
+    def get(self, key: int) -> int:
+        res = -1
+
+        if key in self.keyDict:
+            node = self.keyDict[key]
+            res = node.val
+            self.moveNodeToFront(node)
+
+        return res
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.keyDict:
+            node = self.keyDict[key]
+            node.val = value
+            self.moveNodeToFront(node)
+        else:
+            newNode = Node(key, value)
+
+            if len(self.keyDict) >= self.capacity:
+                del self.keyDict[self.tail.prev.key]
+                self.removeNode(self.tail.prev)
+
+            self.keyDict[key] = newNode
+            self.addNode(newNode)
 
 
 # Your LRUCache object will be instantiated and called as such:
