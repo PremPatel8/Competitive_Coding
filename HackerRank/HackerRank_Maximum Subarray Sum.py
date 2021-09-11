@@ -1,5 +1,28 @@
 #!/bin/python3
 
+from typing import List
+
+"""
+Problem Name: Maximum Subarray Sum
+
+Problem URL: https://www.hackerrank.com/challenges/maximum-subarray-sum/problem?h_r=internal-search
+
+Problem Section: search, array
+
+Problem Difficulty: Hard
+
+Problem Statement:
+Given a n element array of integers 'a' and a integer 'm' determine the maximum value of the sum of any of its subarrays modulo 'm'
+
+Example:
+a = [1,2,3]
+m = 2
+the max modulus is 1
+
+Resources:
+
+"""
+
 import math
 import os
 import random
