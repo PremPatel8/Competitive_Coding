@@ -82,7 +82,7 @@ class Solution:
     Space complexity : O(min(M,N)) because in worst case where the grid is filled with lands, the size of queue can grow up to min(M,N)
     """
 
-    """ def numIslandsBFS(self, grid):
+    def numIslandsBFS(self, grid):
         if not grid or not grid[0]:
             return 0
 
@@ -113,7 +113,7 @@ class Solution:
                 nr, nc = r + d[0], c + d[1]
                 if self.is_valid(grid, nr, nc) and grid[nr][nc] == '1':
                     queue.append((nr, nc))
-                    grid[nr][nc] = '0' """
+                    grid[nr][nc] = '0'
 
     # Disjoint Set AKA Union Find Solution
     def numIslands(self, grid):
