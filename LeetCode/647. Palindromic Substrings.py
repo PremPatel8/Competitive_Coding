@@ -29,7 +29,7 @@ Memory Usage: 14 MB
 
 """
 
-# Solution techniques are generate a list of center indexes and left and right index for each center, 
+# Solution techniques are generate a list of center indexes and left and right index for each center,
 # keep expanding leaft and right index so long as the chars at those indexes match and the indexs are within the bound 0 and len(string)
 # Alt solution using DP
 
@@ -40,6 +40,11 @@ class Solution:
     def countSubstrings(self, s: str) -> int:
         slen = len(s)
         res = 0
+
+        """ We perform a "center expansion" among all possible centers of the palindrome.
+            Let N = len(S). There are 2N-1 possible centers for the palindrome: we could have a center at S[0], between S[0] and S[1], at S[1], between S[1] and S[2], at S[2], etc.
+            To iterate over each of the 2N-1 centers, we will move the left pointer every 2 times, and the right pointer every 2 times starting with the second (index 1). 
+            Hence, left = center / 2, right = center / 2 + center % 2. """
 
         for center in range(2*slen-1):
             left = center // 2
@@ -53,12 +58,12 @@ class Solution:
         return res
 
     # def countSubstrings(self, s: str) -> int:
-	#     L, r = len(s), 0
-	#     for i in range(L):
-	#     	for a,b in [(i,i),(i,i+1)]:
-	#     		while a >= 0 and b < L and s[a] == s[b]: a -= 1; b += 1
-	#     		r += (b-a)//2
-	#     return r
+        #     L, r = len(s), 0
+        #     for i in range(L):
+        #     	for a,b in [(i,i),(i,i+1)]:
+        #     		while a >= 0 and b < L and s[a] == s[b]: a -= 1; b += 1
+        #     		r += (b-a)//2
+        #     return r
 
     """ DP Solution """
     # def countSubstrings(self, s):
