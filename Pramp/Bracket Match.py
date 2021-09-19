@@ -41,7 +41,7 @@ To make sure the first rule is correct, we simply take the difference between th
 """
 
 
-def bracket_match(text):
+""" def bracket_match(text):
     diffCount = 0
     res = 0
 
@@ -58,6 +58,28 @@ def bracket_match(text):
             res += 1
 
     res += diffCount
+    return res """
+
+
+# My Alt solution, with early termination of the for loop
+def bracket_match(text):
+    bracket_pair = {'(': ')'}
+    opening_brackets = []
+    res = 0
+
+    for idx, bracket in enumerate(text):
+        if bracket in bracket_pair:
+            opening_brackets.append(bracket)
+        else:
+            if len(opening_brackets) == 0:
+                res = len(text)-idx
+                break
+            else:
+                opening_brackets.pop()
+
+    if len(opening_brackets) != 0:
+        res = len(opening_brackets)
+
     return res
 
 
