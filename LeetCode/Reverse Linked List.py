@@ -36,6 +36,8 @@ Memory Usage: 19.9 MB
 class Solution:
     def reverseList(self, head: ListNode) -> ListNode:
         def reverse(node, prev=None):
+            # when we reach the None node, that means we have reached the end of the original linked list
+            # and therefore the prev variable points to the new head of the reversed linked list which we return as the answer
             if not node:
                 return prev
 
