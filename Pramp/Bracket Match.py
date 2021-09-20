@@ -62,6 +62,8 @@ To make sure the first rule is correct, we simply take the difference between th
 
 
 # My Alt solution, with early termination of the for loop
+# Time - O(n) worst case, could have early termination
+# Space - O(n) worst case if entire input string is just opening brackets
 def bracket_match(text):
     bracket_pair = {'(': ')'}
     opening_brackets = []
