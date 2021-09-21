@@ -25,7 +25,7 @@ runtime:
 130 / 130 test cases passed.
 	Status: Accepted
 Runtime: 112 ms
-Memory Usage: 14 MB 
+Memory Usage: 14 MB
 
 """
 
@@ -37,23 +37,49 @@ Memory Usage: 14 MB
 
 
 class Solution:
+    # def countSubstrings(self, s: str) -> int:
+    #     slen = len(s)
+    #     res = 0
+
+    #     """ We perform a "center expansion" among all possible centers of the palindrome.
+    #         Let N = len(S). There are 2N-1 possible centers for the palindrome: we could have a center at S[0], between S[0] and S[1], at S[1], between S[1] and S[2], at S[2], etc.
+    #         To iterate over each of the 2N-1 centers, we will move the left pointer every 2 times, and the right pointer every 2 times starting with the second (index 1).
+    #         Hence, left = center / 2, right = center / 2 + center % 2. """
+
+    #     for center in range(2*slen-1):
+    #         left = center // 2
+    #         right = left + center % 2
+
+    #         while left >= 0 and right < slen and s[left] == s[right]:
+    #             res += 1
+    #             left -= 1
+    #             right += 1
+
+    #     return res
+
+    """
+    we first calculate all palindromes of odd length
+    and then we calculate all palindromes of even length
+    """
+
     def countSubstrings(self, s: str) -> int:
-        slen = len(s)
         res = 0
 
-        """ We perform a "center expansion" among all possible centers of the palindrome.
-            Let N = len(S). There are 2N-1 possible centers for the palindrome: we could have a center at S[0], between S[0] and S[1], at S[1], between S[1] and S[2], at S[2], etc.
-            To iterate over each of the 2N-1 centers, we will move the left pointer every 2 times, and the right pointer every 2 times starting with the second (index 1). 
-            Hence, left = center / 2, right = center / 2 + center % 2. """
+        for i in range(len(s)):
+            # Odd len palindromes
+            res += self.countPalin(s, i, i)
+            # Even len palindromes
+            res += self.countPalin(s, i, i+1)
 
-        for center in range(2*slen-1):
-            left = center // 2
-            right = left + center % 2
+        return res
 
-            while left >= 0 and right < slen and s[left] == s[right]:
-                res += 1
-                left -= 1
-                right += 1
+    def countPalin(self, s, left, right):
+        res = 0
+
+        while left >= 0 and right < len(s) and s[left] == s[right]:
+            res += 1
+            left -= 1
+            right += 1
 
         return res
 
