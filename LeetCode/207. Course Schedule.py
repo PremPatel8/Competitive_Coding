@@ -51,7 +51,7 @@ Memory Usage: 15.1 MB
 # https://leetcode.com/problems/course-schedule/discuss/441722/Python-99-time-and-100-space.-Collection-of-solutions-with-explanation
 
 # DFS with vertex state array
-# DFS with stack + set (Top Sort)
+# DFS with stack + set (Topological Sort)
 # BFS kahn's algorithm with inDegree array and queue
 
 
@@ -109,7 +109,8 @@ class Solution:
         return True """
 
 # Solution 2: DFS with a stack storing all decendants being processed
-# Same idea as Solution 1, this time we use a stack to store all vertices being processed. While visiting a descendant of a vertex, if we found it in the stack it means a cycle appears.
+# Same idea as Solution 1, this time we use a stack to store all vertices being processed. 
+# While visiting a descendant of a vertex, if we found it in the stack it means a cycle appears.
 # This technique is also used to find a Topological order from the graph.
 
     """ 46 / 46 test cases passed.
@@ -117,7 +118,7 @@ class Solution:
     Runtime: 100 ms
     Memory Usage: 17.3 MB """
 
-    """ def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         # build Adjacency list from Edges list
         adjList = self.buildAdjacencyList(numCourses, prerequisites)
         visited = set()
@@ -148,7 +149,7 @@ class Solution:
             if hasCycle(v, []):
                 return False
 
-        return True """
+        return True
 
 
 # Solution 3: BFS with Kahn's algorithm for Topological Sorting

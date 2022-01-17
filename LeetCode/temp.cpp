@@ -14,9 +14,11 @@ int numberOfFilters(vector A)
         total += a;
         pq.push(a);
     }
+
     double current = 0;
     int counter = 0;
     cout << "total=" << total << endl;
+
     while (current < total / 2)
     {
         double temp = pq.top() / 2;
@@ -26,6 +28,7 @@ int numberOfFilters(vector A)
         pq.push(temp);
         counter++;
     }
+
     return counter;
 }
 
