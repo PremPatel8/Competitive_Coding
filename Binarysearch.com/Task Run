@@ -1,0 +1,51 @@
+# My solution
+
+class Solution:
+    def solve(self, tasks, k):
+        lastDone = {}
+        timeTaken = 0
+        expectedTimeGap = k+1
+
+        for task in tasks:
+            if (task not in lastDone):
+                lastDone[task] = timeTaken
+                timeTaken += 1
+            else:
+                actualTimeGap = timeTaken - lastDone[task]
+
+                if(actualTimeGap < expectedTimeGap):
+                    idleTime = (expectedTimeGap) - (actualTimeGap)
+                    timeTaken += idleTime
+
+                lastDone[task] = timeTaken
+                timeTaken += 1
+
+        return timeTaken
+
+
+# Top Submission
+
+class Solution:
+    def solve(self, tasks, k):
+        last = {}
+        t = 0
+        
+        for x in tasks:
+            t = max((last.get(x, -k) + k), t) + 1
+            last[x] = t
+
+        return t
+
+
+# My improved solution
+
+class Solution:
+    def solve(self, tasks, k):
+        lastDone = {}
+        timeTaken = 0
+        
+        for task in tasks:
+            timeTaken = (timeTaken if task not in lastDone else max(lastDone[task]+k, timeTaken)) + 1
+            lastDone[task] = timeTaken
+
+        return timeTaken
