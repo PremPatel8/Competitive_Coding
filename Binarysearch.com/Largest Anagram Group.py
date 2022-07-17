@@ -1,4 +1,4 @@
-from collections import defaultdict
+from collections import Counter, defaultdict
 
 
 class Solution:
@@ -14,3 +14,17 @@ class Solution:
 
         # Your code took 106 milliseconds — faster than 98.81% in Python
         return max(anagramFreqDict.values())
+
+    # Alt solution using Counter which should be a O(n) time complexity compared to sorting
+    # Your code took 396 milliseconds — faster than 11.02% in Python,
+    # this sol is slower because for small number of strings and small sized strings creating a Counter is a slower than just sorting the strings
+
+    def solve_alt(self, words):
+        counter_freq_dict = defaultdict(int)
+
+        for word in words:
+            charCounter = Counter(word)
+
+            counter_freq_dict[frozenset(charCounter.items())] += 1
+
+        return max(counter_freq_dict.values())
