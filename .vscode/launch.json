@@ -5,6 +5,19 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch Isomorphic_Strings",
+            "request": "launch",
+            "mainClass": "Isomorphic_Strings",
+            "projectName": "Competitive_Coding_2aeb04ad"
+        },
+        {
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",

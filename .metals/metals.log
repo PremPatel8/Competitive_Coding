@@ -545,3 +545,11 @@ INFO: Unsupported notification method: $/setTrace
 
 Dec 26, 2022 7:53:54 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
 INFO: Unsupported notification method: $/setTrace
+2022.12.26 23:55:18 INFO  shutting down Metals
+2022.12.27 23:13:33 INFO  tracing is disabled for protocol LSP, to enable tracing of incoming and outgoing JSON messages create an empty file at d:\GitHub\Competitive_Coding\.metals\lsp.trace.json or C:\Users\PremP\AppData\Local\scalameta\metals\cache\lsp.trace.json
+2022.12.27 23:13:33 INFO  logging to file D:\GitHub\Competitive_Coding\.metals\metals.log
+2022.12.27 23:13:33 INFO  Started: Metals version 0.11.9 in workspace 'D:\GitHub\Competitive_Coding' for client Visual Studio Code 1.74.2.
+2022.12.27 23:13:34 INFO  time: initialize in 0.98s
+2022.12.27 23:13:35 WARN  Build server is not auto-connectable.
+2022.12.27 23:13:35 WARN  no build tool detected in workspace 'D:\GitHub\Competitive_Coding'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+2022.12.27 23:14:22 INFO  shutting down Metals

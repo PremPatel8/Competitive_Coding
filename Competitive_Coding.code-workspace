@@ -13,7 +13,7 @@
 			"**/.factorypath": true
 		},
 		"jupyter.jupyterServerType": "local",
-		"debug.inlineValues": false,
+		"debug.inlineValues": "on",
 		"files.watcherExclude": {
 			"**/target": true
 		}
