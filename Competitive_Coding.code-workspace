@@ -16,6 +16,7 @@
 		"debug.inlineValues": "on",
 		"files.watcherExclude": {
 			"**/target": true
-		}
+		},
+		"pythonTestExplorer.testFramework": "pytest"
 	}
 }

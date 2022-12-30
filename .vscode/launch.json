@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Running_Sum_of_1d_Array",
+            "request": "launch",
+            "mainClass": "Running_Sum_of_1d_Array",
+            "projectName": "Competitive_Coding_2aeb04ad"
+        },
+        {
+            "type": "java",
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}"
