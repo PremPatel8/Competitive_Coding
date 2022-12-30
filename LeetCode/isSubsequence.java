@@ -1,3 +1,6 @@
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 class isSubsequence {
 
     // iteration sol
@@ -5,7 +8,7 @@ class isSubsequence {
         if (s.length() > t.length())
             return false;
 
-        if (s.length() == 0 && t.length() >= 0)
+        if (s.length() == 0)
             return true;
 
         if (s.length() > 0 && t.length() == 0)
@@ -21,8 +24,24 @@ class isSubsequence {
         return i == s.length();
     }
 
-    // My iteration sol
+    // Stack sol
     public boolean isSubsequence1(String s, String t) {
+        Deque<Character> stack = new ArrayDeque<>();
+
+        for (Character ch : s.toCharArray()) {
+            stack.push(ch);
+        }
+
+        for (int idx = t.length() - 1; idx >= 0 && stack.size() > 0; idx--) {
+            if (stack.peek() == t.charAt(idx))
+                stack.pop();
+        }
+
+        return stack.size() == 0;
+    }
+
+    // My iteration sol
+    public boolean isSubsequence2(String s, String t) {
         if (s.length() > t.length()) {
             return false;
         }
