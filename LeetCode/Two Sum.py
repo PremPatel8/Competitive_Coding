@@ -50,7 +50,42 @@ class Solution:
             numIndex[no] = i
 
         return res
+    
+# My Python Dict solution with fewer lines of code
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        seen = {}
+        
+        for idx, no in enumerate(nums):
+            diff = target-no
+            
+            if diff in seen:
+                return [seen[diff], idx]
+            else:
+                seen[no] = idx
 
+
+# My Java HashMap solution
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int[] output = new int[2];
+        Map<Integer, Integer> numIndex = new HashMap<Integer, Integer>();
+
+        for(int idx=0; idx < nums.length; idx++) {
+            int num = nums[idx];
+            int complement = target-num;
+
+            if(numIndex.containsKey(complement)) {
+                output[0] = idx;
+                output[1] = numIndex.get(complement);
+                return output;
+            } else {
+                numIndex.put(num, idx);
+            }
+        }
+        return output;
+    }
+}
 
 myobj = Solution()
 nums = [2, 7, 11, 15]
