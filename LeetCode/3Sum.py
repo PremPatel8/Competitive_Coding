@@ -32,34 +32,35 @@ class Solution:
         Memory Usage: 17.3 MB """
     """ Two pointer approach """
 
-    # def threeSum(self, nums: List[int]) -> List[List[int]]:
-    #     res = []
-    #     nums.sort()
+    # No 3 approach
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        nums.sort()
 
-    #     for i in range(len(nums)-2):
-    #         if i > 0 and nums[i] == nums[i-1]:
-    #             continue
+        for i in range(len(nums)-2):
+            if i > 0 and nums[i] == nums[i-1]:
+                continue
 
-    #         left_idx, right_idx = i+1, len(nums)-1
+            left_idx, right_idx = i+1, len(nums)-1
 
-    #         while left_idx < right_idx:
-    #             s = nums[i] + nums[left_idx] + nums[right_idx]
+            while left_idx < right_idx:
+                s = nums[i] + nums[left_idx] + nums[right_idx]
 
-    #             if s < 0:
-    #                 left_idx += 1
-    #             elif s > 0:
-    #                 right_idx -= 1
-    #             else:
-    #                 res.append([nums[i], nums[left_idx], nums[right_idx]])
-    #                 while left_idx < right_idx and nums[left_idx] == nums[left_idx+1]:
-    #                     left_idx += 1
-    #                 while left_idx < right_idx and nums[right_idx] == nums[right_idx-1]:
-    #                     right_idx -= 1
+                if s < 0:
+                    left_idx += 1
+                elif s > 0:
+                    right_idx -= 1
+                else:
+                    res.append([nums[i], nums[left_idx], nums[right_idx]])
+                    while left_idx < right_idx and nums[left_idx] == nums[left_idx+1]:
+                        left_idx += 1
+                    while left_idx < right_idx and nums[right_idx] == nums[right_idx-1]:
+                        right_idx -= 1
 
-    #                 left_idx += 1
-    #                 right_idx -= 1
+                    left_idx += 1
+                    right_idx -= 1
 
-    #     return res
+        return res
 
     # Two pointer approach LeetCode
     # To make sure the result contains unique triplets, we need to skip duplicate values. 
@@ -81,7 +82,7 @@ class Solution:
     Space Complexity: from O(log⁡n) to O(n), 
     depending on the implementation of the sorting algorithm. For the purpose of complexity analysis, we ignore the memory required for the output.
  """
-
+    # No 2 approach
     def threeSum(self, nums: List[int]) -> List[List[int]]:
         res = []
         # sorted so that negative nos are at the beginning, then zeros and then positive nos at the end
@@ -196,21 +197,22 @@ Memory Usage: 18.1 MB """
     Adding a new number to this sequence will produce n / 3 new triplets.
  """
 
-# def threeSum(self, nums: List[int]) -> List[List[int]]:
-#     res, dups = set(), set()
-#     seen = {}
+# No 1 approach
+def threeSum(self, nums: List[int]) -> List[List[int]]:
+    res, dups = set(), set()
+    seen = {}
 
-#     for i, val1 in enumerate(nums):
-#         if val1 not in dups:
-#             dups.add(val1)
+    for i, val1 in enumerate(nums):
+        if val1 not in dups:
+            dups.add(val1)
 
-#             for j, val2 in enumerate(nums[i+1:]):
-#                 complement = -val1 - val2
-#                 if complement in seen and seen[complement] == i:
-#                     # sorted tuples to avoid duplicate results with same values in different positions
-#                     res.add(tuple(sorted((val1, val2, complement))))
-#                 seen[val2] = i
-#     return res
+            for j, val2 in enumerate(nums[i+1:]):
+                complement = -val1 - val2
+                if complement in seen and seen[complement] == i:
+                    # sorted tuples to avoid duplicate results with same values in different positions
+                    res.add(tuple(sorted((val1, val2, complement))))
+                seen[val2] = i
+    return res
 
 """ 318 / 318 test cases passed.
             Status: Accepted
