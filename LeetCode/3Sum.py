@@ -25,47 +25,6 @@ runtime:
 
 """
 
-# Solution techniques are
-
-# Time complexity : O() Space complexity : O()
-
-
-# Solution using 2 pointer
-# class Solution:
-#     def threeSum(self, nums: List[int]) -> List[List[int]]:
-#         nums.sort()
-#         output = []
-#         length = len(nums)
-
-#         for xitr in range(length-2):
-#             if nums[xitr] > 0:
-#                 break
-
-#             if xitr == 0 or xitr > 0 and nums[xitr] != nums[xitr-1]:
-#                 lwrBnd = xitr+1
-#                 uprBnd = length-1
-#                 # ansSum = 0-x
-
-#                 while lwrBnd < uprBnd:
-#                     total = nums[xitr] + nums[lwrBnd] + nums[uprBnd]
-
-#                     if total < 0:
-#                         lwrBnd += 1
-#                     elif total > 0:
-#                         uprBnd -= 1
-#                     elif total == 0:
-#                         output.append([nums[xitr], nums[lwrBnd], nums[uprBnd]])
-
-#                         while lwrBnd < uprBnd and nums[lwrBnd] == nums[lwrBnd+1]:
-#                             lwrBnd += 1
-#                         while lwrBnd < uprBnd and nums[uprBnd] == nums[uprBnd-1]:
-#                             uprBnd -= 1
-
-#                         lwrBnd += 1
-#                         uprBnd -= 1
-
-#         return output
-
 class Solution:
     """ 318 / 318 test cases passed.
         Status: Accepted
