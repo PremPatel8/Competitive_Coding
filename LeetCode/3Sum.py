@@ -142,6 +142,7 @@ class Solution:
         lo = i + 1, 
         hi = len(nums) - 1
 
+        # Kind of like binary search
         while (lo < hi):
             sum = nums[i] + nums[lo] + nums[hi]
 
@@ -239,9 +240,11 @@ Memory Usage: 18.1 MB """
 # def threeSum(self, nums: List[int]) -> List[List[int]]:
 #     res, dups = set(), set()
 #     seen = {}
+
 #     for i, val1 in enumerate(nums):
 #         if val1 not in dups:
 #             dups.add(val1)
+
 #             for j, val2 in enumerate(nums[i+1:]):
 #                 complement = -val1 - val2
 #                 if complement in seen and seen[complement] == i:
@@ -267,13 +270,14 @@ Memory Usage: 18.1 MB """
 
 # def threeSum(self, nums: List[int]) -> List[List[int]]:
 #     res = []
+#     #Sort the input array
 #     nums.sort()
 
 #     for i in range(len(nums)):
 #         # If the current value is greater than zero, break from the loop. Remaining values cannot sum to zero.
 #         if nums[i] > 0:
 #             break
-#         # if at the first index (0) ot if current no not same as previous number, call twosum from current index
+#         # if at the first index (0) OR if current no not same as previous number, call twosum from current index
 #         if i == 0 or nums[i - 1] != nums[i]:
 #             self.twoSum(nums, i, res)
 
