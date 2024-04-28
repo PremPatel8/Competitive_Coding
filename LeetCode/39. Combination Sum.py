@@ -57,6 +57,7 @@ class Solution:
             return
 
         for i in range(len(candidates)):
+            # we remove the ith candidate from available candidates when going down the path, because we want to avoid duplicate solutions, like 2,2,3 and 3,2,2
             self.backtrack(candidates[i:], target-candidates[i], curr_combination+[candidates[i]], res)
 
 
