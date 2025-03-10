@@ -45,5 +45,9 @@ class Solution:
 
 
 myobj = Solution()
-inpt = 1534236469
-print(myobj.reverse(inpt))
+
+oddLenInptStr = ["h", "e", "l", "l", "o"]
+myobj.reverseString(oddLenInptStr)
+
+evenLenInptStr = ["H","a","n","n","a","h"]
+myobj.reverseString(evenLenInptStr)
