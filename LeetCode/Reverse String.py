@@ -30,23 +30,6 @@ Memory Usage: 13.8 MB """
 
 
 class Solution:
-    def reverse(self, x: int) -> int:
-        res = 0
-        sign = -1 if x < 0 else 1
-        x = abs(x)
-
-        while x != 0:
-            pop = x % 10
-            newRes = res*10 + pop
-
-            if newRes > (2**31-1) or newRes < (-2**31):
-                return 0
-
-            res = newRes
-            x = x // 10
-
-        return sign*res
-
     def reverseString(self, s: List[str]) -> None:
         """
         Do not return anything, modify s in-place instead.

@@ -45,7 +45,25 @@ class Solution:
             res = res * 10 + x % 10
             x //= 10
 
-        return 0 if res > pow(2, 31) else sign*res """
+        return 0 if res > pow(2, 31) else sign*res
+    """
+
+    """ def reverse(self, x: int) -> int:
+        res = 0
+        sign = -1 if x < 0 else 1
+        x = abs(x)
+
+        while x != 0:
+            pop = x % 10
+            newRes = res*10 + pop
+
+            if newRes > (2**31-1) or newRes < (-2**31):
+                return 0
+
+            res = newRes
+            x = x // 10
+
+        return sign*res """
 
     # String reverse sol
     def reverse(self, x: int) -> int:
