@@ -26,7 +26,7 @@ Runtime: 28 ms
 Memory Usage: 13.8 MB """
 
 # Solution techniques are
-# Time complexity : O() Space complexity : O() optimized mathematical div & mod solution
+# Time complexity : O() Space complexity : O()
 
 
 class Solution:
