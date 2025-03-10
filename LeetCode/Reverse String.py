@@ -47,6 +47,19 @@ class Solution:
 
         return sign*res
 
+    def reverseString(self, s: List[str]) -> None:
+        """
+        Do not return anything, modify s in-place instead.
+        """
+        arrLen = len(s)
+
+        for idx in range((arrLen//2)):
+                temp = s[idx]
+                s[idx] = s[arrLen-idx-1]
+                s[arrLen-idx-1] = temp
+
+        print(f"Reversed String = {s}")
+
 
 myobj = Solution()
 inpt = 1534236469
