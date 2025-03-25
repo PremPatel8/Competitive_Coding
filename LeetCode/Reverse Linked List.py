@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 """
 Problem Name: Reverse Linked List
@@ -34,7 +34,7 @@ Memory Usage: 19.9 MB
 #         self.val = val
 #         self.next = next
 class Solution:
-    def reverseList(self, head: ListNode) -> ListNode:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
         def reverse(curr_node, prev=None):
             # when we reach the None node, that means we have reached the end of the original linked list
             # and therefore the prev variable points to the new head of the reversed linked list which we return as the answer
@@ -51,7 +51,7 @@ class Solution:
 
     # Iterative Solution
     # Time complexity : O(n) Space complexity : O(1)
-    def reverseList(self, head: ListNode) -> ListNode:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
         prev = None
         curr = head
 
