@@ -49,6 +49,20 @@ class Solution:
 
         return reverse(head)
 
+    # Iterative Solution
+    # Time complexity : O(n) Space complexity : O(1)
+    def reverseList(self, head: ListNode) -> ListNode:
+        prev = None
+        curr = head
+
+        while curr:
+            next_temp = curr.next
+            curr.next = prev
+            prev = curr
+            curr = next_temp
+
+        return prev
+
 
 myobj = Solution()
 
