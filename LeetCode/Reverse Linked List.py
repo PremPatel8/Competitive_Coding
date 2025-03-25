@@ -35,17 +35,17 @@ Memory Usage: 19.9 MB
 #         self.next = next
 class Solution:
     def reverseList(self, head: ListNode) -> ListNode:
-        def reverse(node, prev=None):
+        def reverse(curr_node, prev=None):
             # when we reach the None node, that means we have reached the end of the original linked list
             # and therefore the prev variable points to the new head of the reversed linked list which we return as the answer
-            if not node:
+            if not curr_node:
                 return prev
 
-            n = node.next
+            next_node = curr_node.next
 
-            node.next = prev
+            curr_node.next = prev
 
-            return reverse(n, node)
+            return reverse(next_node, curr_node) # recursive call where we pass the next node as the current node and the current node as the previous node
 
         return reverse(head)
 
