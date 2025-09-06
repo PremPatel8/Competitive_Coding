@@ -1,4 +1,4 @@
-from typing import List
+import pytest
 
 """
 Problem Name: 7. Reverse Integer
@@ -45,6 +45,23 @@ class Solution:
             x //= 10
 
         return 0 if res > pow(2, 31) else sign*res """
+        
+    """ def reverse(self, x: int) -> int:
+    res = 0
+    sign = -1 if x < 0 else 1
+    x = abs(x)
+
+    while x != 0:
+        pop = x % 10
+        newRes = res*10 + pop
+
+        if newRes > (2**31-1) or newRes < (-2**31):
+            return 0
+
+        res = newRes
+        x = x // 10
+
+    return sign*res """
 
     # String reverse sol
     def reverse(self, x: int) -> int:
@@ -82,9 +99,48 @@ def test_reverse_0():
     assert Solution().reverse(0) == 0 """
 
 
-def test_reverse():
+# Unnecessary repititions of method calls
+def test_using_simple_multiple_method_calls():
     sol = Solution()
+    
     assert sol.reverse(123) == 321
     assert sol.reverse(-123) == -321
     assert sol.reverse(120) == 21
+    assert sol.reverse(0) == 0
+    
+    
+# efficient for loop to test multiple inputs and expected outputs, cannot test specific values individually
+def test_using_testcases_array_and_for_loop():
+    sol = Solution()
+    
+    test_cases = [
+    (123, 321),
+    (-123, -321),
+    (120, 21),
+    (0, 0)
+    ]
+    
+    for input, expected in test_cases:
+        result = sol.reverse(input)
+        assert result == expected, f"Failed with input {input}: got {result}, expected {expected}"
+    
+    print("All tests passed!")
+    
+
+
+# Pytest style individual unit tests
+@pytest.fixture
+def sol():
+    return Solution()
+
+def test_positive(sol):
+    assert sol.reverse(123) == 321
+
+def test_negative(sol):
+    assert sol.reverse(-123) == -321
+
+def test_zero_end(sol):
+    assert sol.reverse(120) == 21
+
+def test_zero(sol):
     assert sol.reverse(0) == 0
