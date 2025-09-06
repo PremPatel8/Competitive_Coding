@@ -83,7 +83,8 @@ def test_reverse_0():
 
 
 def test_reverse():
-    assert Solution().reverse(123) == 321
-    assert Solution().reverse(-123) == -321
-    assert Solution().reverse(120) == 21
-    assert Solution().reverse(0) == 0
+    sol = Solution()
+    assert sol.reverse(123) == 321
+    assert sol.reverse(-123) == -321
+    assert sol.reverse(120) == 21
+    assert sol.reverse(0) == 0

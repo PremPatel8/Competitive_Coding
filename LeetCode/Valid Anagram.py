@@ -21,10 +21,7 @@ What if the inputs contain unicode characters? How would you adapt your solution
 
 Resources:
 """
-""" 34 / 34 test cases passed.
-	Status: Accepted
-Runtime: 40 ms
-Memory Usage: 14.8 MB """
+
 
 # Solution techniques are
 # Time complexity : O() Space complexity : O() solution using string sorting
@@ -35,19 +32,22 @@ class Solution:
         if len(s) != len(t):
             return False
 
-        s_count = Counter(s)
-        t_count = Counter(t)
-
-        return True if len(s_count-t_count) == 0 else False
+        return len(Counter(s)-Counter(t)) == 0
 
 
-myobj = Solution()
-s = "anagram"
-t = "nagaram"
-# s = "a"
-# t = "ab"
-print(myobj.isAnagram(s, t))
+# myobj = Solution()
+# s = "anagram"
+# t = "nagaram"
+# # s = "a"
+# # t = "ab"
+# print(myobj.isAnagram(s, t))
 
+
+
+
+
+
+"Java"
 
 """ 
 Time complexity : O(n)
