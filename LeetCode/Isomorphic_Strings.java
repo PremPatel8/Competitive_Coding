@@ -82,8 +82,34 @@ class Isomorphic_Strings {
 
     public static void main(String[] args) {
         Isomorphic_Strings obj = new Isomorphic_Strings();
-        boolean result = obj.isIsomorphic("badc", "baba");
-        System.out.println("result = " + result);
-    }
+        
+        // Basic tests using assert
+        /* assert obj.isIsomorphic("egg", "add") : "Test 1 failed";
+        assert !obj.isIsomorphic("foo", "bar") : "Test 2 failed";
+        assert obj.isIsomorphic("paper", "title") : "Test 3 failed";
+        assert !obj.isIsomorphic("ab", "aa") : "Test 4 failed";
+        assert obj.isIsomorphic("", "") : "Test 5 failed"; */
 
+        // System.out.println(obj.isIsomorphic("egg", "add") == true ? "Pass"  : "Fail");
+        // System.out.println(obj.isIsomorphic("foo", "bar") == false ? "Pass" : "Fail");
+        // System.out.println(obj.isIsomorphic("paper", "title") == true ? "Pass"  : "Fail");
+        // System.out.println(obj.isIsomorphic("ab", "aa") == false ? "Pass" : "Fail");
+        // System.out.println(obj.isIsomorphic("", "") == true ? "Pass"  : "Fail");
+
+        Object[][] tests = {
+            {"egg", "add", true},
+            {"foo", "bar", false},
+            {"paper", "title", true},
+            {"ab", "aa", false},
+            {"", "", true}
+        };
+        
+        for (Object[] test : tests) {
+            boolean result = obj.isIsomorphic((String)test[0], (String)test[1]);
+            boolean expected = (Boolean)test[2];
+            System.out.println((result == expected ? "Pass " : "Fail ") + test[0] + "/" + test[1]);
+        }
+        
+        System.out.println("All tests completed!");
+    }
 }

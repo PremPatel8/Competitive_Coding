@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Isomorphic_Strings",
+            "request": "launch",
+            "mainClass": "Isomorphic_Strings",
+            "projectName": "Competitive_Coding_2aeb04ad"
+        },
+        {
+            "type": "java",
             "name": "Launch Find_pivot_index",
             "request": "launch",
             "mainClass": "Find_pivot_index",
@@ -25,15 +32,8 @@
             "mainClass": "${file}"
         },
         {
-            "type": "java",
-            "name": "Launch Isomorphic_Strings",
-            "request": "launch",
-            "mainClass": "Isomorphic_Strings",
-            "projectName": "Competitive_Coding_2aeb04ad"
-        },
-        {
             "name": "Python: Current File",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal"
