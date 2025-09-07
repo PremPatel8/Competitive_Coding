@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Valid_Anagram",
+            "request": "launch",
+            "mainClass": "Valid_Anagram",
+            "projectName": "Competitive_Coding_2aeb04ad"
+        },
+        {
+            "type": "java",
             "name": "Isomorphic_Strings",
             "request": "launch",
             "mainClass": "Isomorphic_Strings",
