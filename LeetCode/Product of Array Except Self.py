@@ -34,9 +34,9 @@ Resources:
 Runtime: 124 ms
 Memory Usage: 20.5 MB """
 
-# Solution techniques are
+# Solution techniques are - Optimized Left and Right (Prefix and Suffix) product lists solution
 
-# Time complexity : O(n) Space complexity : O(1) Optimized Left and Right product lists solution
+# Time complexity : O(n) Space complexity : O(1)
 
 
 class Solution:
@@ -72,7 +72,7 @@ class Solution:
         return answer
 
 
-# Solution techniques are Left and Right product lists
+# Solution techniques are - Left and Right product lists, AKA Prefix and Suffix product lists
 
 # Time complexity : O(n) Space complexity : O(n)
 
@@ -115,6 +115,23 @@ class Solution:
             answer[i] = L[i] * R[i]
 
         return answer
+    
+    
+    # Divide by zero solution
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        prod, zero_cnt = 1, 0
+        for num in nums:
+            if num:
+                prod *= num
+            else:
+                zero_cnt +=  1
+        if zero_cnt > 1: return [0] * len(nums)
+
+        res = [0] * len(nums)
+        for i, c in enumerate(nums):
+            if zero_cnt: res[i] = 0 if c else prod
+            else: res[i] = prod // c
+        return res
 
 
 myobj = Solution()
