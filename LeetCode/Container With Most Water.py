@@ -29,7 +29,7 @@ Resources:
 Runtime: 132 ms
 Memory Usage: 15.3 MB """
 
-# Solution techniques are
+# Solution techniques are Two Pointer
 
 # Time complexity : O(n) Space complexity : O(1) Two pointer solution
 
@@ -41,8 +41,15 @@ class Solution:
         right = len(height)-1
 
         while left < right:
-            max_area = max(max_area, min(height[left], height[right]) * (right-left))
-
+            curr_area = min(height[left], height[right]) * (right-left)
+            
+            max_area = max(max_area, curr_area)
+            
+            # If we try to move the pointer at the longer line inwards, we won't gain any increase in area, since it is limited by the shorter line
+            # the value of Area of water is calculated by the formula - Min Line Height * Width between lines, we will lost the width regardless of which pointer we move left or right
+            # so the only thing we can maximize here is Min Line Height, so we always choose the taller line pointer and move the shorter line pointer
+            # moving the shorter line's pointer could turn out to be beneficial, despite the reduction in the width, 
+            # This is done since a relatively longer line obtained by moving the shorter line's pointer might overcome the reduction in width
             if height[left] < height[right]:
                 left += 1
             else:
