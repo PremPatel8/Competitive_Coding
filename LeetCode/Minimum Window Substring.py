@@ -40,40 +40,112 @@ class Solution:
         if not t or not s:
             return ""
 
-        dict_t = Counter(t)
+        str_t_char_freq_dict = Counter(t)
 
-        required = len(dict_t)
+        required_substr_chars_len = len(str_t_char_freq_dict)
 
-        l, r = 0, 0
-
+        left = 0
+        right = 0
+        
+        # keep track of how many unique characters in t are present in the current window in its desired frequency,
+        # so it will only be incremented when the char is in t and it's freq so far is equal to it's freq in string t
         formed = 0
 
-        window_counts = defaultdict(int)
+        # keeps a count of all the unique characters in the current window
+        window_char_freq_dict = defaultdict(int)
 
-        ans = float("inf"), None, None
+        # ans tuple of the form (window length, left, right)
+        ans = (float("inf"), None, None)
 
-        while r < len(s):
+        while right < len(s):
+            # Add one character from the right to the window
+            currChr = s[right]
+            window_char_freq_dict[currChr] += 1
 
-            character = s[r]
-            window_counts[character] += 1
-
-            if character in dict_t and window_counts[character] == dict_t[character]:
+            # If the current char is in string t and it's frequency added up so far equals to the desired count in t then increment the formed count by 1.
+            if currChr in str_t_char_freq_dict and window_char_freq_dict[currChr] == str_t_char_freq_dict[currChr]:
                 formed += 1
 
-            while l <= r and formed == required:
-                character = s[l]
+            # Try and contract the window till the point where it ceases to be 'desirable' OR left pointer has reached the same position as right pointer
+            while left <= right and formed == required_substr_chars_len:
+                currChr = s[left]
 
-                if r - l + 1 < ans[0]:
-                    ans = (r - l + 1, l, r)
+                if right - left + 1 < ans[0]:
+                    ans = (right - left + 1, left, right)
 
-                window_counts[character] -= 1
-                if character in dict_t and window_counts[character] < dict_t[character]:
+                # Decreases frequency count of the leftmost character as we're about to move the left pointer
+                window_char_freq_dict[currChr] -= 1
+                
+                # Check if window becomes invalid, AKA this currChr is in the string t and removing it means the current window does not have all the characters from string t
+                if currChr in str_t_char_freq_dict and window_char_freq_dict[currChr] < str_t_char_freq_dict[currChr]:
                     formed -= 1
 
-                l += 1
+                left += 1
 
-            r += 1
+            right += 1
 
+        return "" if ans[0] == float("inf") else s[ans[1]: ans[2] + 1]
+    
+    
+    from collections import Counter, defaultdict
+
+    # Filtered String Optimization AND Early Termination Check solution
+    def minWindow_filtered_string_optimization(self, s: str, t: str) -> str:
+        # Early termination checks
+        if not t or not s or len(s) < len(t):
+            return ""
+        
+        # Quick check: if s doesn't contain all unique chars from t
+        s_chars = set(s)
+        if not all(char in s_chars for char in set(t)):
+            return ""
+        
+        str_t_char_freq_dict = Counter(t)
+        required_substr_chars_len = len(str_t_char_freq_dict)
+        
+        # Filtered String Optimization: Only consider characters that appear in t
+        filtered_s = []
+        for i, char in enumerate(s):
+            if char in str_t_char_freq_dict:
+                filtered_s.append((i, char))  # (original_index, character)
+        
+        # If no characters from t found in s (shouldn't happen due to early check, but safety)
+        if not filtered_s:
+            return ""
+        
+        left = 0
+        right = 0
+        formed = 0
+        window_char_freq_dict = defaultdict(int)
+        ans = (float("inf"), None, None)
+        
+        while right < len(filtered_s):
+            # Get character from filtered string
+            currChr = filtered_s[right][1]
+            window_char_freq_dict[currChr] += 1
+            
+            if currChr in str_t_char_freq_dict and window_char_freq_dict[currChr] == str_t_char_freq_dict[currChr]:
+                formed += 1
+            
+            # Try to contract the window from left
+            while left <= right and formed == required_substr_chars_len:
+                currChr = filtered_s[left][1]
+                
+                # Calculate window size using original indices from s
+                original_left = filtered_s[left][0]
+                original_right = filtered_s[right][0]
+                window_size = original_right - original_left + 1
+                
+                if window_size < ans[0]:
+                    ans = (window_size, original_left, original_right)
+                
+                window_char_freq_dict[currChr] -= 1
+                if currChr in str_t_char_freq_dict and window_char_freq_dict[currChr] < str_t_char_freq_dict[currChr]:
+                    formed -= 1
+                left += 1
+            
+            right += 1
+        
         return "" if ans[0] == float("inf") else s[ans[1]: ans[2] + 1]
 
 
