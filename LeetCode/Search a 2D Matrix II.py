@@ -33,6 +33,7 @@ Memory Usage: 18.5 MB """
 # Time complexity : O(m+n) Space complexity : O(1) LeetCode Solution
 
 
+# Staircase Search solution
 class Solution:
     def searchMatrix(self, matrix, target):
         if not matrix or not matrix[0]:
