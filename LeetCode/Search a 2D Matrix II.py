@@ -30,21 +30,27 @@ Given target = 20, return false.
 Runtime: 36 ms
 Memory Usage: 18.5 MB """
 
-# Time complexity : O(m+n) Space complexity : O(1) LeetCode Solution
+# Time complexity : O(m+n) Space complexity : O(1)
 
 
 # Staircase Search solution
 class Solution:
-    def searchMatrix(self, matrix, target):
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
         if not matrix or not matrix[0]:
             return False
         
-        row = 0
-        col = len(matrix[0]) - 1
+        height = len(matrix)
+        width = len(matrix[0])
         
-        while row < len(matrix) and col >= 0:
+        # Start at the top right corner
+        row = 0
+        col = width - 1
+        
+        while row < height and col >= 0:
+            # If current > target → Move LEFT (All elements to its left are smaller, row is sorted)
             if matrix[row][col] > target:
                 col -= 1
+            # If current < target → Move DOWN, (All elements below it are larger, column is sorted)
             elif matrix[row][col] < target:
                 row += 1
             else:
