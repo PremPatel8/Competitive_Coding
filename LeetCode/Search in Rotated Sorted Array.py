@@ -62,17 +62,27 @@ class Solution:
                  mid          
             search in A[mid] ~ A[right] if A[mid] < target <= A[right] else, search left side
             """
+            
+            # It implies that the left subarray nums[left ~ mid] is sorted. 
+            # We can determine whether to proceed with this subarray by comparing target with the boundary elements
             if nums[mid] >= nums[left]:  # left rotated
-                # in ascending order side
+                # in ascending order side. it suggests that the sorted left half might include target.
+                # Consequently, we focus on the left half for further steps
                 if nums[left] <= target and target < nums[mid]:
                     right = mid - 1
                 else:
+                    # Otherwise, the left half is guaranteed not to contain target, and we will move on to the right half.
                     left = mid + 1
-            else:  # right rotated
-                # in ascending order side
+            # right rotated. It implies that the right subarray nums[mid ~ right] is sorted.
+            # we can determine whether to proceed with the right subarray by comparing the target with its boundary elements
+            else:
+                # nums[mid] < nums[left]
+                # in ascending order side.
+                # it implies that the sorted right half might contain target. As a result, we will move on with the right half.
                 if nums[mid] < target and target <= nums[right]:
                     left = mid + 1
                 else:
+                    # Otherwise, the right half is guaranteed not to contain target, and we will move on to the left half.
                     right = mid - 1
         # cannot find the target value
         return -1
