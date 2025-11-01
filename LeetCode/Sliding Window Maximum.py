@@ -14,6 +14,8 @@ moves right by one position.
 
 Return the max sliding window.
 
+Our task is to return a list of integers that contains the largest element from each window.
+
 Example 1:
 Input: nums = [1,3,-1,-3,5,3,6,7], k = 3
 Output: [3,3,5,5,6,7]
@@ -65,27 +67,64 @@ Memory Usage: 30 MB """
 
 class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-        mono_deque = deque()
-        res = []
         # Index in mono queue increasing (lowest / initial index to last index)
         # Values of array at those index decreasing (Highest value to lowest value left to right)
         # Leftmost index value in mono queue corresponds to highest value in current window so far
         # Pop the left most index value in mono queue if it's outside the current elements windows leftmost index
         # Starting from right side check for any value less than current array num and pop them
+        
+        """
+        Core Idea:
+        We maintain a deque (double-ended queue) that stores indices of elements in decreasing order of their values. The front of the deque always contains the index of the maximum element in the current window.
+        
+        Why This Works
+        The deque maintains two critical properties:
+        Front has the maximum: dq[0] always points to the largest element in the current window
+        Monotonically decreasing: Elements decrease in value from front to back
+        Recent elements beat older equal elements: If a newer element is >= an older one, we remove the older one
+        
+        If an older element is smaller than the current element, it can never be the maximum of any future window (because the current element is both larger and will stay in the window longer).
+        """
 
-        for i, num in enumerate(nums):
-            if mono_deque and mono_deque[0] <= i-k:
-                mono_deque.popleft()
+        dq = deque()  # stores indices
+        output = []
+        
+        for i in range(len(nums)):
+            # Step 1: Remove indices outside the current window
+            if dq and dq[0] <= i - k:
+                dq.popleft()
+            
+            # Step 2: Remove smaller elements (they'll never be max)
+            while dq and nums[dq[-1]] < nums[i]:
+                dq.pop()
+            
+            # Step 3: Add current index
+            dq.append(i)
+            
+            # Step 4: Record the max (front of deque) once window is full
+            if i >= k - 1:
+                output.append(nums[dq[0]])
+        
+        return output
+    
+    
+    """
+    Max heap solution
 
-            while mono_deque and nums[mono_deque[-1]] < num:
-                mono_deque.pop()
+    Time complexity: O(nlog⁡n)
+    Space complexity: O(n)
 
-            mono_deque.append(i)
-
-            if i >= k-1:
-                res.append(nums[mono_deque[0]])
-
-        return res
+    """
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        heap = []
+        output = []
+        for i in range(len(nums)):
+            heapq.heappush(heap, (-nums[i], i))
+            if i >= k - 1:
+                while heap[0][1] <= i - k:
+                    heapq.heappop(heap)
+                output.append(-heap[0][0])
+        return output
 
 
 myobj = Solution()
