@@ -1,8 +1,3 @@
-# Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, val=0, next=None):
-#         self.val = val
-#         self.next = next
 
 """ You are given two non-empty linked lists representing two non-negative integers. 
 The digits are stored in reverse order and each of their nodes contain a single digit. 
@@ -16,18 +11,6 @@ Explanation: 342 + 465 = 807. """
 
 from typing import Optional
 
-
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
-    def __repr__(self):
-        return self.val
-
-
-
-
 """
 Elementary Math solution
 
@@ -37,11 +20,13 @@ Space complexity : O(1). The length of the new list is at most max(m,n)+1 Howeve
 
 """
 
-# Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, val=0, next=None):
-#         self.val = val
-#         self.next = next
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+    def __repr__(self):
+        return self.val
 class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
         curr = dummyHead = ListNode()
