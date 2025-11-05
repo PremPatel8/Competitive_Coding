@@ -14,6 +14,9 @@ Output: 7 -> 0 -> 8
 Explanation: 342 + 465 = 807. """
 
 
+from typing import Optional
+
+
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
@@ -23,76 +26,45 @@ class ListNode:
         return self.val
 
 
-# class Solution:
-#     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
-#         numA = numB = total = 0
-#         headA = l1
-#         headB = l2
-#         head = tail = None
 
-#         numA = self.getNum(headA)
-#         numB = self.getNum(headB)
 
-#         total = numA + numB
+"""
+Elementary Math solution
 
-#         if total == 0:
-#             return ListNode(0)
+Time complexity : O(max(m,n)). Assume that m and n represents the length of l1 and l2 respectively, the algorithm above iterates at most max(m,n) times.
 
-#         while total > 0:
-#             digit = total % 10
+Space complexity : O(1). The length of the new list is at most max(m,n)+1 However, we don't count the answer as part of the space complexity.
 
-#             if not head:
-#                 head = tail = ListNode(digit)
-#             else:
-#                 tail.next = ListNode(digit)
-#                 tail = tail.next
+"""
 
-#             total = total//10
-
-#         return head
-
-#     def getNum(self, headPtr):
-#         num = i = 0
-#         while headPtr:
-#             num += headPtr.val * 10**i
-#             headPtr = headPtr.next
-#             i += 1
-
-#         return num
-
-""" LeetCode Solution """
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
 class Solution:
-    def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
-        
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        curr = dummyHead = ListNode()
         carry = 0
-        head=None
-        while(l1 or l2):
-            node1val= l1.val if l1 else 0
-            node2val = l2.val if l2 else 0
-            ans = node1val + node2val
-            if carry: ans = ans + carry
-            if ans >= 10: 
-                carry = 1
-                ans = ans-10
-            else:
-                carry = 0
-            newnode = ListNode(ans)
-            if not head:
-                head = newnode
-                newnode.next = None
-                current = head
-            else:                
-                newnode.next = None
-                current.next = newnode
-                current = newnode
-            l1=l1.next if l1 else None
-            l2=l2.next if l2 else None
-        if carry:
-            newnode = ListNode(carry)
-            newnode.next = None
-            current.next = newnode
-            current = newnode
-        return head
+
+        while l1 or l2 or carry != 0:
+            l1Val = l1.val if l1 else 0
+            l2Val = l2.val if l2 else 0
+
+            columnSum = l1Val + l2Val + carry
+
+            carry = columnSum // 10
+            
+            newNode = ListNode(columnSum % 10)
+
+            curr.next = newNode
+            curr = newNode
+
+            l1 = l1.next if l1 else None
+            l2 = l2.next if l2 else None
+        
+
+        return dummyHead.next
 
 
 h1 = ListNode(2)
