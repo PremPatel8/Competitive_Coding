@@ -1,4 +1,5 @@
 from typing import List
+from collections import deque
 
 """
 Problem Name: 226. Invert Binary Tree
@@ -54,6 +55,14 @@ class TreeNode:
 
 class Solution:
     # Recursive sol
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root:
+            return None
+    
+        root.left, root.right = self.invertTree(root.right), self.invertTree(root.left)
+        
+        return root
+    
     # def invertTree(self, root: TreeNode) -> TreeNode:
     #     if not root:
     #         return None
@@ -66,24 +75,24 @@ class Solution:
 
     #     return root
 
-    # Iterative sol
-    def invertTree(self, root: TreeNode) -> TreeNode:
+    # Iterative BFS
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         if not root:
             return None
 
-        queue = []
-        queue.append(root)
+        queue = deque([root])
 
         while queue:
-            curr = queue.pop()
-            curr.right, curr.left = curr.left, curr.right
+            curr = queue.popleft()
 
             if curr.left:
                 queue.append(curr.left)
-
+            
             if curr.right:
                 queue.append(curr.right)
-
+            
+            curr.left, curr.right = curr.right, curr.left
+        
         return root
 
 
