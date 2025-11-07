@@ -48,16 +48,53 @@ Runtime: 164 ms
 Memory Usage: 17.5 MB """
 
 # Solution techniques are:
-# Brute Force single list sort,          T - O(Nlog⁡N), S - O(N) , where N is the total number of nodes.
-# Compare one by one each LL's head ptr, T - O(kN), S - O(n) / O(1), where k is the number of linked lists.
-# Optimize Approach 2 by Priority Queue, T - O(N log⁡ k), S - O(n) / O(k) - BEST
-# Merge lists one by one,                T - O(kN), S - O(1)
-# Merge with Divide And Conquer,         T - O(N log ⁡k), S - O(1) - BEST
+# 1 Brute Force single list sort,                           T - O(Nlog⁡N), S - O(N) , where N is the total number of nodes.
+# 2 Compare one by one each LL's head ptr,                  T - O(kN), S - O(n) / O(1), where k is the number of linked lists.
+# 3 OPTIMIZE Approach 2 by Priority Queue,                  T - O(N log⁡ k), S - O(n) / O(k) - BEST
+# 4 Merge lists one by one,                                 T - O(kN), S - O(1)
+# 5 OPTIMIZED approach 4 by Merge with Divide And Conquer,  T - O(N log ⁡k), S - O(1) - BEST
 
 # Time complexity : O() Space complexity : O() Optimize Approach 2 by Priority Queue
 
 
-# Definition for singly-linked list.
+
+
+# OPTIMIZE Approach 2 by Priority Queue solution
+class HeapNode:
+    def __init__(self, node):
+        self.node = node
+
+    def __lt__(self, other):
+        # Define comparison based on ListNode's value
+        return self.node.val < other.node.val
+
+
+class Solution:
+    def mergeKLists(
+        self, lists: List[Optional[ListNode]]
+    ) -> Optional[ListNode]:
+        dummy = ListNode(0)
+        current = dummy
+        heap = []
+
+        # Initialize the heap
+        for l in lists:
+            if l:
+                heapq.heappush(heap, HeapNode(l))
+
+        # Extract the minimum node and add its next node to the heap
+        while heap:
+            heap_node = heapq.heappop(heap)
+            node = heap_node.node
+            current.next = node
+            current = current.next
+            if node.next:
+                heapq.heappush(heap, HeapNode(node.next))
+
+        return dummy.next
+
+
+
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
