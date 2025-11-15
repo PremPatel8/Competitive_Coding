@@ -140,23 +140,30 @@ class Minesweeper:
         """Display the current board state."""
         print("\n   ", end="")
         for col in range(self.cols):
+            # {col:2} formats numbers with 2-character width for alignment
+            # end=" " prevents newline after each print
             print(f"{col:2}", end=" ")
         print("\n   " + "---" * self.cols)
         
         for row in range(self.rows):
+            # {row:2}| prints row number left-aligned with 2-character width
             print(f"{row:2}|", end=" ")
+            
             for col in range(self.cols):
                 if reveal_all or self.visible[row][col]:
                     cell = self.board[row][col]
                     if cell == -1:
+                        # mine
                         print(" *", end=" ")
                     elif cell == 0:
+                        # empty cell
                         print(" .", end=" ")
                     else:
                         print(f"{cell:2}", end=" ")
                 elif self.flagged[row][col]:
                     print(" F", end=" ")
                 else:
+                    # hidden
                     print(" #", end=" ")
             print()
         print()
