@@ -41,7 +41,7 @@ Memory Usage: 15.7 MB """
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
         def backtrack(row, col, idx):
-            # First: validate current cell
+            # First: validate current cell index boundaries and value
             if not (0 <= row < rows) or not (0 <= col < cols) or board[row][col] != word[idx]:
                 return False
             # Then: if last character matched, success!
@@ -58,7 +58,6 @@ class Solution:
                     board[row][col] = temp  # restore before returning
                     return True
 
-            # Backtrack
             board[row][col] = temp
             return False
 
