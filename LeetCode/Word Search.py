@@ -37,40 +37,46 @@ board and word consists only of lowercase and uppercase English letters.
 Runtime: 200 ms
 Memory Usage: 15.7 MB """
 
-# Using counter to check if the board has the necessary char frequency (no. of each char) to contain the target word before iterating through the board
+# Backtrackin with some optimization
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
-        if not board or not word:
-            return False
-
-        board_counter, word_counter = Counter(chain(*board)), Counter(word)
-        if word_counter - board_counter:
-            return False
-
-        rows, cols, chars = len(board), len(board[0]), len(word)
-        gradients = [(1, 0), (-1, 0), (0, 1), (0, -1)]
-
-        def dfs(i: int, j: int, idx: int = 0):
-            if not (0 <= i < rows and 0 <= j < cols) or board[i][j] != word[idx]:
+        def backtrack(row, col, idx):
+            # First: validate current cell
+            if not (0 <= row < rows) or not (0 <= col < cols) or board[row][col] != word[idx]:
                 return False
-
-            if idx == chars - 1:
+            # Then: if last character matched, success!
+            if idx == len(word) - 1:
                 return True
 
-            cell_value, board[i][j] = board[i][j], '#'
+            # Mark as visited
+            temp = board[row][col]
+            board[row][col] = '#'
 
-            if any(dfs(i + di, j + dj, idx + 1) for (di, dj) in gradients):
-                return True
-
-            board[i][j] = cell_value
-
-            return False
-
-        for r in range(rows):
-            for c in range(cols):
-                if board[r][c] == word[0] and dfs(r, c):
+            # Explore neighbors
+            for dr, dc in [(1,0), (-1,0), (0,1), (0,-1)]:
+                if backtrack(row + dr, col + dc, idx + 1):
+                    board[row][col] = temp  # restore before returning
                     return True
 
+            # Backtrack
+            board[row][col] = temp
+            return False
+
+        
+        rows, cols = len(board), len(board[0])
+        
+        # Early Termination & Pruning (Optimization)
+        if not ((rows * cols) >= len(word)):
+            return False
+        
+        # If the board doesn’t contain enough of each character in word, return False early.
+        if Counter(word) - Counter(ch for row in board for ch in row):
+            return False
+        
+        for r in range(rows):
+            for c in range(cols):
+                if backtrack(r, c, 0):
+                    return True
         return False
 
 
