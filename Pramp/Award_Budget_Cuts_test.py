@@ -49,7 +49,7 @@ E.g:
 """
 
 
-def find_grants_cap(grantsArray, newBudget):
+""" def find_grants_cap(grantsArray, newBudget):
     grantsArray.sort(reverse=True)
 
     grantsArray.append(0)
@@ -75,7 +75,46 @@ def find_grants_cap(grantsArray, newBudget):
             break
 
     # the abs(surplus) is the amount of money left on the table, we divide it by the number of affected grants and add it to cap grant
-    return grantsArray[j+1] + (abs(surplus) / float(j+1))
+    return grantsArray[j+1] + (abs(surplus) / float(j+1)) """
+    
+    
+from typing import List
+
+
+""" 
+The Core Idea
+This approach asks at each position: "What if we cap all grants from here onward?"
+It calculates what the cap would need to be, then checks if that cap would actually affect the current grant.
+
+Think of it as a **greedy scan from left to right**:
+
+Why This Works:
+if cur_grant < local_cap:
+    # This grant stays untouched, continue
+else:
+    # This grant would be capped, so local_cap is our answer
+    return local_cap
+```
+
+When `cur_grant >= local_cap`, it means:
+- All previous grants were smaller than `local_cap` (they stay unchanged)
+- The current grant and all remaining grants will be capped at `local_cap`
+- This is exactly the optimal cap that minimizes impacted recipients!
+"""
+
+def find_grants_cap(grantsArray: List[int], newBudget: int) -> float:
+    grantsArray.sort()
+    uncapped_sum = 0
+
+    for idx, cur_grant in enumerate(grantsArray):
+
+        potential_cap = (newBudget-uncapped_sum)/(len(grantsArray)-idx)
+
+        if cur_grant < potential_cap:
+            uncapped_sum += cur_grant
+        else:
+            return potential_cap
+
 
 
 # res = find_grants_cap(
