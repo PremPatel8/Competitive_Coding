@@ -22,7 +22,18 @@ Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
 class Solution:
     """ 
     Complexity Analysis
+    Time complexity: O(4^N)
+    Space complexity: O(N)
     
+    Total combinations = (choices for digit 1) × (choices for digit 2) × … × (choices for digit n)
+    Since each digit gives at least 3 choices, and up to 4, the total grows exponentially with the number of digits.
+    
+    Each digit you process branches into multiple choices:
+
+    Digit "2" → 'a', 'b', 'c' → 3 branches
+    Digit "7" → 'p', 'q', 'r', 's' → 4 branches
+
+    So, for each digit, you multiply the number of possible paths by the number of letters it maps to.
 
     Time complexity: O(4N⋅N), where N is the length of digits. Note that 4 in this expression is referring to the maximum value length in the hash map, and not to the length of the input.
     The worst-case is where the input consists of only 7s and 9s. In that case, we have to explore 4 additional paths for every extra digit. Then, for each combination, it costs up to N to build the combination. This problem can be generalized to a scenario where numbers correspond with up to M digits, in which case the time complexity would be O(MN⋅N). For the problem constraints, we're given, M=4, because of digits 7 and 9 having 4 letters each.
