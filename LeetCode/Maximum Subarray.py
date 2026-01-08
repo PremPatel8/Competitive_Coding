@@ -47,10 +47,13 @@ class Solution:
         if not nums:
             return 0
 
+        # Initialize our variables using the first element.
         curr_sum = max_sum = nums[0]
 
+        # Start with the 2nd element since we already used the first one.
         for num in nums[1:]:
-            curr_sum = max(curr_sum+num, num)
+            # If current_subarray is negative, throw it away. Otherwise, keep adding to it.
+            curr_sum = max(num, curr_sum + num)
             max_sum = max(max_sum, curr_sum)
 
         return max_sum
