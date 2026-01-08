@@ -28,7 +28,7 @@ Resources:
 Runtime: 68 ms
 Memory Usage: 14.6 MB """
 
-# Solution techniques are Dynamic Programming and Kadane's Algo:
+# Solution techniques are Greedy Dynamic Programming and Kadane's Algo:
 
 # the max subarray sum at index i is either the max_sum for subarray ending at [i-1] + nums[i] or nums[i]
 # (either we extend the prev subarry by adding nums[i] or start a new subarray from index i)
