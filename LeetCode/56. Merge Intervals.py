@@ -1,7 +1,7 @@
 from typing import List
 
 """
-Problem Name: Merge Intervals
+Problem Name: 56. Merge Intervals
 
 Problem Section: Sorting and Searching
 
@@ -38,8 +38,9 @@ class Solution:
             if not merged or merged[-1][1] < interval[0]:
                 merged.append(interval)
             else:
-                # otherwise, there is overlap, so we merge the current and previous
-                # intervals.
+                # otherwise, there is overlap, so we merge the current and previous intervals.
+                # Since we sorted the intervals array by the interval starting point, it is guaranteed that the start point of merged[-1][0] < interval[0]
+                # so we only need to compare the ending points
                 merged[-1][1] = max(merged[-1][1], interval[1])
 
         return merged
