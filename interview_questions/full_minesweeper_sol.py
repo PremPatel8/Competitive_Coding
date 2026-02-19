@@ -227,5 +227,11 @@ def main():
         print("🎉 CONGRATULATIONS! You won!")
 
 
+"""
+To run this script either 
+1 - Click the drop down next to the run button and click "Run Python file in dedicated terminal"
+OR
+2 - Open terminal, wait for the venv activation script to execute and type python D:\GitHub\Competitive_Coding\interview_questions\full_minesweeper_sol.py
+"""
 if __name__ == '__main__':
     main()
