@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T9 Backtracking Visualizer</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Syne:wght@400;700;800&display=swap');
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --border: #1e1e2e;
+    --accent: #7c6af7;
+    --accent2: #f76a8c;
+    --accent3: #6af7c2;
+    --text: #e0e0f0;
+    --muted: #555570;
+    --found: #6af7c2;
+    --backtrack: #f76a8c;
+    --active: #f7c46a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    min-height: 100vh;
+    padding: 32px 24px;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 0.75rem;
+    margin-bottom: 28px;
+  }
+
+  .digits-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .digit-box {
+    width: 44px;
+    height: 44px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--muted);
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .digit-box .letters {
+    font-size: 0.45rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    margin-top: 1px;
+  }
+
+  .digit-box.active {
+    border-color: var(--active);
+    color: var(--active);
+    background: rgba(247, 196, 106, 0.08);
+    box-shadow: 0 0 16px rgba(247, 196, 106, 0.2);
+  }
+
+  .digit-box.active .letters { color: var(--active); opacity: 0.7; }
+
+  .digit-box.used {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(124, 106, 247, 0.08);
+  }
+
+  .digit-box.used .letters { color: var(--accent); opacity: 0.7; }
+
+  .controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  button {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+
+  button:hover { border-color: var(--accent); color: var(--accent); }
+  button.primary { border-color: var(--accent); background: rgba(124,106,247,0.15); color: var(--accent); }
+  button.primary:hover { background: rgba(124,106,247,0.3); }
+  button:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  .speed-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  input[type=range] {
+    accent-color: var(--accent);
+    width: 80px;
+  }
+
+  .main-layout {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 20px;
+  }
+
+  @media (max-width: 800px) {
+    .main-layout { grid-template-columns: 1fr; }
+  }
+
+  .tree-panel {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    min-height: 420px;
+    overflow-x: auto;
+  }
+
+  .panel-title {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  svg {
+    width: 100%;
+    overflow: visible;
+  }
+
+  .right-panels {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .stack-panel, .results-panel, .log-panel {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+  }
+
+  .stack-items {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 4px;
+    min-height: 60px;
+  }
+
+  .stack-item {
+    background: rgba(124,106,247,0.1);
+    border: 1px solid rgba(124,106,247,0.3);
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 0.72rem;
+    color: var(--accent);
+    display: flex;
+    justify-content: space-between;
+    animation: slideIn 0.2s ease;
+  }
+
+  .stack-item.top {
+    background: rgba(124,106,247,0.2);
+    border-color: var(--accent);
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .result-item {
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    color: var(--found);
+    background: rgba(106, 247, 194, 0.08);
+    border: 1px solid rgba(106, 247, 194, 0.2);
+    margin-bottom: 4px;
+    animation: foundPulse 0.4s ease;
+  }
+
+  @keyframes foundPulse {
+    0% { transform: scale(1.03); background: rgba(106,247,194,0.25); }
+    100% { transform: scale(1); background: rgba(106,247,194,0.08); }
+  }
+
+  .log-items {
+    max-height: 130px;
+    overflow-y: auto;
+    font-size: 0.68rem;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+
+  .log-items::-webkit-scrollbar { width: 4px; }
+  .log-items::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .log-entry { padding: 1px 0; }
+  .log-entry.match { color: var(--accent3); }
+  .log-entry.found { color: var(--found); }
+  .log-entry.backtrack { color: var(--backtrack); }
+  .log-entry.try { color: var(--active); }
+
+  .legend {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.65rem;
+    color: var(--muted);
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .step-counter {
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .empty-state {
+    color: var(--muted);
+    font-size: 0.72rem;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<h1>T9 Backtracking</h1>
+<p class="subtitle">Visualizing how the algorithm segments digits into word combinations</p>
+
+<div class="digits-row" id="digitsRow"></div>
+
+<div class="controls">
+  <button class="primary" id="btnPlay">▶ Play</button>
+  <button id="btnStepBack">← Back</button>
+  <button id="btnStep">Step →</button>
+  <button id="btnReset">↺ Reset</button>
+  <div class="speed-control">
+    <span>Speed</span>
+    <input type="range" id="speedSlider" min="1" max="5" value="3">
+    <span id="speedLabel">3×</span>
+  </div>
+</div>
+
+<div class="step-counter" id="stepCounter">Step 0</div>
+
+<div class="main-layout">
+  <div class="tree-panel">
+    <div class="panel-title">Recursion Tree</div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#7c6af7"></div>Exploring</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#6af7c2"></div>Found</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#f76a8c"></div>Backtrack</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#f7c46a"></div>Active</div>
+    </div>
+    <svg id="treeSvg" height="360"></svg>
+  </div>
+
+  <div class="right-panels">
+    <div class="stack-panel">
+      <div class="panel-title">Current Combo (Stack)</div>
+      <div class="stack-items" id="stackItems"><div class="empty-state">empty</div></div>
+    </div>
+    <div class="results-panel">
+      <div class="panel-title">Results Found</div>
+      <div id="resultsList"><div class="empty-state">none yet</div></div>
+    </div>
+    <div class="log-panel">
+      <div class="panel-title">Log</div>
+      <div class="log-items" id="logItems"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const T9_MAP = {'2':'abc','3':'def','4':'ghi','5':'jkl','6':'mno','7':'pqrs','8':'tuv','9':'wxyz'};
+
+const DIGITS = [7,6,6,3,8,4,6,3];
+const WORDS = ["some","time","rome","sometime","so","me"];
+
+// Build word→digits mapping for lookup
+function wordToDigits(word) {
+  return word.split('').map(c => {
+    for (let [d, letters] of Object.entries(T9_MAP)) {
+      if (letters.includes(c)) return parseInt(d);
+    }
+  });
+}
+
+function matchWords(digits, start, end) {
+  const slice = digits.slice(start, end);
+  return WORDS.filter(w => {
+    if (w.length !== slice.length) return false;
+    return w.split('').every((c, i) => T9_MAP[slice[i]].includes(c));
+  });
+}
+
+// Pre-compute all steps
+let steps = [];
+let treeNodes = [];
+let treeEdges = [];
+
+function simulate() {
+  steps = [];
+  treeNodes = [];
+  treeEdges = [];
+
+  let nodeId = 0;
+  const rootId = nodeId++;
+  treeNodes.push({ id: rootId, label: 'start', depth: 0, indexInDepth: 0, type: 'root', combo: [] });
+
+  function segment(start, combo, parentId, siblingIndex) {
+    steps.push({ type: 'enter', start, combo: [...combo], nodeId: parentId });
+
+    if (start === DIGITS.length) {
+      steps.push({ type: 'found', combo: [...combo], nodeId: parentId });
+      treeNodes.find(n => n.id === parentId).type = 'found';
+      return;
+    }
+
+    let childCount = 0;
+    for (let end = start + 1; end <= DIGITS.length; end++) {
+      const matched = matchWords(DIGITS, start, end);
+      steps.push({ type: 'try', start, end, matched, combo: [...combo], nodeId: parentId });
+
+      for (const word of matched) {
+        combo.push(word);
+        steps.push({ type: 'match', word, start, end, combo: [...combo], nodeId: parentId });
+
+        const childId = nodeId++;
+        const depth = combo.length;
+        treeNodes.push({ id: childId, label: word, depth, indexInDepth: childCount++, type: 'explore', combo: [...combo], parentId });
+        treeEdges.push({ from: parentId, to: childId, word });
+
+        segment(end, combo, childId, childCount);
+
+        combo.pop();
+        steps.push({ type: 'backtrack', word, combo: [...combo], nodeId: parentId });
+        treeNodes.find(n => n.id === childId).type = 'backtrack';
+      }
+    }
+  }
+
+  segment(0, [], rootId, 0);
+  layoutTree();
+}
+
+// Layout tree nodes
+function layoutTree() {
+  const depthGroups = {};
+  for (const n of treeNodes) {
+    if (!depthGroups[n.depth]) depthGroups[n.depth] = [];
+    depthGroups[n.depth].push(n);
+  }
+  const W = 700;
+  for (const [depth, nodes] of Object.entries(depthGroups)) {
+    const spacing = W / (nodes.length + 1);
+    nodes.forEach((n, i) => {
+      n.x = spacing * (i + 1);
+      n.y = parseInt(depth) * 72 + 30;
+    });
+  }
+}
+
+simulate();
+
+// Render
+let currentStep = -1;
+let visibleNodeIds = new Set([treeNodes[0].id]);
+let activeNodeId = treeNodes[0].id;
+let nodeStates = {};
+nodeStates[treeNodes[0].id] = 'active';
+
+// Snapshots for back-stepping — saved BEFORE applying each step
+let snapshots = [];
+
+function saveSnapshot() {
+  snapshots[currentStep] = {
+    visibleNodeIds: new Set(visibleNodeIds),
+    activeNodeId,
+    nodeStates: { ...nodeStates },
+    results: results.map(r => [...r]),
+    logs: logs.map(l => ({ ...l })),
+  };
+}
+
+function restoreSnapshot(idx) {
+  const s = snapshots[idx];
+  visibleNodeIds = new Set(s.visibleNodeIds);
+  activeNodeId = s.activeNodeId;
+  nodeStates = { ...s.nodeStates };
+  results = s.results.map(r => [...r]);
+  logs = s.logs.map(l => ({ ...l }));
+  // re-render log panel
+  const el = document.getElementById('logItems');
+  el.innerHTML = logs.map(l => `<div class="log-entry ${l.type}">${l.msg}</div>`).join('');
+  el.scrollTop = el.scrollHeight;
+}
+
+function getNodeColor(state) {
+  switch(state) {
+    case 'active': return '#f7c46a';
+    case 'found': return '#6af7c2';
+    case 'backtrack': return '#f76a8c';
+    default: return '#7c6af7';
+  }
+}
+
+function renderTree() {
+  const svg = document.getElementById('treeSvg');
+  const maxY = Math.max(...treeNodes.filter(n => visibleNodeIds.has(n.id)).map(n => n.y), 100);
+  svg.setAttribute('height', maxY + 60);
+  svg.setAttribute('viewBox', `0 0 700 ${maxY + 60}`);
+
+  let html = '';
+
+  // Edges
+  for (const e of treeEdges) {
+    if (!visibleNodeIds.has(e.from) || !visibleNodeIds.has(e.to)) continue;
+    const from = treeNodes.find(n => n.id === e.from);
+    const to = treeNodes.find(n => n.id === e.to);
+    const state = nodeStates[e.to] || 'explore';
+    const color = getNodeColor(state);
+    const opacity = state === 'backtrack' ? 0.3 : 0.6;
+    html += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" stroke="${color}" stroke-width="1.5" opacity="${opacity}" stroke-dasharray="${state==='backtrack'?'4,4':'none'}"/>`;
+  }
+
+  // Nodes
+  for (const n of treeNodes) {
+    if (!visibleNodeIds.has(n.id)) continue;
+    const state = nodeStates[n.id] || 'explore';
+    const color = getNodeColor(state);
+    const isActive = n.id === activeNodeId;
+    const r = isActive ? 20 : 16;
+    const opacity = state === 'backtrack' ? 0.4 : 1;
+
+    html += `<g opacity="${opacity}">`;
+    if (isActive) {
+      html += `<circle cx="${n.x}" cy="${n.y}" r="${r+6}" fill="${color}" opacity="0.15"/>`;
+    }
+    html += `<circle cx="${n.x}" cy="${n.y}" r="${r}" fill="${n.id === 0 ? '#1e1e2e' : color}22" stroke="${color}" stroke-width="${isActive?2.5:1.5}"/>`;
+    html += `<text x="${n.x}" y="${n.y+1}" text-anchor="middle" dominant-baseline="middle" fill="${color}" font-family="JetBrains Mono" font-size="${n.label.length > 6 ? '8' : '10'}" font-weight="600">${n.label}</text>`;
+    html += `</g>`;
+  }
+
+  svg.innerHTML = html;
+}
+
+function renderDigits(combo, activeStart, activeEnd) {
+  const row = document.getElementById('digitsRow');
+  row.innerHTML = '';
+  
+  // figure out which indices are "used" by current combo
+  let usedRanges = [];
+  let pos = 0;
+  for (const w of combo) {
+    usedRanges.push([pos, pos + w.length]);
+    pos += w.length;
+  }
+
+  DIGITS.forEach((d, i) => {
+    const box = document.createElement('div');
+    box.className = 'digit-box';
+    
+    const isUsed = usedRanges.some(([s, e]) => i >= s && i < e);
+    const isActive = i >= activeStart && i < activeEnd;
+    
+    if (isActive) box.classList.add('active');
+    else if (isUsed) box.classList.add('used');
+    
+    box.innerHTML = `${d}<div class="letters">${T9_MAP[d]}</div>`;
+    row.appendChild(box);
+  });
+}
+
+function renderStack(combo) {
+  const el = document.getElementById('stackItems');
+  if (combo.length === 0) {
+    el.innerHTML = '<div class="empty-state">empty</div>';
+    return;
+  }
+  el.innerHTML = combo.map((w, i) => 
+    `<div class="stack-item ${i === combo.length-1 ? 'top' : ''}">
+      <span>${w}</span>
+      <span style="color:var(--muted);font-size:0.65rem">[${i}]</span>
+    </div>`
+  ).join('');
+}
+
+let results = [];
+function renderResults() {
+  const el = document.getElementById('resultsList');
+  if (results.length === 0) {
+    el.innerHTML = '<div class="empty-state">none yet</div>';
+    return;
+  }
+  el.innerHTML = results.map(r => 
+    `<div class="result-item">✓ [${r.map(w => `"${w}"`).join(', ')}]</div>`
+  ).join('');
+}
+
+let logs = [];
+function addLog(msg, type='') {
+  logs.push({ msg, type });
+  if (logs.length > 40) logs.shift();
+  const el = document.getElementById('logItems');
+  el.innerHTML = logs.map(l => `<div class="log-entry ${l.type}">${l.msg}</div>`).join('');
+  el.scrollTop = el.scrollHeight;
+}
+
+function applyStep(step) {
+  document.getElementById('stepCounter').textContent = `Step ${currentStep + 1} / ${steps.length}`;
+  document.getElementById('btnStepBack').disabled = currentStep <= 0;
+  document.getElementById('btnStep').disabled = currentStep >= steps.length - 1;
+
+  if (step.type === 'enter') {
+    activeNodeId = step.nodeId;
+    nodeStates[step.nodeId] = 'active';
+    renderDigits(step.combo, step.start, step.start);
+    renderStack(step.combo);
+    addLog(`→ segment(start=${step.start}, combo=[${step.combo.map(w=>`"${w}"`).join(',')}])`, 'try');
+  } else if (step.type === 'try') {
+    activeNodeId = step.nodeId;
+    renderDigits(step.combo, step.start, step.end);
+    const matchStr = step.matched.length ? step.matched.join(', ') : 'none';
+    addLog(`  try [${step.start}:${step.end}] → ${matchStr}`, step.matched.length ? 'match' : '');
+  } else if (step.type === 'match') {
+    const childNode = treeNodes.find(n => n.parentId === step.nodeId && n.label === step.word && !visibleNodeIds.has(n.id));
+    if (childNode) {
+      visibleNodeIds.add(childNode.id);
+      nodeStates[childNode.id] = 'active';
+      activeNodeId = childNode.id;
+    }
+    renderDigits(step.combo, step.end, step.end);
+    renderStack(step.combo);
+    addLog(`  ✓ matched "${step.word}" → push to combo`, 'match');
+  } else if (step.type === 'found') {
+    nodeStates[step.nodeId] = 'found';
+    activeNodeId = step.nodeId;
+    results.push([...step.combo]);
+    renderResults();
+    renderDigits(step.combo, DIGITS.length, DIGITS.length);
+    addLog(`★ FOUND: [${step.combo.map(w=>`"${w}"`).join(', ')}]`, 'found');
+  } else if (step.type === 'backtrack') {
+    nodeStates[step.nodeId] = 'backtrack';
+    // find parent
+    const node = treeNodes.find(n => n.id === step.nodeId);
+    if (node && node.parentId !== undefined) {
+      activeNodeId = node.parentId;
+      nodeStates[node.parentId] = 'active';
+    }
+    renderStack(step.combo);
+    renderDigits(step.combo, 0, 0);
+    addLog(`  ↩ backtrack — pop "${step.word}"`, 'backtrack');
+  }
+
+  renderTree();
+}
+
+function reset() {
+  currentStep = -1;
+  visibleNodeIds = new Set([treeNodes[0].id]);
+  activeNodeId = treeNodes[0].id;
+  nodeStates = {};
+  nodeStates[treeNodes[0].id] = 'active';
+  results = [];
+  logs = [];
+  snapshots = [];
+  document.getElementById('logItems').innerHTML = '';
+  document.getElementById('stepCounter').textContent = `Step 0 / ${steps.length}`;
+  document.getElementById('btnStepBack').disabled = true;
+  document.getElementById('btnStep').disabled = false;
+  renderTree();
+  renderDigits([], 0, 0);
+  renderStack([]);
+  renderResults();
+  document.getElementById('btnPlay').textContent = '▶ Play';
+  document.getElementById('btnPlay').disabled = false;
+}
+
+function stepForward() {
+  if (currentStep >= steps.length - 1) return;
+  // Save current state before moving forward
+  saveSnapshot();
+  currentStep++;
+  applyStep(steps[currentStep]);
+}
+
+function stepBackward() {
+  if (currentStep <= 0) return;
+  // Step back to previous snapshot
+  currentStep--;
+  restoreSnapshot(currentStep);
+  applyStep(steps[currentStep]);
+}
+
+let playing = false;
+let playInterval = null;
+
+function getDelay() {
+  const speed = parseInt(document.getElementById('speedSlider').value);
+  return [800, 500, 300, 180, 80][speed - 1];
+}
+
+document.getElementById('btnPlay').addEventListener('click', () => {
+  if (playing) {
+    playing = false;
+    clearInterval(playInterval);
+    document.getElementById('btnPlay').textContent = '▶ Play';
+  } else {
+    if (currentStep >= steps.length - 1) reset();
+    playing = true;
+    document.getElementById('btnPlay').textContent = '⏸ Pause';
+    playInterval = setInterval(() => {
+      if (currentStep >= steps.length - 1) {
+        playing = false;
+        clearInterval(playInterval);
+        document.getElementById('btnPlay').textContent = '▶ Play';
+        return;
+      }
+      stepForward();
+    }, getDelay());
+  }
+});
+
+document.getElementById('btnStep').addEventListener('click', stepForward);
+document.getElementById('btnStepBack').addEventListener('click', stepBackward);
+document.getElementById('btnReset').addEventListener('click', reset);
+
+document.getElementById('speedSlider').addEventListener('input', function() {
+  document.getElementById('speedLabel').textContent = this.value + '×';
+  if (playing) {
+    clearInterval(playInterval);
+    playInterval = setInterval(() => {
+      if (currentStep >= steps.length - 1) {
+        playing = false;
+        clearInterval(playInterval);
+        document.getElementById('btnPlay').textContent = '▶ Play';
+        return;
+      }
+      stepForward();
+    }, getDelay());
+  }
+});
+
+reset();
+</script>
+</body>
+</html>
