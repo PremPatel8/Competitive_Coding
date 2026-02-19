@@ -138,17 +138,21 @@ class Minesweeper:
     
     def display(self, reveal_all=False):
         """Display the current board state."""
+        
         print("\n   ", end="")
+        # Prints the column indexes 0  1  2  3  4  5  6  7  8
         for col in range(self.cols):
-            # {col:2} formats numbers with 2-character width for alignment
+            # {col:2} formats column number with 2-character width for alignment
             # end=" " prevents newline after each print
             print(f"{col:2}", end=" ")
+        
         print("\n   " + "---" * self.cols)
         
         for row in range(self.rows):
-            # {row:2}| prints row number left-aligned with 2-character width
+            # Prints row number left-aligned with 2-character width and a pipe char after it (|) e.g - 2|
             print(f"{row:2}|", end=" ")
             
+            # Prints each cell for this row
             for col in range(self.cols):
                 if reveal_all or self.visible[row][col]:
                     cell = self.board[row][col]
