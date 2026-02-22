@@ -23,34 +23,71 @@ https://leetcode.com/problems/maximum-performance-of-a-team/discuss/741822/Met-t
 https://leetcode.com/problems/maximum-performance-of-a-team/discuss/539687/JavaC%2B%2BPython-Priority-Queue
 """
 
-""" 53 / 53 test cases passed.
-	Status: Accepted
-Runtime: 384 ms
-Memory Usage: 29.8 MB """
+# Solution techniques are Greedy with Priority Queue
 
-# Solution techniques are Sort based on efficiency, use min heap to store k element speeds and to pop elements with speed less than curr element speed and calculate running best speed for curr element efficiency
+""" 
+Greedy with Priority Queue
 
-# Time complexity : O(n log n)? Space complexity : O(k)
+Time Complexity: O(nlogn+nlogk)
+
+First, we build a list of candidates from the inputs, which takes O(N) time.
+Sorting: Sorting the n candidates by efficiency takes O(nlogn).
+Heap Operations: You iterate through the n candidates once. In each iteration, you perform heappush and potentially heappop. Since the heap size is maintained at a maximum of k elements, each heap operation takes O(logk). Over n iterations, this contributes O(nlogk).
+
+Space Complexity: O(n+k)
+
+Candidates List: Storing the zipped and sorted tuples of (efficiency, speed) takes O(n) space.
+Heap: The speed_heap stores at most k elements, taking O(k) space.
+Total: O(n) (since k≤n).
+"""
 
 
 class Solution:
     def maxPerformance(self, n: int, speed: List[int], efficiency: List[int], k: int) -> int:
-        # people = sorted(zip(speed, efficiency), key=lambda x: -x[1])
-        people = sorted(zip(efficiency, speed), reverse=True)
+        modulo = 10 ** 9 + 7
 
-        result, sum_speed = 0, 0
-        min_heap = []
+        # build tuples of (efficiency, speed)
+        candidates = zip(efficiency, speed)
+        # sort the candidates by their efficiencies, largest to smallest
+        candidates = sorted(candidates, key=lambda t:t[0], reverse=True)
 
-        for i, (e, s) in enumerate(people):
-            if i < k:
-                sum_speed += s
-                heapq.heappush(min_heap, s)
-            elif s > min_heap[0]:
-                sum_speed += s - heapq.heappushpop(min_heap, s)
+        speed_heap = []
+        speed_sum, perf = 0, 0
+        for curr_efficiency, curr_speed in candidates:
+            # maintain a heap for the fastest (k-1) speeds
+            if len(speed_heap) > k-1:
+                # discard the team member with the lowest speed
+                # This ensures that speed_sum always represents the sum of the largest speeds encountered so far for the given efficiency constraint.
+                speed_sum -= heapq.heappop(speed_heap)
+                
+            heapq.heappush(speed_heap, curr_speed)
 
-            result = max(result, sum_speed * e)
+            # calculate the maximum performance with the current member as the least efficient one in the team
+            speed_sum += curr_speed
+            perf = max(perf, speed_sum * curr_efficiency)
 
-        return result % ((10**9)+7)
+        return perf % modulo
+
+
+# class Solution:
+#     def maxPerformance(self, n: int, speed: List[int], efficiency: List[int], k: int) -> int:
+#         modulo = 10 ** 9 + 7
+#         # people = sorted(zip(speed, efficiency), key=lambda x: -x[1])
+#         people = sorted(zip(efficiency, speed), reverse=True)
+
+#         result, sum_speed = 0, 0
+#         min_heap = []
+
+#         for i, (e, s) in enumerate(people):
+#             if i < k:
+#                 sum_speed += s
+#                 heapq.heappush(min_heap, s)
+#             elif s > min_heap[0]:
+#                 sum_speed += s - heapq.heappushpop(min_heap, s)
+
+#             result = max(result, sum_speed * e)
+
+#         return result % modulo
 
         """ def maxPerformance(self, n, speed, efficiency, k):
         h = []
@@ -69,4 +106,5 @@ n = 6
 speed = [2, 10, 3, 1, 5, 8]
 efficiency = [5, 4, 3, 9, 7, 2]
 k = 4
-print(myobj.maxPerformance(n, speed, efficiency, k))
+result = myobj.maxPerformance(n, speed, efficiency, k)
+print(f"Expected = 72, Result = {result}, {72 == result}")
