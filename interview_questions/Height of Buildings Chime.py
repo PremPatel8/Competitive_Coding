@@ -16,7 +16,8 @@ Space Complexity: O(n) to store the stack in the worst-case scenario (e.g., a de
 def highest_visible_building(heights):
     n = len(heights)
     highest_building = [-1] * n
-    unblocked_buildings_index = []  # Stores indices of buildings
+    # Monotonic Decreasing Stack - Stores indices of unblocked buildings
+    unblocked_buildings_index = []
 
     for i in range(n):
         # If current building is taller than the building on top of stack,
@@ -35,3 +36,13 @@ def highest_visible_building(heights):
 # Building 6 sees 2. 2 is shorter, so it doesn't block. 
 # But there's nothing taller than 6. Result: -1.
 # Building 2 has nothing to its right. Result: -1.
+
+heights = [10, 5, 2, 7]
+result = highest_visible_building(heights)
+expected = [-1, 7, 7, -1]
+print(result == expected)
+
+heights = [10,6,8,5,11,9]
+result = highest_visible_building(heights)
+expected = [11,8,11,11,-1,-1]
+print(result == expected)
