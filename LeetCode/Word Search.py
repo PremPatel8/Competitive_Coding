@@ -37,32 +37,11 @@ board and word consists only of lowercase and uppercase English letters.
 Runtime: 200 ms
 Memory Usage: 15.7 MB """
 
-# Backtrackin with some optimization
+# Backtracking with some optimization
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
-        def backtrack(row, col, idx):
-            # First: validate current cell index boundaries and value
-            if not (0 <= row < rows) or not (0 <= col < cols) or board[row][col] != word[idx]:
-                return False
-            # Then: if last character matched, success!
-            if idx == len(word) - 1:
-                return True
-
-            # Mark as visited
-            temp = board[row][col]
-            board[row][col] = '#'
-
-            # Explore neighbors
-            for dr, dc in [(1,0), (-1,0), (0,1), (0,-1)]:
-                if backtrack(row + dr, col + dc, idx + 1):
-                    board[row][col] = temp  # restore before returning
-                    return True
-
-            board[row][col] = temp
-            return False
-
-        
         rows, cols = len(board), len(board[0])
+        directions = ((1,0), (-1,0), (0,1), (0,-1))
         
         # Early Termination & Pruning (Optimization)
         if not ((rows * cols) >= len(word)):
@@ -72,6 +51,80 @@ class Solution:
         if Counter(word) - Counter(ch for row in board for ch in row):
             return False
         
+        def backtrack(row, col, word_idx):
+            # First: validate current cell index boundaries and value
+            if not (0 <= row < rows) or not (0 <= col < cols) or board[row][col] != word[word_idx]:
+                return False
+            
+            # Then: if last character matched, success!
+            if word_idx == len(word) - 1:
+                return True
+
+            # Mark as visited temporarily, so that it does not get reused when exploring neighboring cells
+            temp = board[row][col]
+            board[row][col] = '#'
+
+            # Explore neighbors
+            for dr, dc in directions:
+                nr, nc = row + dr, col + dc
+                
+                if backtrack(nr, nc, word_idx+1):
+                    board[row][col] = temp  # restore before returning
+                    return True
+
+            board[row][col] = temp
+            return False
+
+        
+        for r in range(rows):
+            for c in range(cols):
+                if backtrack(r, c, 0):
+                    return True
+        
+        return False
+    
+    
+"""
+Variation : Revisiting the same letter cell is allowed
+
+If the constraint is changed to allow revisiting the same letter cell, the problem transitions from finding a path (no repeating nodes) to finding a walk (repeating nodes allowed).
+
+Without the "no-reuse" constraint, the problem structure changes significantly. In the original version, the "visited" state makes the search path-dependent. If reuse is allowed, the answer for backtrack(row, col, word_idx) depends only on the current coordinates and the current index of the word.
+
+Heuristic Hint: Since multiple paths could lead to the same cell at the same word_idx, you would likely encounter many redundant calculations.
+Optimization: You could use Memoization (e.g., @cache in Python) to store the result of (row, col, word_idx). This would turn the time complexity into O(Rows×Cols×WordLength).
+"""
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        rows, cols = len(board), len(board[0])
+        directions = ((1, 0), (-1, 0), (0, 1), (0, -1))
+        
+        # Dictionary to store results of (row, col, word_idx)
+        memo = {}
+
+        def backtrack(row, col, word_idx):
+            # Check memo first
+            if (row, col, word_idx) in memo:
+                return memo[(row, col, word_idx)]
+            
+            # Validate current cell index boundaries and value
+            if not (0 <= row < rows) or not (0 <= col < cols) or board[row][col] != word[word_idx]:
+                return False
+            
+            # If last character matched, success!
+            if word_idx == len(word) - 1:
+                return True
+
+            # Explore neighbors without marking the board
+            for dr, dc in directions:
+                if backtrack(row + dr, col + dc, word_idx + 1):
+                    memo[(row, col, word_idx)] = True
+                    return True
+
+            # Store result in memo before returning
+            memo[(row, col, word_idx)] = False
+            return False
+
         for r in range(rows):
             for c in range(cols):
                 if backtrack(r, c, 0):
