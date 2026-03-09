@@ -69,6 +69,19 @@ def get_mastermind_score(secret, guess):
 
 # print(f"Duplicate Case: {get_mastermind_score('R R P P', 'R Y R R')}") 
 # Expected: [1, 1] (One 'R' is Black, only one more 'R' exists in secret for a White)
+
+"""
+'R R P P', 
+'R Y R R'
+
+s_remaining = [R P P]
+g_remaining = [Y R R]
+
+s_counts = {R:1, P:2}
+g_counts = {Y:1, R:2}
+
+"""
+
     
             
 
