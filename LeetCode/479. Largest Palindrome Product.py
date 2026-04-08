@@ -75,15 +75,50 @@
 #
 # Therefore, once `a < √pal`, **no new factor pairs remain to be discovered**, and we can safely `break`.
 
+# %% [markdown]
+# For `n = 1`, the problem is:
+#
+# -   Two 1‑digit numbers → both in `[1, 9]`
+# -   We need the **largest palindrome** that can be written as `a * b` with `1 ≤ a, b ≤ 9`.
+#
+# Let’s reason it out:
+#
+# -   Max product is `9 * 9 = 81` (not a palindrome).
+# -   Check which products are palindromes:
+#
+# 1‑digit palindromes: `1,2,3,4,5,6,7,8,9`  
+# 2‑digit palindromes: `11,22,33,44,55,66,77,88,99`
+#
+# Now, which of these can be written as a product of two 1‑digit numbers?
+#
+# -   2‑digit palindromes: none of `11,22,...,99` can be written as `a * b` with both `a,b` in `[1,9]`.
+# -   1‑digit palindromes: many appear (e.g., `9 = 3*3` or `1*9`, `8 = 2*4`, etc.)
+#
+# Among all such palindromic products, the **largest** is `9`.  
+# Since `9 < 1337`, the function should return `9`.
+#
+# That’s why we handle `n == 1` specially:
+#
+# ```python
+# if n == 1:
+#     return 9
+# ```
+#
+# Apply Code
+#
+# Then for `n ≥ 2`, the even‑length (2n‑digit) palindrome approach works.
+
 # %%
 class Solution:
     def largestPalindrome(self, n: int) -> int:
+        # The following for loop only 
         if n == 1:
             return 9
         
         max_num = 10**n - 1
         min_num = 10**(n-1)
         
+        # Loop from the max num to min num so we start with largest palindrome and go lower, this way the first valid palindrome we find will be the largest palindrome product and we can just return it
         for left_half in range(max_num, min_num - 1, -1):
             # create palindrome
             left_str = str(left_half)
