@@ -166,10 +166,32 @@
 #   - Like with time complexity, the Iterator itself is probably using memory in its own implementation. But again, this is not our concern. Our implementation only uses a few variables, so is O(1).
 
 # %%
+# Below is the interface for Iterator, which is already defined for you.
+#
+# class Iterator:
+#     def __init__(self, nums):
+#         """
+#         Initializes an iterator object to the beginning of a list.
+#         :type nums: List[int]
+#         """
+#
+#     def hasNext(self):
+#         """
+#         Returns true if the iteration has more elements.
+#         :rtype: bool
+#         """
+#
+#     def next(self):
+#         """
+#         Returns the next element in the iteration.
+#         :rtype: int
+#         """
+
 class PeekingIterator:
     def __init__(self, iterator):
         self._iterator = iterator
         self._peeked_value = None
+        
 
     def peek(self):
         # If there's not already a peeked value, get one out and store
@@ -183,6 +205,7 @@ class PeekingIterator:
             self._peeked_value = self._iterator.next()
 
         return self._peeked_value
+        
 
     def next(self):
         # Firstly, we need to check if we have a value already
@@ -199,12 +222,19 @@ class PeekingIterator:
 
         # Otherwise, we need to return a new value.
         return self._iterator.next()
+        
 
     def hasNext(self):
         # If there's a value waiting in _peeked_value, or if there are values
         # remaining in the iterator, we should return true.
         return self._peeked_value is not None or self._iterator.hasNext()
+        
 
+# Your PeekingIterator object will be instantiated and called as such:
+# iter = PeekingIterator(Iterator(nums))
+# while iter.hasNext():
+#     val = iter.peek()   # Get the next element but not advance the iterator.
+#     iter.next()         # Should return the same value as [val].
 
 # %% [markdown]
 # ### Solution 2, Saving the Next Value
@@ -219,13 +249,36 @@ class PeekingIterator:
 # - Space Complexity: O(1)
 
 # %%
+# Below is the interface for Iterator, which is already defined for you.
+#
+# class Iterator:
+#     def __init__(self, nums):
+#         """
+#         Initializes an iterator object to the beginning of a list.
+#         :type nums: List[int]
+#         """
+#
+#     def hasNext(self):
+#         """
+#         Returns true if the iteration has more elements.
+#         :rtype: bool
+#         """
+#
+#     def next(self):
+#         """
+#         Returns the next element in the iteration.
+#         :rtype: int
+#         """
+
 class PeekingIterator:
     def __init__(self, iterator):
         self._next = iterator.next()
         self._iterator = iterator
+        
 
     def peek(self):
         return self._next
+        
 
     def next(self):
         if self._next is None:
@@ -235,9 +288,17 @@ class PeekingIterator:
         if self._iterator.hasNext():
             self._next = self._iterator.next()
         return to_return
+        
 
     def hasNext(self):
         return self._next is not None
+        
+
+# Your PeekingIterator object will be instantiated and called as such:
+# iter = PeekingIterator(Iterator(nums))
+# while iter.hasNext():
+#     val = iter.peek()   # Get the next element but not advance the iterator.
+#     iter.next()         # Should return the same value as [val].
 
 # %% [markdown]
 # ### The Follow Up
